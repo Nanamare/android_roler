@@ -46,12 +46,12 @@
         </activity>
         <activity android:name=".LogInActivity"></activity>
         <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".RoleActivity">
+        <activity android:name=".RoleActivity" android:label="My Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.PlanActivity" />
         </activity>
-        <activity android:name=".EditRoleActivity">
+        <activity android:name=".EditRoleActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.RoleActivity" />
@@ -59,7 +59,11 @@
 
         <activity android:name=".ModifyActivity"></activity>
 
-        <activity android:name=".DayActivity"></activity>
+        <activity android:name=".DayActivity" android:label="Timetable">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.buttering.roler.PlanActivity" />
+        </activity>
 
         <!-- 네이버 아이디로 로그인에서 사용하는 액티비티를 등록 -->
         <activity
