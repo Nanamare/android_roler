@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_marginBottom="10dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tv_rolePrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="25sp"/>
+
+            <TextView
+                android:id="@+id/tv_roleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_rolePrimary"
+                android:text="임시임시임시제목"
+                android:textSize="25sp"/>
+
+            <Button
+                android:id="@+id/bt_editRoleDetail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/tv_roleContent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_roleName"
+                android:text="임시임시임시 내용내용 내욘ㄴ언아렁니ㅏ렁나ㅣ"
+                android:textSize="15sp"/>
+
+
+
+            <com.github.lzyzsd.circleprogress.CircleProgress
+                android:id="@+id/cp_rolePercent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                custom:circle_progress="30"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

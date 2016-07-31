@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="156dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="400dp"
+        android:layout_height="140dp"
+        custom:cardCornerRadius="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rl_roleItemTop"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="#f5a4c8"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp">
+                <TextView
+                    android:id="@+id/tv_rolePrimaryPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="1"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_comma"
+                    android:layout_toRightOf="@id/tv_rolePrimaryPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="."
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_roleNamePlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_comma"
+                    android:text="임시임시임시제목"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rl_roleItemTop"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp">
+                <TextView
+                    android:id="@+id/tv_roleContentPlan"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="임시임시임시 내용내용 내욘ㄴ언아렁니ㅏ렁나ㅣ"
+                    android:textSize="10sp"/>
+
+
+
+                <com.github.lzyzsd.circleprogress.CircleProgress
+                    android:id="@+id/cp_planPercent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    custom:circle_unfinished_color="#ffffff"
+                    custom:circle_text_color="#f5a4c8"
+                    custom:circle_finished_color="#f5a4c8"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    custom:circle_progress="35"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

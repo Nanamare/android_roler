@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+    tools:context="com.buttering.roler.PlanActivity">
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/abcde"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_profileLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_picture"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="코카콜라"
+            android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/bt_editProfile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/mody_inform"
+            android:layout_toRightOf="@id/tv_name"
+            android:layout_marginLeft="8dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_recyclerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_profileLayout"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_marginTop="30dp">
+
+        <Button
+            android:id="@+id/bt_editRoleInfo"
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/mody_inform"/>
+
+        <TextView
+            android:id="@+id/tv_editRoleInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="역할정보수정"
+            android:layout_toLeftOf="@id/bt_editRoleInfo"/>
+
+        <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+            android:id="@+id/vp_roleDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_editRoleInfo"
+            android:layout_marginTop="10dp"
+            coverflow:coverHeight="250dp"
+            coverflow:coverWidth="200dp"
+            coverflow:maxScaleFactor="1.5"
+            coverflow:reflectionGap="0px"
+            coverflow:rotationThreshold="0.5"
+            coverflow:scalingThreshold="0.5"
+            coverflow:spacing="0.6">
+        </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+
+        <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/vp_roleDetail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_below="@id/tv_editRoleInfo"-->
+            <!--android:layout_marginTop="10dp">-->
+        <!--</android.support.v4.view.ViewPager>-->
+
+    </RelativeLayout>
+
+</RelativeLayout>
