@@ -1,51 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".SignUpActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_singnup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.buttering.roler.signup.SignUpActivity">
+
+    <include
+        android:id="@+id/custom_toolBar"
+        layout="@layout/toolbar"/>
+
+
+    <ScrollView
+        android:layout_below="@id/custom_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="25dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="25dp">
+
+
+            <LinearLayout
+                android:id="@+id/ll_Id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#96FFFFFF">
+
+                <EditText
+                    android:id="@+id/activity_signup_edt_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:background="@android:color/transparent"
+                    android:hint="ID (example@liveo.me)"
+                    android:inputType="textNoSuggestions"
+                    android:lines="1"
+                    android:textColor="#333333"
+                    android:textColorHint="@color/soft_grey"
+                    android:textCursorDrawable="@null"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_Pwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/ll_Id"
+                android:layout_marginTop="18dp"
+                android:background="#96FFFFFF"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/activity_signup_edt_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="PW (Min 8 characters including a number)"
+                    android:inputType="textPassword|textNoSuggestions"
+                    android:lines="1"
+                    android:textColor="#333333"
+                    android:textColorHint="@color/soft_grey"
+                    android:textCursorDrawable="@null"
+                    android:textSize="15sp"/>
+
+
+                <TextView
+                    android:id="@+id/activity_signup_tv_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/activity_signup_ll_policy"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
     <Button
-        android:id="@+id/signup_btn_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="profile image"/>
-    <EditText
-        android:id="@+id/signup_edit_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        />
-    <EditText
-        android:id="@+id/signup_edit_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="E-mail Address"
-        />
-    <EditText
-        android:id="@+id/signup_edit_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        />
-    <EditText
-        android:id="@+id/signup_edit_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Confirm Password"
-        />
-    <Button
-        android:id="@+id/signup_btn_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"/>
-    <Button
-        android:id="@+id/signup_btn_toplan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="to Plan Activity"/>
-</LinearLayout>
+        android:id="@+id/activity_signup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hard_grey"
+        android:text="Next"
+        android:textColor="@color/white"/>
+
+
+</RelativeLayout>

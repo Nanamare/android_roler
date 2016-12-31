@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_day"
-        android:icon="@drawable/icon_timeline"
-        android:title="day"
-        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="300"
+        android:title="Refresh"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="300"
+        android:title="Settings"
+        app:showAsAction="never"/>
 
 
 </menu>

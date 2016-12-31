@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Roler</string>
+
+    //signUpActivity
+    <string name="join_empty_email">Please enter your email</string>
+    <string name="join_too_long_email">Your email must be less than characters</string>
+    <string name="join_invalid_email">The email format is not correct</string>
+    <string name="join_invalid_pwd">The password format is not correct</string>
+    <string name="join_empty_pwd">Please enter a password</string>
+    <string name="join_too_short_pwd">Password must be longer than 8 characters</string>
+
+
+    //myinfokey
+    <string name="key_alias">Roler_KEY</string>
+
 </resources>

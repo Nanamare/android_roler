@@ -1,55 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
-    tools:context="com.buttering.roler.PlanActivity">
+                xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                tools:context="com.buttering.roler.plan.PlanActivity"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+    <include
+        android:id="@+id/custom_toolBar"
+        layout="@layout/toolbar"/>
 
 
     <RelativeLayout
+        android:layout_below="@id/custom_toolBar"
         android:id="@+id/rl_planTop"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="530dp">
+        android:layout_height="530dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/tv_yearMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016.07"
             android:layout_marginLeft="30dp"
+            android:text="year.month"
             android:textSize="15sp"/>
+
         <TextView
             android:id="@+id/tv_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sunday"
             android:layout_centerHorizontal="true"
+            android:text="Sunday"
             android:textSize="15sp"/>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:id="@+id/ll_swipe_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/activity_plan_arrow_left_iv"
+            android:layout_marginRight="60dp"
+            android:layout_gravity="center_vertical|left"
+            android:background="@drawable/icon_arrow_left"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="31"
-            android:textSize="60sp"
-            android:layout_marginTop="-10dp"
             android:layout_below="@id/tv_day"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="31"
+            android:textSize="60sp"/>
+
+        <ImageView
+            android:id="@+id/activity_plan_arrow_right_iv"
+            android:layout_marginLeft="60dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/icon_arrow_right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        </LinearLayout>
 
         <TextView
-            android:textSize="15sp"
-            android:text="오늘 날씨 맑음"
-            android:layout_alignParentRight="true"
+            android:id="@+id/activity_plan_name_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15sp"/>
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_rolePlanPage"
+            android:layout_marginTop="-20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tv_date"
+            android:layout_below="@id/ll_swipe_arrow"
             coverflow:coverHeight="250dp"
             coverflow:coverWidth="200dp"
             coverflow:maxScaleFactor="1.7"
@@ -59,11 +93,12 @@
             coverflow:spacing="0.34">
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_planBottom"
-        android:layout_below="@id/rl_planTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/rl_planTop"
         android:layout_marginTop="-230dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -86,36 +121,36 @@
                     android:id="@+id/tv_numberText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No."
                     android:layout_marginLeft="10dp"
+                    android:text="No."
                     android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/tv_listText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="List"
-                    android:textSize="20sp"
+                    android:layout_marginLeft="50dp"
                     android:layout_toRightOf="@id/tv_numberText"
-                    android:layout_marginLeft="50dp"/>
+                    android:text="List"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/tv_doText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Do"
-                    android:textSize="20sp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"/>
+                    android:layout_marginRight="30dp"
+                    android:text="Do"
+                    android:textSize="20sp"/>
 
                 <LinearLayout
                     android:id="@+id/ll_bottomLine1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
                     android:layout_below="@id/tv_numberText"
+                    android:layout_marginTop="10dp"
                     android:background="#d9d9d9"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_todolist"
@@ -132,7 +167,6 @@
         </android.support.v7.widget.CardView>
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

@@ -3,5 +3,5 @@
     <item android:state_checked="true" android:drawable="@drawable/checkselected">
 
     </item>
-    <item android:drawable="@drawable/checkno" />
+    <!--<item android:drawable="@drawable/checkno" />-->
 </selector>

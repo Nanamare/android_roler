@@ -1,17 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="c1">#e60000</color>
+    <color name="c2">#6C717B</color>
+    <color name="c3">#A4AAB3</color>
+    <color name="c4">#CACAD2</color>
+    <color name="c5">#f0f0f3</color>
+    <color name="c6">#f8f9fa</color>
+    <color name="dark_transparent">#d50000</color>
+    <color name="trans">#80000000</color>
+    <color name="black">#FF000000</color>
+    <color name="semi_transparent_black">#7f000000</color>
+    <color name="black_transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorPrimary">#218eed</color>
+    <color name="colorPrimaryDark">#218eed</color>
+    <color name="primaryColor">#e02121</color>
+    <color name="notification_ic_background">#0a242e</color>
+    <color name="notification_ic_small_background">#a3a3a3</color>
+
+    <color name="dialog_background">#7f000000</color>
+
+    <color name="actionbar">#3cb879</color>
+    <color name="body_background">#e8e8e8</color>
+    <color name="body_background_green">#82e783</color>
+    <color name="server_status_bar">#2b2b2b</color>
+    <color name="title_gray">#434343</color>
+    <color name="bg_msg_you">#5eb964</color>
+    <color name="bg_msg_from">#80FFFFFF</color>
+    <color name="msg_border_color">#a1a1a1</color>
+    <color name="bg_btn_join">#1e6258</color>
+    <color name="bg_msg_input">#66000000</color>
+    <color name="text_msg_input">#626262</color>
+    <color name="lblFromName">#66000000</color>
+    <color name="bg_timeline_comment">#F6F6F6</color>
+    <color name="lblFromJoin">#80FF0000</color>
+
+    <color name="feed_bg">#d3d6db</color>
+    <color name="feed_item_bg">#ffffff</color>
+    <color name="feed_item_border">#c2c3c8</color>
+    <color name="link">#0a80d1</color>
+    <color name="timestamp">#b0b0b0</color>
+
+    <color name="primaryColorDark">#1976D2</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#727272</color>
+    <color name="soft_white">#f0f0f0</color>
+    <color name="grey">#8b999b</color>
+    <color name="hard_grey">#e4e5e7</color>
+    <color name="soft_grey">#508b999b</color>
+    <color name="text_grey">#727a7c</color>
+    <color name="text_soft_grey">#aab0b0</color>
+    <color name="text_hard_grey">#57585a</color>
+    <color name="black_semitransparent">#7f000000</color>
+    <color name="black_semitransparent2">#1A000000</color>
 
-    <color name="event_color_01">#59dbe0</color>
-    <color name="event_color_02">#f57f68</color>
-    <color name="event_color_03">#87d288</color>
-    <color name="event_color_04">#f8b552</color>
-    <color name="toolbar">#efefef</color>
-    <color name="toolbar_text">#8f000000</color>
-    <color name="accent">#2789e4</color>
-    <color name="mdtp_accent_color">#009688</color>
-    <color name="mdtp_accent_color_dark">#00796b</color>
 
+    <color name="holo_orange_dark">#F57C00</color>
+    <color name="notification_btn_text_color">#eee</color>
+    <color name="notification_background">#000000</color>
+    <color name="notification_background_light">#FFFFFF</color>
+    <color name="notification_btn_text_color_light">#000</color>
+    <color name="shadow_dark">#666</color>
+
+    <color name="suggestion_highlight_text">#177bbd</color>
+    <color name="button_press_highlight">#dedede</color>
+
+    <color name="notification_icon_color">#878787</color>
+
+    <color name="text_color_dark">#000000</color>
+    <color name="text_color_light">#FFFFFF</color>
+    <color name="error_highlight_text">#ffcc0000</color>
+
+    <color name="primary">#2196F3</color>
+    <color name="primaryDark">#1E88E5</color>
+    <color name="primaryDarker">#1976D2</color>
+
+    <color name="holo_green_dark">#4CAF50</color>
+    <color name="holo_green_darker">#43A047</color>
+    <color name="holo_green_darkest">#388E3C</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

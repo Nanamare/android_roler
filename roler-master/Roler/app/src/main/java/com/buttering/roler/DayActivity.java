@@ -50,7 +50,7 @@ public class DayActivity extends BaseActivity {
         endTime.add(Calendar.HOUR, 1);
         endTime.set(Calendar.MONTH, newMonth - 1);
         WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime)+"어머니 생신 선물 사기 \n 카페 쿠폰 쓰기", startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
+        event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
 
        /* startTime = Calendar.getInstance();
@@ -75,7 +75,7 @@ public class DayActivity extends BaseActivity {
         endTime.set(Calendar.HOUR_OF_DAY, 5);
         endTime.set(Calendar.MINUTE, 0);
         event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_03));
+        event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
 
         startTime = Calendar.getInstance();
@@ -87,7 +87,7 @@ public class DayActivity extends BaseActivity {
         endTime.add(Calendar.HOUR_OF_DAY, 2);
         endTime.set(Calendar.MONTH, newMonth-1);
         event = new WeekViewEvent(2, getEventTitle(startTime)+"택배 붙이기", startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
+        event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
 
        /* startTime = Calendar.getInstance();
@@ -112,7 +112,7 @@ public class DayActivity extends BaseActivity {
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 3);
         event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_04));
+        event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
 
         startTime = Calendar.getInstance();
@@ -124,7 +124,7 @@ public class DayActivity extends BaseActivity {
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 3);
         event = new WeekViewEvent(5, getEventTitle(startTime)+"핸드폰 바꾸기", startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
+        event.setColor(getResources().getColor(R.color.colorPrimary));
         events.add(event);
 
         startTime = Calendar.getInstance();
@@ -136,7 +136,7 @@ public class DayActivity extends BaseActivity {
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 3);
         event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
+        event.setColor(getResources().getColor(R.color.colorPrimary));
         events.add(event);
 
 
