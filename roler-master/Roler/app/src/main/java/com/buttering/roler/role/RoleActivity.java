@@ -1,4 +1,4 @@
-package com.buttering.roler;
+package com.buttering.roler.role;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,19 +11,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buttering.roler.EditRoleActivity;
+import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
-import com.buttering.roler.adapter.RoleActivityAdapter;
-
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 /**
@@ -33,8 +35,9 @@ public class RoleActivity extends AppCompatActivity {
 
     Button bt_editProfile;
     Button bt_editRoleInfo;
-    ImageView iv_picture;
     TextView tv_name;
+    @BindView(R.id.iv_picture)
+    CircleImageView iv_picture;
 
     List<Role> allRoleList = null;
     RoleActivityAdapter adapter = null;
@@ -48,10 +51,10 @@ public class RoleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role);
+        ButterKnife.bind(this);
 
         bt_editProfile = (Button) findViewById(R.id.bt_editProfile);
         bt_editRoleInfo = (Button) findViewById(R.id.bt_editRoleInfo);
-        iv_picture = (ImageView) findViewById(R.id.iv_picture);
         tv_name = (TextView) findViewById(R.id.tv_name);
         vp_roleDetail = (FeatureCoverFlow) findViewById(R.id.vp_roleDetail);
 
@@ -62,9 +65,6 @@ public class RoleActivity extends AppCompatActivity {
         vp_roleDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(RoleActivity.this,
-//                        allRoleList.get(position).getRoleName(),
-//                        Toast.LENGTH_SHORT).show();
 
                 Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
                 startActivity(intentSubActivity);
@@ -107,19 +107,22 @@ public class RoleActivity extends AppCompatActivity {
         role.setRoleName("사랑하는 사람");
         role.setRolePrimary(0);
         role.setUser_id(1);
+        roles.add(role);
 
+        role = new Role();
         role.setId(1);
         role.setRoleContent("경영학적인 도전을 게을리하지 않는다. 수익과 니즈, 시장을 항상 살피며, 생각하고, 공부한다,");
         role.setRoleName("경영학도로서의 나");
         role.setRolePrimary(1);
         role.setUser_id(1);
+        roles.add(role);
 
+        role = new Role();
         role.setId(2);
         role.setRoleContent("가족을 사랑하는 내가 된다. 항상 부모님께 감사하는 마음을 가지고 생활 한다 으쌰!");
         role.setRoleName("아들이자 동생");
         role.setRolePrimary(2);
-        role.setUser_id(1);
-
+        role.setUser_id(2);
         roles.add(role);
 
         //테스트용 for문 END

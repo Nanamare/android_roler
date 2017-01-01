@@ -30,7 +30,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.RoleActivity"/>
+                android:value="com.buttering.roler.role.RoleActivity"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -40,7 +40,7 @@
             android:theme="@style/NoAppBarTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.RoleActivity"/>
+                android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
         <activity
             android:name=".login.LogInActivity"
@@ -53,7 +53,7 @@
         </activity>
         <activity
             android:theme="@style/AppTheme"
-            android:name=".RoleActivity"
+            android:name=".role.RoleActivity"
             android:label="My Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -62,7 +62,7 @@
         <activity android:name=".EditRoleActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.RoleActivity"/>
+                android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
 
         <activity android:name=".ModifyActivity"></activity>

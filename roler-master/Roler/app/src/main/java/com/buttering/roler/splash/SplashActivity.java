@@ -35,7 +35,7 @@ public class SplashActivity extends Activity {
 					loggedInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					startActivity(loggedInIntent);
 					finish();
-				}, 1500);
+				}, 1000);
 
 
 			} else {
@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
 				new Handler().postDelayed(() -> {
 					startActivity(intent);
 					finish();
-				}, 2000);
+				}, 1000);
 			}
 
 

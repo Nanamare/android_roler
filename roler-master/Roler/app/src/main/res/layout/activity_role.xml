@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
-    tools:context="com.buttering.roler.plan.PlanActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+                tools:context="com.buttering.roler.plan.PlanActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_picture"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -14,7 +14,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:id="@+id/rl_profileLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,22 +24,35 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp">
 
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
+            android:textSize="25sp"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="코카콜라"
+            android:text="kozy brown"
             android:layout_centerVertical="true"/>
 
         <Button
+            android:layout_alignBaseline="@+id/tv_name"
             android:id="@+id/bt_editProfile"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/mody_inform"
+            android:background="@drawable/ic_menu"
             android:layout_toRightOf="@id/tv_name"
             android:layout_marginLeft="8dp"/>
+        </LinearLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:layout_below="@id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Roler@roler.com"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_recyclerLayout"
@@ -53,13 +68,13 @@
             android:layout_alignParentRight="true"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/mody_inform"/>
+            android:background="@drawable/ic_menu"/>
 
         <TextView
             android:id="@+id/tv_editRoleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="역할정보수정"
+            android:text="역할 정보 수정"
             android:layout_toLeftOf="@id/bt_editRoleInfo"/>
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
@@ -78,13 +93,20 @@
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
         <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/vp_roleDetail"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_below="@id/tv_editRoleInfo"-->
-            <!--android:layout_marginTop="10dp">-->
+        <!--android:id="@+id/vp_roleDetail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/tv_editRoleInfo"-->
+        <!--android:layout_marginTop="10dp">-->
         <!--</android.support.v4.view.ViewPager>-->
 
     </RelativeLayout>
+
+    <TextView
+        android:text="My profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_picture"
+        android:layout_toStartOf="@+id/rl_profileLayout"/>
 
 </RelativeLayout>

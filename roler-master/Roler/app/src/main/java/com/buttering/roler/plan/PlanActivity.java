@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,12 +21,10 @@ import android.widget.Toast;
 
 import com.buttering.roler.DayActivity;
 import com.buttering.roler.R;
-import com.buttering.roler.RoleActivity;
+import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -116,13 +113,6 @@ public class PlanActivity extends AppCompatActivity {
 
 		});
 
-//		vp_rolePlanPage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				currentPosition = position;
-//
-//			}
-//		});
 
 		left_arrow_iv.setOnClickListener(new View.OnClickListener() {
 			@Override

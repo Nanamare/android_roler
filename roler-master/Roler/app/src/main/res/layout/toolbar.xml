@@ -1,4 +1,5 @@
 <android.support.v7.widget.Toolbar
+    android:background="#caf0feff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme"
@@ -12,7 +13,6 @@
     android:nestedScrollingEnabled="false">
 
     <LinearLayout
-
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
