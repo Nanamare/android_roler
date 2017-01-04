@@ -51,6 +51,10 @@ public class MyInfoDAO {
 		preferences.put("email", email);
 	}
 
+	public void setPicUrl(String picUrl){
+		preferences.put("picture_url",picUrl);
+	}
+
 
 	public int getDeviceId() {
 		return 0;
@@ -69,10 +73,18 @@ public class MyInfoDAO {
 		SharePrefUtil.putSharedPreference("myUserInfo", json);
 	}
 
-	public void saveAccountInfo(String email, String pwd, String name) {
+	public void saveAccountInfo(String email, String pwd, String name, String picURL) {
 		setEmail(email);
 		setPwd(pwd);
 		setName(name);
+		setPicUrl(picURL);
+	}
+
+	public void saveUserInfo(User user) {
+		setEmail(user.getEmail());
+		setPwd(user.getPassword());
+		setName(user.getName());
+		setPicUrl(user.getPicture_url());
 	}
 
 	public String getEmail() {
@@ -85,6 +97,10 @@ public class MyInfoDAO {
 
 	public String getNickName() {
 		return preferences.getString("name");
+	}
+
+	public String getPicUrl(){
+		return preferences.getString("picture_url");
 	}
 
 

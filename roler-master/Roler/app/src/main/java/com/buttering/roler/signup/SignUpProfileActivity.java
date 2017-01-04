@@ -240,7 +240,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 						.signUp(email, passwd, fullName)
 						.flatMap(user -> {
 							MyInfoDAO.getInstance().setMyUserInfo(user);
-							MyInfoDAO.getInstance().saveAccountInfo(email, passwd,fullName);
+							MyInfoDAO.getInstance().saveAccountInfo(email, passwd,fullName,"NULL");
 							return null;
 						})
 						.subscribe(new Subscriber<Object>() {

@@ -61,7 +61,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.plan.PlanActivity"/>
         </activity>
-        <activity android:name=".EditRoleActivity">
+        <activity android:name=".EditRoleActivity"
+                  android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>

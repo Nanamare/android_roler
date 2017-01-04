@@ -61,26 +61,28 @@
         android:layout_below="@id/rl_profileLayout"
         android:layout_marginTop="30dp">
 
-        <Button
-            android:id="@+id/bt_editRoleInfo"
-            android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/ic_menu"/>
-
         <TextView
             android:id="@+id/tv_editRoleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="역할 정보 수정"
-            android:layout_toLeftOf="@id/bt_editRoleInfo"/>
+            android:text="역할 정보 추가"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_above="@+id/vp_roleDetail"
+            android:id="@+id/bt_editRoleInfo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_menu"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/tv_editRoleInfo"/>
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_roleDetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tv_editRoleInfo"
-            android:layout_marginTop="10dp"
             coverflow:coverHeight="200dp"
             coverflow:coverWidth="170dp"
             coverflow:maxScaleFactor="1.5"

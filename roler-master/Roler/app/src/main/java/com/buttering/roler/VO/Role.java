@@ -1,9 +1,11 @@
 package com.buttering.roler.VO;
 
+import java.io.Serializable;
+
 /**
  * Created by ichaeeun on 2016. 7. 30..
  */
-public class Role {
+public class Role implements Serializable{
 
     private int id;
     private int rolePrimary;

@@ -3,22 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/custom_toolBar"
+        layout="@layout/toolbar"/>
+
     <RelativeLayout
+        android:layout_below="@+id/rl_priority"
         android:id="@+id/rl_editRoleTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <EditText
+            android:textColorHint="@color/hard_grey"
+            android:hint="역할을 설정해보세요!"
+            android:id="@+id/et_roleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_roleNameText"/>
+
         <TextView
+            android:layout_marginRight="5dp"
             android:id="@+id/tv_roleNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="역할제목"/>
-
-        <EditText
-            android:id="@+id/et_roleName"
-            android:layout_toRightOf="@id/tv_roleNameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="역할 제목 설정"
+            android:layout_alignBaseline="@+id/et_roleName"
+            android:layout_alignBottom="@+id/et_roleName"
+            android:layout_alignParentStart="true"/>
 
     </RelativeLayout>
 
@@ -28,18 +39,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <EditText
+            android:textColorHint="@color/hard_grey"
+            android:hint="역할에 대한 설명을 적어 보아요!"
+            android:id="@+id/et_roleContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_roleContentText"/>
+
         <TextView
+            android:layout_marginRight="5dp"
+            android:layout_alignBaseline="@+id/et_roleContent"
             android:id="@+id/tv_roleContentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="단기목표"/>
-
-        <EditText
-            android:id="@+id/et_roleContent"
-            android:layout_toRightOf="@id/tv_roleContentText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="단기 목표 설명"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
 
     </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/activity_edit_role_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hard_grey"
+        android:text="Done"
+        android:textColor="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_priority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/custom_toolBar"
+        android:layout_alignParentStart="true">
+        <Button
+            android:background="@color/white"
+            android:textSize="15sp"
+            android:textColor="@color/actionbar"
+            android:textColorHint="@color/actionbar"
+            android:hint="우선순위를 설정하세요!"
+            android:id="@+id/et_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_priority"/>
+
+        <TextView
+            android:layout_marginRight="5dp"
+            android:id="@+id/tv_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   우선순위   "
+            android:layout_alignBaseline="@+id/et_priority"
+            android:layout_alignBottom="@+id/et_priority"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+    <com.dpizarro.uipicker.library.picker.PickerUI
+        android:id="@+id/picker_ui_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_edit_role_btn"/>
+
 
 </RelativeLayout>

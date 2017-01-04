@@ -342,7 +342,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				user.setPicture_url(currentPerson.getImage().getUrl());
 				user.setId(currentPerson.getId());
 				user.setEmail(email);
-				MyInfoDAO.getInstance().setMyUserInfo(user);
+				MyInfoDAO.getInstance().saveUserInfo(user);
 				Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);
