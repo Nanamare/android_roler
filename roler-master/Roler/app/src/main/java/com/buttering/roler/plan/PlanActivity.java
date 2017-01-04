@@ -21,11 +21,13 @@ import android.widget.Toast;
 
 import com.buttering.roler.DayActivity;
 import com.buttering.roler.R;
-import com.buttering.roler.role.RoleActivity;
+import com.buttering.roler.SettingActivity;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
+import com.buttering.roler.role.RoleActivity;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,11 +60,13 @@ public class PlanActivity extends AppCompatActivity {
 	ImageView right_arrow_iv;
 
 	private List<Role> allRoleList = null;
-	private List<Todo> allTodoList = null;
+	private List<List<Todo>> allTodoList = null;
 	private PlanActivityAdapter adapter = null;
 	private PlanActivityTodoAdapter todoAdapter = null;
 	private int currentPosition;
 	List<Role> roles = new ArrayList<>();
+	private Todo todo = null;
+	List<Todo> todolist;
 
 
 	LinearLayoutManager linearLayoutManager;
@@ -94,13 +98,15 @@ public class PlanActivity extends AppCompatActivity {
 
 			alert.setPositiveButton("확인", (dialog, whichButton) -> {
 				String value = input.getText().toString();
-				value.toString();
-				Todo todo = new Todo();
-				todo.setContent(value);
-				int pos = vp_rolePlanPage.getScrollPosition();
-				allTodoList.add(todo);
-				todoAdapter.notifyDataSetChanged();
-
+				if (!value.isEmpty()) {
+					value.toString();
+					Todo todo = new Todo();
+					todo.setContent(value);
+					allTodoList.get(currentPosition).add(todo);
+					todoAdapter.notifyDataSetChanged();
+				} else {
+					Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+				}
 			});
 
 
@@ -122,9 +128,11 @@ public class PlanActivity extends AppCompatActivity {
 					currentPosition = vp_rolePlanPage.getCount();
 				}
 				if (currentPosition > 0) {
-					vp_rolePlanPage.scrollToPosition(currentPosition - 1);
+					currentPosition -= 1;
+					vp_rolePlanPage.scrollToPosition(currentPosition);
 				}
 
+				listRecall();
 			}
 		});
 
@@ -135,6 +143,7 @@ public class PlanActivity extends AppCompatActivity {
 				if (currentPosition < vp_rolePlanPage.getCount()) {
 					vp_rolePlanPage.scrollToPosition(currentPosition + 1);
 				}
+				listRecall();
 			}
 		});
 
@@ -171,23 +180,48 @@ public class PlanActivity extends AppCompatActivity {
 	private void listRecall() {
 
 		allTodoList = receiveTodoItems();
-		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList, R.layout.activity_todolist_item);
+		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 		rv_todolist.setAdapter(todoAdapter);//adapter 다시 만들어서 연결
 
 	}
 
-	private List<Todo> receiveTodoItems() {
+	private List<List<Todo>> receiveTodoItems() {
 
 		allTodoList = new ArrayList<>();
 		//테스트용 for문 START
-		Todo todo = null;
+		todolist = new ArrayList<>();
+
 
 		todo = new Todo();
-
+		todo.setRole_id(0);
 		todo.setId(0);
-		todo.setContent("test");
+		todo.setContent("test 0");
 		todo.setDone(true);
-		allTodoList.add(todo);
+		todolist.add(todo);
+
+		todo = new Todo();
+		todo.setRole_id(0);
+		todo.setId(0);
+		todo.setContent("test 0");
+		todo.setDone(true);
+		todolist.add(todo);
+		allTodoList.add(todolist);
+
+		todolist = new ArrayList<>();
+		todo = new Todo();
+		todo.setRole_id(1);
+		todo.setId(0);
+		todo.setContent("test 1");
+		todo.setDone(true);
+		todolist.add(todo);
+
+		todo = new Todo();
+		todo.setRole_id(1);
+		todo.setId(0);
+		todo.setContent("test 1");
+		todo.setDone(true);
+		todolist.add(todo);
+		allTodoList.add(todolist);
 
 		//테스트용 for문 END
 		return allTodoList;
@@ -197,9 +231,9 @@ public class PlanActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		allRoleList = receiveRoles();
-		adapter = new PlanActivityAdapter(this, allRoleList);
-		vp_rolePlanPage.setAdapter(adapter);
+//		allRoleList = receiveRoles();
+//		adapter = new PlanActivityAdapter(this, allRoleList);
+//		vp_rolePlanPage.setAdapter(adapter);
 	}
 
 	public List<Role> receiveRoles() {
@@ -213,7 +247,7 @@ public class PlanActivity extends AppCompatActivity {
 		role.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
 		role.setRoleName("사랑하는 사람");
 		role.setRolePrimary(2);
-		role.setUser_id(2);
+		role.setUser_id(1);
 		roles.add(role);
 
 		role = new Role();
@@ -221,7 +255,7 @@ public class PlanActivity extends AppCompatActivity {
 		role.setRoleContent("경영학적인 도전을 게을리하지 않는다. 수익과 니즈, 시장을 항상 살피며, 생각하고, 공부한다,");
 		role.setRoleName("경영학도로서의 나");
 		role.setRolePrimary(3);
-		role.setUser_id(3);
+		role.setUser_id(2);
 		roles.add(role);
 
 
@@ -247,9 +281,8 @@ public class PlanActivity extends AppCompatActivity {
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_setting) {
 
-			Toast.makeText(this, "setting 준비중", Toast.LENGTH_SHORT).show();
-//			Intent setIntent = new Intent(this, SettingActivity.class);
-//			startActivity(setIntent);
+			Intent setIntent = new Intent(this, SettingActivity.class);
+			startActivity(setIntent);
 
 		} else if (id == R.id.action_refresh) {
 			// signin 정보 재확인 후 main으로 이동

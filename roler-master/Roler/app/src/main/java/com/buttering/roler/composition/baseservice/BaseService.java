@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseService<T> {
 
 
-	public static final String BASE_URL = "http://172.20.10.4:3000";
+	public static final String BASE_URL = "http://52.78.65.255:3000";
 
 	private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
 		Response originalResponse = chain.proceed(chain.request());

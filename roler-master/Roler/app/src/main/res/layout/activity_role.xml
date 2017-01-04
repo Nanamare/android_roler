@@ -8,11 +8,11 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_picture"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/abcde"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="30dp"/>
 
     <LinearLayout
         android:gravity="center_horizontal"
@@ -59,8 +59,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_profileLayout"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
         android:layout_marginTop="30dp">
 
         <Button
@@ -83,8 +81,8 @@
             android:layout_height="match_parent"
             android:layout_below="@id/tv_editRoleInfo"
             android:layout_marginTop="10dp"
-            coverflow:coverHeight="250dp"
-            coverflow:coverWidth="200dp"
+            coverflow:coverHeight="200dp"
+            coverflow:coverWidth="170dp"
             coverflow:maxScaleFactor="1.5"
             coverflow:reflectionGap="0px"
             coverflow:rotationThreshold="0.5"

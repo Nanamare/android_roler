@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +47,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	public final static String EXTRA_MESSAGE = "com.buttering.roler";
 	private static final int REQUEST_WRITE_STORAGE = 112;
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	private static final int GET_ACCOUNT = 111;
 
 	private static final String TAG = "Login_Activity";
 	private static String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
@@ -69,6 +72,35 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	TextView pw_et;
 
 	private GoogleApiClient mGoogleApiClient;
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		switch (requestCode) {
+			case GET_ACCOUNT: {
+				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					//reload my activity with permission granted or use the features what required the permission
+				} else {
+					Toast.makeText(this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+				}
+			}
+		}
+
+
+	}
+
+
+	private void checkThePemission() {
+		if (Build.VERSION.SDK_INT > 22) {
+			boolean hasPermission = (ContextCompat.checkSelfPermission(this,
+					Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED);
+			if (!hasPermission) {
+				ActivityCompat.requestPermissions(this,
+						new String[]{
+								android.Manifest.permission.GET_ACCOUNTS}, GET_ACCOUNT);
+			}
+		}
+	}
 
 
 	private boolean checkPlayServices() {
@@ -252,6 +284,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	public void mOnClick(View view) {
 		switch (view.getId()) {
 			case R.id.activity_login_google_btn:
+				checkThePemission();
 				mGoogleApiClient = new GoogleApiClient.Builder(this)
 						.addConnectionCallbacks(this)
 						.addOnConnectionFailedListener(this)
@@ -278,13 +311,13 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 			Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-				// TODO: Consider calling
-				//    ActivityCompat#requestPermissions
-				// here to request the missing permissions, and then overriding
-				//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-				//                                          int[] grantResults)
-				// to handle the case where the user grants the permission. See the documentation
-				// for ActivityCompat#requestPermissions for more details.
+//				 TODO: Consider calling
+//				    ActivityCompat#requestPermissions
+//				 here to request the missing permissions, and then overriding
+//				   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//				                                          int[] grantResults)
+//				 to handle the case where the user grants the permission. See the documentation
+//				 for ActivityCompat#requestPermissions for more details.
 				return;
 			}
 			String email = Plus.AccountApi.getAccountName(mGoogleApiClient);

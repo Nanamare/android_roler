@@ -31,12 +31,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".plan.PlanActivity"
+        <activity
+            android:name=".plan.PlanActivity"
             android:theme="@style/NoAppBarTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -49,12 +52,11 @@
         <activity
             android:name=".signup.SignUpProfileActivity"
             android:theme="@style/NoAppBarTheme">
-
         </activity>
         <activity
-            android:theme="@style/AppTheme"
             android:name=".role.RoleActivity"
-            android:label="My Page">
+            android:label="My Page"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.plan.PlanActivity"/>
@@ -64,9 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
-
-        <activity android:name=".ModifyActivity"></activity>
-
+        <activity android:name=".ModifyActivity"/>
         <activity
             android:name=".DayActivity"
             android:label="Timetable">
@@ -74,7 +74,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.plan.PlanActivity"/>
         </activity>
-
         <activity
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
@@ -82,7 +81,8 @@
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
             android:label="OAuth2.0 In-app"/>
         <activity android:name=".signup.SignUpActivity"/>
-
+        <activity android:name=".SettingActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -13,4 +13,7 @@
     //myinfokey
     <string name="key_alias">Roler_KEY</string>
 
+     <string name="invite"> 님 롤러를 사용해주셔서 감사합니다. 잘 사용하셨다면 친구들에게 추천해보세요!
+    </string>
+
 </resources>

@@ -101,6 +101,12 @@ public class MyInfoDAO {
 		//save2Server(userInfo);
 	}
 
+	public void deleteAccountInfo() {
+		preferences.removeValue("email");
+		preferences.removeValue("pwd");
+		preferences.clear();
+	}
+
 
 	public String getMyUserId() {
 		return myUserInfo != null ? myUserInfo.getId() : "";
@@ -112,5 +118,7 @@ public class MyInfoDAO {
 	public String getThumbnailPath() {
 		return myUserInfo.getPicture_url();
 	}
+
+
 
 }

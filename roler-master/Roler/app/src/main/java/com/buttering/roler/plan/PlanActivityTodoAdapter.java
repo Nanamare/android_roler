@@ -54,18 +54,16 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			} else {
 				AlertDialog.Builder alert = new AlertDialog.Builder(context);
 				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
-						.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								holder.tv_list.setTextColor(Color.BLACK);
-								holder.tv_no.setTextColor(Color.BLACK);
-							}
+						.setPositiveButton("확인", (dialog, which) -> {
+							holder.tv_list.setTextColor(Color.BLACK);
+							holder.tv_no.setTextColor(Color.BLACK);
+
 						})
-						.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								return;
-							}
+						.setNegativeButton("취소", (dialog, which) -> {
+							holder.cb_todo.setChecked(true);
+							holder.tv_list.setTextColor(Color.LTGRAY);
+							holder.tv_no.setTextColor(Color.LTGRAY);
+
 						});
 
 				AlertDialog alertDialog = alert.create();
@@ -139,7 +137,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-			ll_swipe_left = (LinearLayout)itemView.findViewById(R.id.ll_swipe_left);
+			ll_swipe_left = (LinearLayout) itemView.findViewById(R.id.ll_swipe_left);
 			swipe_layout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
 			tv_no = (TextView) itemView.findViewById(R.id.tv_no);
 			tv_list = (TextView) itemView.findViewById(R.id.tv_list);

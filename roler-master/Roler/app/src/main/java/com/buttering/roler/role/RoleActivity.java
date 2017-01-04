@@ -117,13 +117,6 @@ public class RoleActivity extends AppCompatActivity {
         role.setUser_id(1);
         roles.add(role);
 
-        role = new Role();
-        role.setId(2);
-        role.setRoleContent("가족을 사랑하는 내가 된다. 항상 부모님께 감사하는 마음을 가지고 생활 한다 으쌰!");
-        role.setRoleName("아들이자 동생");
-        role.setRolePrimary(2);
-        role.setUser_id(2);
-        roles.add(role);
 
         //테스트용 for문 END
         //서버에서 받아오거나 혹은 SharedPreference에 있는 정보를 넣을 것(협의 안됨)

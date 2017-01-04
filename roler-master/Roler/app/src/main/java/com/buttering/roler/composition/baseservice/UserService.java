@@ -1,22 +1,13 @@
 package com.buttering.roler.composition.baseservice;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.RolerAccount;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.composition.serialization.RolerResponse;
-import com.facebook.internal.BoltsMeasurementEventListener;
-import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -27,9 +18,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.schedulers.Schedulers;
 
 /**
@@ -37,6 +26,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class UserService extends BaseService {
+
 	public static boolean DEBUG = false;
 
 	public UserService() {
@@ -156,7 +146,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -165,6 +155,7 @@ public class UserService extends BaseService {
 								String result = parseParams(responseBody.string());
 								if (result.equals("true")) {
 									subscriber.onNext(result);
+
 								} else {
 									subscriber.onError(new Throwable());
 								}
@@ -174,11 +165,23 @@ public class UserService extends BaseService {
 
 						}
 
-						private String parseParams (String json){
+						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String param = ja.get("result").getAsString();
-							return param;
+							String result = ja.get("result").getAsString();
+							String name = ja.get("name").getAsString();
+							String email = ja.get("email").getAsString();
+							User user = generateUser(email,name);
+							MyInfoDAO.getInstance().setMyUserInfo(user);
+							return result;
 						}
+
+						private User generateUser(String email, String name) {
+							User user = new User();
+							user.setEmail(email);
+							user.setName(name);
+							return user;
+						}
+
 
 					});
 
