@@ -36,8 +36,10 @@ public class SignUpProfileTimeDialog extends DialogFragment implements DatePicke
 
 
 
+
 	@Override
 	public void onDateSet(DatePicker datePicker, int year, int mothOfYear, int dayOfMonth) {
-		txt_time.setText(mothOfYear+1+"-"+dayOfMonth+", "+year);
+		txt_time.setText(year+""+mothOfYear+1+""+dayOfMonth);
 	}
+
 }

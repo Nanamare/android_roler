@@ -61,7 +61,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.plan.PlanActivity"/>
         </activity>
-        <activity android:name=".EditRoleActivity"
+        <activity android:name=".role.EditRoleActivity"
                   android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -69,7 +69,7 @@
         </activity>
         <activity android:name=".ModifyActivity"/>
         <activity
-            android:name=".DayActivity"
+            android:name=".timetable.DayActivity"
             android:label="Timetable">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -82,7 +82,7 @@
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
             android:label="OAuth2.0 In-app"/>
         <activity android:name=".signup.SignUpActivity"/>
-        <activity android:name=".SettingActivity">
+        <activity android:name=".setting.SettingActivity">
         </activity>
     </application>
 

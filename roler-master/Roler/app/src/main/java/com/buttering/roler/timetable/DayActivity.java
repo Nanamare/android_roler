@@ -1,14 +1,12 @@
-package com.buttering.roler;
+package com.buttering.roler.timetable;
 
 /**
  * Created by nanamare on 2016-07-31.
  */
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
+import com.buttering.roler.timetable.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +36,7 @@ public class DayActivity extends BaseActivity {
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        List<WeekViewEvent> events = new ArrayList<>();
 
 
         Calendar startTime = Calendar.getInstance();
@@ -52,19 +50,6 @@ public class DayActivity extends BaseActivity {
         WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime)+"어머니 생신 선물 사기 \n 카페 쿠폰 쓰기", startTime, endTime);
         event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
-
-       /* startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 30);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.set(Calendar.HOUR_OF_DAY, 4);
-        endTime.set(Calendar.MINUTE, 30);
-        endTime.set(Calendar.MONTH, newMonth-1);
-        event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
-        events.add(event);*/
 
         startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 4);
@@ -90,19 +75,6 @@ public class DayActivity extends BaseActivity {
         event.setColor(getResources().getColor(R.color.c1));
         events.add(event);
 
-       /* startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 5);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        startTime.add(Calendar.DATE, 1);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        event = new WeekViewEvent(3, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_03));
-        events.add(event);
-*/
         startTime = Calendar.getInstance();
         startTime.set(Calendar.DAY_OF_MONTH, 15);
         startTime.set(Calendar.HOUR_OF_DAY, 3);

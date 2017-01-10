@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import rx.Subscriber;
 
 /**
@@ -55,6 +58,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private static String OAUTH_CLIENT_NAME = "Roler";
 	private static OAuthLogin mOAuthLoginModule;
 	private ILoginPresenter loginPresenter;
+	private ACProgressFlower dialog;
 
 	@BindView(R.id.activity_login_google_btn)
 	ImageButton login_google_btn;
@@ -293,6 +297,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 						.build();
 
 				mGoogleApiClient.connect();
+				showLoadingBar();
 				break;
 		}
 
@@ -343,6 +348,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				user.setId(currentPerson.getId());
 				user.setEmail(email);
 				MyInfoDAO.getInstance().saveUserInfo(user);
+				hideLoadingBar();
 				Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);
@@ -379,5 +385,18 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		}
 	}
 
+
+	public void showLoadingBar() {
+		dialog = new ACProgressFlower.Builder(this)
+				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
+				.themeColor(Color.WHITE)
+				.fadeColor(Color.DKGRAY).build();
+		dialog.show();
+	}
+
+	public void hideLoadingBar() {
+		if (dialog != null)
+			dialog.dismiss();
+	}
 
 }

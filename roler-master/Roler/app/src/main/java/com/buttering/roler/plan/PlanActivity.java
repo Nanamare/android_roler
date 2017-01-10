@@ -19,15 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buttering.roler.DayActivity;
+import com.buttering.roler.timetable.DayActivity;
 import com.buttering.roler.R;
-import com.buttering.roler.SettingActivity;
+import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
 import com.buttering.roler.role.RoleActivity;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

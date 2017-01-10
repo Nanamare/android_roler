@@ -15,11 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.buttering.roler.EditRoleActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
-import com.buttering.roler.VO.Todo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

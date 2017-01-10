@@ -1,4 +1,4 @@
-package com.buttering.roler;
+package com.buttering.roler.role;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.role.RoleActivity;
 import com.dpizarro.uipicker.library.picker.PickerUI;

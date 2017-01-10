@@ -1,4 +1,4 @@
-package com.buttering.roler;
+package com.buttering.roler.setting;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buttering.roler.BuildConfig;
+import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.login.LogInActivity;
 
