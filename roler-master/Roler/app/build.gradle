@@ -105,4 +105,9 @@ dependencies {
     //PICKERUI
     compile 'com.github.davidpizarro:pickerui:1.0.1'
 
+    //leack trace memory
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
 }

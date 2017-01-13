@@ -8,6 +8,7 @@ import com.buttering.roler.R;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by kinamare on 2016-12-17.
@@ -53,6 +54,7 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		LeakCanary.install(this);
 
 
 		FacebookSdk.sdkInitialize(this);
