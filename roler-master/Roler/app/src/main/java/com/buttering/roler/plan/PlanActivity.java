@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buttering.roler.timetable.DayActivity;
+import com.buttering.roler.timetable.BaseActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.VO.MyInfoDAO;
@@ -307,7 +307,7 @@ public class PlanActivity extends AppCompatActivity {
 		});
 
 		imageView2.setOnClickListener(v -> {
-			startActivity(new Intent(PlanActivity.this, DayActivity.class));
+			startActivity(new Intent(PlanActivity.this, BaseActivity.class));
 		});
 
 

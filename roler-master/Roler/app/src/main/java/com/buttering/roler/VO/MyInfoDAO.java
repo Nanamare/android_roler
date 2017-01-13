@@ -38,6 +38,9 @@ public class MyInfoDAO {
 		return instance;
 	}
 
+	public  void setUserId(String id){
+		preferences.put("userId",id);
+	}
 
 	public void setPwd(String pwd) {
 		preferences.put("pwd", pwd);
@@ -60,6 +63,7 @@ public class MyInfoDAO {
 		return 0;
 	}
 
+
 	public String getToken() {
 		return SharePrefUtil.getSharedPreference("token");
 	}
@@ -73,11 +77,20 @@ public class MyInfoDAO {
 		SharePrefUtil.putSharedPreference("myUserInfo", json);
 	}
 
-	public void saveAccountInfo(String email, String pwd, String name, String picURL) {
+	public void saveAccountInfo(String userId, String email, String pwd, String name, String picURL) {
 		setEmail(email);
 		setPwd(pwd);
 		setName(name);
 		setPicUrl(picURL);
+		setUserId(userId);
+	}
+
+
+	public void loginAccountInfo(String userId, String email, String name, String picURL) {
+		setEmail(email);
+		setName(name);
+		setPicUrl(picURL);
+		setUserId(userId);
 	}
 
 	public void saveUserInfo(User user) {
@@ -85,6 +98,7 @@ public class MyInfoDAO {
 		setPwd(user.getPassword());
 		setName(user.getName());
 		setPicUrl(user.getPicture_url());
+		setUserId(user.getId());
 	}
 
 	public String getEmail() {
@@ -101,6 +115,10 @@ public class MyInfoDAO {
 
 	public String getPicUrl(){
 		return preferences.getString("picture_url");
+	}
+
+	public String getUserId(){
+		return preferences.getString("userId");
 	}
 
 

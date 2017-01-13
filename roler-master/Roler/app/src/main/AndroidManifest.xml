@@ -84,6 +84,8 @@
         <activity android:name=".signup.SignUpActivity"/>
         <activity android:name=".setting.SettingActivity">
         </activity>
+
+        <activity android:name=".timetable.BaseActivity"/>
     </application>
 
 </manifest>

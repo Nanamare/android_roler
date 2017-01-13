@@ -4,18 +4,16 @@ package com.buttering.roler.timetable;
  * Created by nanamare on 2016-07-31.
  */
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,9 +28,6 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
-import com.buttering.roler.VO.Todo;
-import com.buttering.roler.plan.PlanActivity;
-import com.buttering.roler.signup.SignUpProfileTimeDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,11 +41,19 @@ import java.util.Locale;
  * Created by Raquib-ul-Alam Kanak on 1/3/2014.
  * Website: http://alamkanak.github.io
  */
-public abstract class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 	private static final int TYPE_DAY_VIEW = 1;
 	private static final int TYPE_THREE_DAY_VIEW = 2;
 	private static final int TYPE_WEEK_VIEW = 3;
 	private int mWeekViewType;
+	private int startTimeOfDay;
+	private int startMinOfDay;
+	private int endTimeOfDay;
+	private int endMinOfDay;
+	private String contents;
+	private boolean isCheck;
+
+	private List<WeekViewEvent> events;
 
 
 	WeekView mWeekView;
@@ -69,6 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 		floatingActionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				final View innerView = getLayoutInflater().inflate(R.layout.dialog_time_custom, null);
 				AlertDialog.Builder alert = new AlertDialog.Builder(BaseActivity.this);
 				alert.setTitle("일정 추가 하기");
@@ -76,8 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 				// Set an EditText view to get user input
 
 
-				TextView txtTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
-				txtTime.setOnClickListener(new View.OnClickListener() {
+				TextView startTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
+				startTime.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						final Calendar c = Calendar.getInstance();
@@ -86,7 +90,9 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
 							@Override
 							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-								txtTime.setText(hourOfDay + " : " + minute);
+								startTimeOfDay = hourOfDay;
+								startMinOfDay = minute;
+								startTime.setText(hourOfDay + " : " + minute);
 							}
 						};
 
@@ -96,38 +102,41 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
 					}
 				});
-//				txtTime.setOnFocusChangeListener((view, hasfocus) -> {
-//					if (hasfocus) {
-//						final Calendar c = Calendar.getInstance();
-//						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
-//						int minite = c.get(Calendar.MINUTE);
-//						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-//							@Override
-//							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//								txtTime.setText(hourOfDay + " : " + minute);
-//							}
-//						};
-//
-//						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minite, true);
-//						dialog.setTitle("시작 시간을 골라주세요");
-//						dialog.show();
-//
-//
-//					}
-//				});
 
+				TextView endTime = (TextView) innerView.findViewById(R.id.dialog_endTime_edt);
+				endTime.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						final Calendar c = Calendar.getInstance();
+						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
+						int minite = c.get(Calendar.MINUTE);
+						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+							@Override
+							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+								endTimeOfDay = hourOfDay;
+								endMinOfDay = minute;
+								endTime.setText(hourOfDay + " : " + minute);
+							}
+						};
 
+						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minite, true);
+						dialog.setTitle("종료 시간을 골라주세요");
+						dialog.show();
+
+					}
+				});
 
 
 				alert.setPositiveButton("확인", (dialog, whichButton) -> {
-//					String value = input.getText().toString();
-//					if (!value.isEmpty()) {
-//						value.toString();
-//
-//
-//					} else {
-//						Toast.makeText(getApplicationContext(), "일정을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-//					}
+					EditText content = (EditText) innerView.findViewById(R.id.dialog_time_content);
+					contents = content.getText().toString();
+					if (!contents.isEmpty()) {
+						isCheck = true;
+						mWeekView.notifyDatasetChanged();
+
+					} else {
+						Toast.makeText(getApplicationContext(), "일정에 대한 설명을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+					}
 				});
 
 
@@ -170,12 +179,6 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 		// Set up a date time interpreter to interpret how the date and time will be formatted in
 		// the week view. This is optional.
 		setupDateTimeInterpreter(false);
-
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
 
 	}
 
@@ -287,7 +290,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 	public void onEventClick(WeekViewEvent event, RectF eventRect) {
 		Toast.makeText(this, "해결 완료", Toast.LENGTH_SHORT).show();
 		event.setColor(getResources().getColor(R.color.body_background_green));
-		mWeekView.notifyDatasetChanged();
+		long id = event.getId();
 
 	}
 
@@ -303,6 +306,106 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
 	public WeekView getWeekView() {
 		return mWeekView;
+	}
+
+	@Override
+	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+		//이슈 부분
+		events = new ArrayList<>();
+
+		if (isCheck == true) {
+			Calendar startCalendar = Calendar.getInstance();
+			int nowMonth = startCalendar.get(Calendar.MONTH);
+			int nowYear = startCalendar.get(Calendar.YEAR);
+			startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
+			startCalendar.set(Calendar.MINUTE, startMinOfDay);
+			startCalendar.set(Calendar.MONTH, nowMonth);
+			startCalendar.set(Calendar.YEAR, nowYear);
+
+			Calendar endCalendar = (Calendar) startCalendar.clone();
+			endCalendar.set(Calendar.MINUTE, endMinOfDay);
+			endCalendar.set(Calendar.HOUR, endTimeOfDay);
+			endCalendar.set(Calendar.MONTH, nowMonth);
+			WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
+			event.setColor(getResources().getColor(R.color.c1));
+			events.add(event);
+			isCheck = false;
+
+		}
+
+		Calendar startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 3);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		Calendar endTime = (Calendar) startTime.clone();
+		endTime.add(Calendar.HOUR, 1);
+		endTime.set(Calendar.MONTH, newMonth - 1);
+		WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime) + "어머니 생신 선물 사기 \n 카페 쿠폰 쓰기", startTime, endTime);
+		event.setColor(getResources().getColor(R.color.c1));
+		events.add(event);
+
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 4);
+		startTime.set(Calendar.MINUTE, 20);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		endTime = (Calendar) startTime.clone();
+		endTime.set(Calendar.HOUR_OF_DAY, 5);
+		endTime.set(Calendar.MINUTE, 0);
+		event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
+		event.setColor(getResources().getColor(R.color.c1));
+		events.add(event);
+
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 5);
+		startTime.set(Calendar.MINUTE, 30);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		endTime = (Calendar) startTime.clone();
+		endTime.add(Calendar.HOUR_OF_DAY, 2);
+		endTime.set(Calendar.MONTH, newMonth - 1);
+		event = new WeekViewEvent(2, getEventTitle(startTime) + "택배 붙이기", startTime, endTime);
+		event.setColor(getResources().getColor(R.color.c1));
+		events.add(event);
+
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.DAY_OF_MONTH, 15);
+		startTime.set(Calendar.HOUR_OF_DAY, 3);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		endTime = (Calendar) startTime.clone();
+		endTime.add(Calendar.HOUR_OF_DAY, 3);
+		event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
+		event.setColor(getResources().getColor(R.color.c1));
+		events.add(event);
+
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.DAY_OF_MONTH, 1);
+		startTime.set(Calendar.HOUR_OF_DAY, 3);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		endTime = (Calendar) startTime.clone();
+		endTime.add(Calendar.HOUR_OF_DAY, 3);
+		event = new WeekViewEvent(5, getEventTitle(startTime) + "핸드폰 바꾸기", startTime, endTime);
+		event.setColor(getResources().getColor(R.color.colorPrimary));
+		events.add(event);
+
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH));
+		startTime.set(Calendar.HOUR_OF_DAY, 15);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.MONTH, newMonth - 1);
+		startTime.set(Calendar.YEAR, newYear);
+		endTime = (Calendar) startTime.clone();
+		endTime.add(Calendar.HOUR_OF_DAY, 3);
+		event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
+		event.setColor(getResources().getColor(R.color.colorPrimary));
+		events.add(event);
+		return events;
+
 	}
 
 }

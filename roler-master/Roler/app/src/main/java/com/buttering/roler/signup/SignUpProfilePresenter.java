@@ -46,7 +46,6 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 		User user = generateUser(email, pwd,name);
 
-
 		return userService
 				.signUp(user)
 				.observeOn(AndroidSchedulers.mainThread());

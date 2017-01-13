@@ -10,6 +10,7 @@ import com.buttering.roler.util.NetUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.File;
@@ -73,17 +74,17 @@ public class BaseService<T> {
 		service = retrofit.create(clazz);
 	}
 
-	protected static int getStatusCode(String json) {
+	protected static String getStatusResult(String json) {
 		try {
-			JsonElement jsonElement = new JsonParser().parse(json);
 
-			return jsonElement.getAsJsonObject()
-					.getAsJsonObject("result")
-					.getAsJsonPrimitive("statusCode").getAsInt();
+			JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+			String result = ja.get("result").getAsString();
+
+			return result;
 		} catch (Exception e) {
 			System.out.print(e);
 		}
-		return 500;
+		return "false";
 	}
 
 //	private void createAuthHTTPClient(String authToken) {

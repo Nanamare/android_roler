@@ -65,7 +65,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="일정을 입력해 주세요."
+            android:text="일정에 대한 설명을 입력해 주세요."
             android:textSize="18sp"/>
 
     </LinearLayout>
@@ -79,6 +79,7 @@
         android:gravity="left">
 
         <EditText
+            android:id="@+id/dialog_time_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"/>

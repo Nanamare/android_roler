@@ -29,6 +29,9 @@ public class UserService extends BaseService {
 
 	public static boolean DEBUG = false;
 
+	private String userId;
+	private String name;
+
 	public UserService() {
 		super(UserAPI.class);
 	}
@@ -61,15 +64,34 @@ public class UserService extends BaseService {
 						}
 
 						@Override
-						public void onNext(ResponseBody o) {
+						public void onNext(ResponseBody responseBody) {
+
 							try {
-								String name = o.string();
-								System.out.print(name);
-								subscriber.onNext(user);
+								String result = parseParams(responseBody.string());
+								if (result.equals("true")) {
+									MyInfoDAO.getInstance().setUserId(userId);
+									MyInfoDAO.getInstance().setName(name);
+									MyInfoDAO.getInstance().saveAccountInfo(userId,user.getEmail(),user.getPassword(),user.getName(),"NULL");
+									//의문의 코드
+									subscriber.onNext(user);
+
+								} else {
+									subscriber.onError(new Throwable());
+								}
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
+
+						private String parseParams(String json) {
+							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+							String result = ja.get("result").getAsString();
+							userId = ja.get("id").getAsString();
+							name = ja.get("name").getAsString();
+
+							return result;
+						}
+
 					});
 
 		});
@@ -170,17 +192,12 @@ public class UserService extends BaseService {
 							String result = ja.get("result").getAsString();
 							String name = ja.get("name").getAsString();
 							String email = ja.get("email").getAsString();
-							User user = generateUser(email,name);
-							MyInfoDAO.getInstance().setMyUserInfo(user);
+							String id = ja.get("id").getAsString();
+
+							MyInfoDAO.getInstance().loginAccountInfo(id,email,name,"NULL");
 							return result;
 						}
 
-						private User generateUser(String email, String name) {
-							User user = new User();
-							user.setEmail(email);
-							user.setName(name);
-							return user;
-						}
 
 
 					});

@@ -14,6 +14,7 @@ import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,9 +29,16 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Role> roles;
+	IRolePresenter presenter;
 
 	public RoleActivityAdapter(Context context, List<Role> roles) {
 		this.context = context;
+		this.roles = roles;
+	}
+	public RoleActivityAdapter(Context context, IRolePresenter presenter,List<Role> roles) {
+		this.context = context;
+		this.presenter = presenter;
+		this.roles = new ArrayList<>();
 		this.roles = roles;
 	}
 
@@ -66,14 +74,18 @@ public class RoleActivityAdapter extends BaseAdapter {
 		}
 
 		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
-//		viewHolder.cp_rolePercent.setFinishedColor(bgColor[roles.get(position).getRolePrimary()]);
-		viewHolder.cp_rolePercent.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
-		viewHolder.cp_rolePercent.setProgress(100);
+//		viewHolder.cp_rolePercent.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
+//		viewHolder.cp_rolePercent.setProgress(100);
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());
 
 		return convertView;
+	}
+
+	public void setCommentList(List<Role> roles) {
+		this.roles = roles;
+		notifyDataSetChanged();
 	}
 
 	final int[] bgColor= {R.color.primaryColor,R.color.primary,R.color.hard_grey};

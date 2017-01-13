@@ -33,7 +33,7 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 /**
  * Created by WonYoung on 16. 7. 30..
  */
-public class RoleActivity extends AppCompatActivity {
+public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	Button bt_editProfile;
 	TextView tv_name;
@@ -51,6 +51,7 @@ public class RoleActivity extends AppCompatActivity {
 
 	final int REQ_CODE_SELECT_IMAGE = 100;
 
+	private IRolePresenter presenter;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,14 +59,18 @@ public class RoleActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_role);
 		ButterKnife.bind(this);
 
+		presenter = new RolePresenter(RoleActivity.this, this);
 
 		bt_editProfile = (Button) findViewById(R.id.bt_editProfile);
 		tv_name = (TextView) findViewById(R.id.tv_name);
 		vp_roleDetail = (FeatureCoverFlow) findViewById(R.id.vp_roleDetail);
 
 		allRoleList = receiveRoles();
-		adapter = new RoleActivityAdapter(this, allRoleList);
+		adapter = new RoleActivityAdapter(this, presenter, allRoleList);
+
 		vp_roleDetail.setAdapter(adapter);
+
+		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 
 		vp_roleDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -96,11 +101,11 @@ public class RoleActivity extends AppCompatActivity {
 
 		Intent intent = getIntent();
 		Role role = (Role) intent.getSerializableExtra("Role");
-		if(role != null){
-			for(int i =0; i<allRoleList.size(); i++){
-				if(allRoleList.get(i).getId()==role.getId()){
+		if (role != null) {
+			for (int i = 0; i < allRoleList.size(); i++) {
+				if (allRoleList.get(i).getId() == role.getId()) {
 					allRoleList.remove(i);
-					allRoleList.add(i,role);
+					allRoleList.add(i, role);
 					adapter.notifyDataSetChanged();
 				}
 
@@ -117,7 +122,7 @@ public class RoleActivity extends AppCompatActivity {
 	}
 
 	@OnClick({R.id.tv_editRoleInfo, R.id.bt_editRoleInfo})
-	public void Onclick(){
+	public void Onclick() {
 		Intent intent = new Intent(RoleActivity.this, EditRoleActivity.class);
 		startActivity(intent);
 	}
@@ -130,34 +135,54 @@ public class RoleActivity extends AppCompatActivity {
 		Role role = null;
 		role = new Role();
 		role.setId(0);
-		role.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-		role.setRoleName("사랑하는 사람");
+		role.setRoleContent("역할에 대한 설명을 적어 보세요");
+		role.setRoleName("역할 정하기");
 		role.setRolePrimary(0);
 		role.setUser_id(1);
 		roles.add(role);
+//
+//		//테스트용 for문 START
+//		Role role2 = null;
+//		role2 = new Role();
+//		role2.setId(0);
+//		role2.setRoleContent("역할에 대한 설명을 적어 보세요");
+//		role2.setRoleName("역할 정하기");
+//		role2.setRolePrimary(0);
+//		role2.setUser_id(1);
+//		roles.add(role2);
+//
+//		//테스트용 for문 START
+//		Role role3 = null;
+//		role3 = new Role();
+//		role3.setId(0);
+//		role3.setRoleContent("역할에 대한 설명을 적어 보세요");
+//		role3.setRoleName("역할 정하기");
+//		role3.setRolePrimary(0);
+//		role3.setUser_id(1);
+//		roles.add(role3);
+//
+//		//테스트용 for문 START
+//		Role role4 = null;
+//		role4 = new Role();
+//		role4.setId(0);
+//		role4.setRoleContent("역할에 대한 설명을 적어 보세요");
+//		role4.setRoleName("역할 정하기");
+//		role4.setRolePrimary(0);
+//		role4.setUser_id(1);
+//		roles.add(role4);
+//
+//		//테스트용 for문 START
+//		Role role5 = null;
+//		role5 = new Role();
+//		role5.setId(0);
+//		role5.setRoleContent("역할에 대한 설명을 적어 보세요");
+//		role5.setRoleName("역할 정하기");
+//		role5.setRolePrimary(0);
+//		role5.setUser_id(1);
+//		roles.add(role5);
 
-		role = new Role();
-		role.setId(1);
-		role.setRoleContent("경영학적인 도전을 게을리하지 않는다. 수익과 니즈, 시장을 항상 살피며, 생각하고, 공부한다,");
-		role.setRoleName("경영학도로서의 나");
-		role.setRolePrimary(1);
-		role.setUser_id(1);
-		roles.add(role);
-
-		role = new Role();
-		role.setId(2);
-		role.setRoleContent("경영학적인 도전을 게을리하지 않는다. 수익과 니즈, 시장을 항상 살피며, 생각하고, 공부한다,");
-		role.setRoleName("경영학도로서의 나");
-		role.setRolePrimary(1);
-		role.setUser_id(1);
-		roles.add(role);
 
 
-		//테스트용 for문 END
-		//서버에서 받아오거나 혹은 SharedPreference에 있는 정보를 넣을 것(협의 안됨)
-
-		Log.d("RoleActivity", "role list 정보: " + roles);
-		Log.d("RoleActivity", "receiveRoles END");
 		return roles;
 	}
 
@@ -196,6 +221,15 @@ public class RoleActivity extends AppCompatActivity {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+
+	@Override
+	public void setRoleContent(List<Role> roleList) {
+		if (adapter != null) {
+			adapter.setCommentList(roleList);
+			adapter.notifyDataSetChanged();
 		}
 	}
 
