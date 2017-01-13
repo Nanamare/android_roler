@@ -172,7 +172,7 @@ public class PlanActivity extends AppCompatActivity {
 	}
 
 	private void setUserInfo() {
-		name.setText(MyInfoDAO.getInstance().getMyUserInfo().getName() + " 님 안녕하세요!");
+		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
 
 	}
 

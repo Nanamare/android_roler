@@ -35,12 +35,14 @@ public class RolePresenter  extends BasePresenter implements IRolePresenter {
 
 	@Override
 	public void getRoleContent(int id) {
+		view.showLoadingBar();
+
 		roleService
 				.getRoleContent(id)
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-
+						view.hideLoadingBar();
 					}
 
 					@Override
@@ -51,7 +53,7 @@ public class RolePresenter  extends BasePresenter implements IRolePresenter {
 					@Override
 					public void onNext(List<Role> role) {
 						view.setRoleContent(role);
-
+						onCompleted();
 					}
 				});
 

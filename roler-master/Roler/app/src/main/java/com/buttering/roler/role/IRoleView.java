@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface IRoleView {
 	void setRoleContent(List<Role> roleList);
+	void showLoadingBar();
+	void hideLoadingBar();
 }

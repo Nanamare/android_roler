@@ -56,7 +56,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private static String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
 	private static String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
 	private static String OAUTH_CLIENT_NAME = "Roler";
-	private static OAuthLogin mOAuthLoginModule;
+	private OAuthLogin mOAuthLoginModule;
 	private ILoginPresenter loginPresenter;
 	private ACProgressFlower dialog;
 
@@ -178,6 +178,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		login_signIn_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				showLoadingBar();
 				String email = email_et.getText().toString();
 				String pwd = pw_et.getText().toString();
 				if (isValid(email, pwd)) {
@@ -185,6 +186,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 							.subscribe(new Subscriber<String>() {
 								@Override
 								public void onCompleted() {
+									hideLoadingBar();
 									Toast.makeText(LogInActivity.this, "로그인 완료 환영합니다", Toast.LENGTH_SHORT).show();
 									Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 									startActivity(intent);

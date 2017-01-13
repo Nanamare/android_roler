@@ -3,6 +3,7 @@ package com.buttering.roler.role;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -27,6 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
@@ -51,6 +54,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	final int REQ_CODE_SELECT_IMAGE = 100;
 
+	private ACProgressFlower dialog;
 	private IRolePresenter presenter;
 
 	@Override
@@ -99,18 +103,18 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			}
 		});
 
-		Intent intent = getIntent();
-		Role role = (Role) intent.getSerializableExtra("Role");
-		if (role != null) {
-			for (int i = 0; i < allRoleList.size(); i++) {
-				if (allRoleList.get(i).getId() == role.getId()) {
-					allRoleList.remove(i);
-					allRoleList.add(i, role);
-					adapter.notifyDataSetChanged();
-				}
-
-			}
-		}
+//		Intent intent = getIntent();
+//		Role role = (Role) intent.getSerializableExtra("Role");
+//		if (role != null) {
+//			for (int i = 0; i < allRoleList.size(); i++) {
+//				if (allRoleList.get(i).getId() == role.getId()) {
+//					allRoleList.remove(i);
+//					allRoleList.add(i, role);
+//					adapter.notifyDataSetChanged();
+//				}
+//
+//			}
+//		}
 
 
 	}
@@ -140,47 +144,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		role.setRolePrimary(0);
 		role.setUser_id(1);
 		roles.add(role);
-//
-//		//테스트용 for문 START
-//		Role role2 = null;
-//		role2 = new Role();
-//		role2.setId(0);
-//		role2.setRoleContent("역할에 대한 설명을 적어 보세요");
-//		role2.setRoleName("역할 정하기");
-//		role2.setRolePrimary(0);
-//		role2.setUser_id(1);
-//		roles.add(role2);
-//
-//		//테스트용 for문 START
-//		Role role3 = null;
-//		role3 = new Role();
-//		role3.setId(0);
-//		role3.setRoleContent("역할에 대한 설명을 적어 보세요");
-//		role3.setRoleName("역할 정하기");
-//		role3.setRolePrimary(0);
-//		role3.setUser_id(1);
-//		roles.add(role3);
-//
-//		//테스트용 for문 START
-//		Role role4 = null;
-//		role4 = new Role();
-//		role4.setId(0);
-//		role4.setRoleContent("역할에 대한 설명을 적어 보세요");
-//		role4.setRoleName("역할 정하기");
-//		role4.setRolePrimary(0);
-//		role4.setUser_id(1);
-//		roles.add(role4);
-//
-//		//테스트용 for문 START
-//		Role role5 = null;
-//		role5 = new Role();
-//		role5.setId(0);
-//		role5.setRoleContent("역할에 대한 설명을 적어 보세요");
-//		role5.setRoleName("역할 정하기");
-//		role5.setRolePrimary(0);
-//		role5.setUser_id(1);
-//		roles.add(role5);
-
 
 
 		return roles;
@@ -196,19 +159,14 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		if (requestCode == REQ_CODE_SELECT_IMAGE) {
 			if (resultCode == Activity.RESULT_OK) {
 				try {
-					//Uri?먯꽌 ?대?吏 ?대쫫???살뼱?⑤떎.
-					//String name_Str = getImageNameToUri(data.getData());
 
-					//?대?吏 ?곗씠?곕? 鍮꾪듃留듭쑝濡?諛쏆븘?⑤떎.
 					Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 					int resizeX = 312;
 					int resizeY = 312;
 					Bitmap resize = Bitmap.createScaledBitmap(image_bitmap, resizeX, resizeY, true);
-					//諛곗튂?대넃? ImageView??set
+
 					iv_picture.setImageBitmap(resize);
 
-
-					//Toast.makeText(getBaseContext(), "name_Str : "+name_Str , Toast.LENGTH_SHORT).show();
 
 
 				} catch (FileNotFoundException e) {
@@ -231,6 +189,21 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			adapter.setCommentList(roleList);
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void showLoadingBar() {
+		dialog = new ACProgressFlower.Builder(this)
+				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
+				.themeColor(Color.WHITE)
+				.fadeColor(Color.DKGRAY).build();
+		dialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (dialog != null)
+			dialog.dismiss();
 	}
 
 
