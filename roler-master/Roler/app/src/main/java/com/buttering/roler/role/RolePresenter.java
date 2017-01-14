@@ -22,9 +22,8 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 	private IRoleView view;
 
 
-	public RolePresenter(Activity activity, IRoleView view) {
+	public RolePresenter(IRoleView view) {
 		this.roleService = new RoleService();
-		this.activity = activity;
 		this.view = view;
 
 	}

@@ -121,6 +121,12 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 	}
 
+	public void setTodoList(List<Todo> todoList){
+		this.todos = todoList;
+		notifyDataSetChanged();
+	}
+
+
 	@Override
 	public int getItemCount() {
 		return todos.size();

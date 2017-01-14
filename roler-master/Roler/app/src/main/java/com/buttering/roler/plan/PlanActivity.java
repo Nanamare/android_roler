@@ -43,7 +43,7 @@ import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class PlanActivity extends AppCompatActivity implements IRoleView {
+public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanView {
 
 	@BindView(R.id.activity_plan_name_tv)
 	TextView name;
@@ -69,7 +69,8 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 	private PlanActivityAdapter adapter = null;
 	private PlanActivityTodoAdapter todoAdapter = null;
 	private int currentPosition;
-	private IRolePresenter presenter;
+	private IRolePresenter rolePresenter;
+	private IPlanPresenter planPresenter;
 	private ILoginView view;
 	private ACProgressFlower dialog;
 	List<Role> roles = new ArrayList<>();
@@ -92,10 +93,11 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 		//get mock data
 		allRoleList = receiveRoles();
 
-		presenter = new RolePresenter(PlanActivity.this, this);
+		rolePresenter = new RolePresenter(this);
+		planPresenter = new PlanPresenter(this);
 
 		adapter = new PlanActivityAdapter(this, allRoleList);
-		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		rolePresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 		vp_rolePlanPage.setAdapter(adapter);
 
 		//get a current role id
@@ -202,9 +204,9 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 
 		//get a mock data
 		allTodoList = receiveTodoItems();
-
 		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 		rv_todolist.setAdapter(todoAdapter);
+		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()),currentPosition);
 
 	}
 
@@ -219,14 +221,14 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 		todo.setRole_id(0);
 		todo.setId(0);
 		todo.setContent("test 0");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 
 		todo = new Todo();
 		todo.setRole_id(0);
 		todo.setId(0);
 		todo.setContent("test 0");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 		allTodoList.add(todolist);
 
@@ -235,14 +237,14 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 		todo.setRole_id(1);
 		todo.setId(0);
 		todo.setContent("test 1");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 
 		todo = new Todo();
 		todo.setRole_id(1);
 		todo.setId(0);
 		todo.setContent("test 1");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 		allTodoList.add(todolist);
 
@@ -250,14 +252,14 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 		todo.setRole_id(3);
 		todo.setId(1);
 		todo.setContent("test 0");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 
 		todo = new Todo();
 		todo.setRole_id(3);
 		todo.setId(1);
 		todo.setContent("test 0");
-		todo.setDone(true);
+		todo.setDone(0);
 		todolist.add(todo);
 		allTodoList.add(todolist);
 
@@ -367,7 +369,7 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 	@Override
 	public void setRoleContent(List<Role> roleList) {
 		if (adapter != null) {
-			adapter.setCommentList(roleList);
+			adapter.setRoleList(roleList);
 			adapter.notifyDataSetChanged();
 		}
 
@@ -389,4 +391,11 @@ public class PlanActivity extends AppCompatActivity implements IRoleView {
 	}
 
 
+	@Override
+	public void setTodoList(List<Todo> todoList) {
+		if (todoAdapter != null) {
+			todoAdapter.setTodoList(todoList);
+			todoAdapter.notifyDataSetChanged();
+		}
+	}
 }

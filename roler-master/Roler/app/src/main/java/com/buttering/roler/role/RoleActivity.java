@@ -67,7 +67,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		setContentView(R.layout.activity_role);
 		ButterKnife.bind(this);
 
-		presenter = new RolePresenter(RoleActivity.this, this);
+		presenter = new RolePresenter(this);
 
 		//mock data
 		allRoleList = receiveRoles();

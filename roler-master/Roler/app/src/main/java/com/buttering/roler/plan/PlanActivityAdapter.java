@@ -26,7 +26,7 @@ public class PlanActivityAdapter extends BaseAdapter {
 	}
 
 
-	public void setCommentList(List<Role> roles) {
+	public void setRoleList(List<Role> roles) {
 		this.roles = roles;
 	}
 
