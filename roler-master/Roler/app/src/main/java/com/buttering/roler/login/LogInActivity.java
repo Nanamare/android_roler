@@ -45,7 +45,7 @@ import rx.Subscriber;
 /**
  * Created by nanamare on 2016-07-30.
  */
-public class LogInActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class LogInActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ILoginView {
 
 	public final static String EXTRA_MESSAGE = "com.buttering.roler";
 	private static final int REQUEST_WRITE_STORAGE = 112;
@@ -129,9 +129,15 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		setContentView(R.layout.activity_login);
 
 		ButterKnife.bind(this);
-		loginPresenter = new LoginPresenter(this);
-		initLoginSetting();
 
+		loginPresenter = new LoginPresenter(this);
+
+		initLoginSetting();
+		initFbService();
+
+	}
+
+	private void initFbService() {
 		if (checkPlayServices()) {
 
 			new AsyncTask() {
@@ -151,8 +157,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 			}.execute(null, null, null);
 
 		}
-
-
 	}
 
 
@@ -178,7 +182,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		login_signIn_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showLoadingBar();
 				String email = email_et.getText().toString();
 				String pwd = pw_et.getText().toString();
 				if (isValid(email, pwd)) {
@@ -195,6 +198,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 								@Override
 								public void onError(Throwable e) {
+									hideLoadingBar();
 									Toast.makeText(LogInActivity.this, "Invalid id or password", Toast.LENGTH_SHORT).show();
 								}
 
@@ -259,7 +263,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		}
 		return isValid;
 	}
-
 
 
 	private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
@@ -387,7 +390,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		}
 	}
 
-
+	@Override
 	public void showLoadingBar() {
 		dialog = new ACProgressFlower.Builder(this)
 				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
@@ -396,6 +399,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		dialog.show();
 	}
 
+	@Override
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();

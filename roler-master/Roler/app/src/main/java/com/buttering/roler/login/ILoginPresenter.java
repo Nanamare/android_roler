@@ -8,4 +8,5 @@ import rx.Observable;
 
 public interface ILoginPresenter {
 	Observable<String> signIn(String email, String pwd);
+
 }

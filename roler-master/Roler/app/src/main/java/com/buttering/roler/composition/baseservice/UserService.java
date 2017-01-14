@@ -9,16 +9,20 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -71,7 +75,7 @@ public class UserService extends BaseService {
 								if (result.equals("true")) {
 									MyInfoDAO.getInstance().setUserId(userId);
 									MyInfoDAO.getInstance().setName(name);
-									MyInfoDAO.getInstance().saveAccountInfo(userId,user.getEmail(),user.getPassword(),user.getName(),"NULL");
+									MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
 									//의문의 코드
 									subscriber.onNext(user);
 
@@ -168,7 +172,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-							e.printStackTrace();
+							subscriber.onError(e);
 						}
 
 						@Override
@@ -176,7 +180,7 @@ public class UserService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("true")) {
-									subscriber.onNext(result);
+									subscriber.onCompleted();
 
 								} else {
 									subscriber.onError(new Throwable());
@@ -194,10 +198,9 @@ public class UserService extends BaseService {
 							String email = ja.get("email").getAsString();
 							String id = ja.get("id").getAsString();
 
-							MyInfoDAO.getInstance().loginAccountInfo(id,email,name,"NULL");
+							MyInfoDAO.getInstance().loginAccountInfo(id, email, name, "NULL");
 							return result;
 						}
-
 
 
 					});
@@ -216,8 +219,10 @@ public class UserService extends BaseService {
 		@GET("/sign/duplitcation")
 		Observable<ResponseBody> isDuplicateEmail(@Query("email") String email);
 
-		@PUT("/users/photos")
+		@PUT("/sign/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
+
+
 
 		@FormUrlEncoded
 		@POST("/sign/up")

@@ -247,6 +247,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 							@Override
 							public void onCompleted() {
 								hideLoadingBar();
+								presenter.uploadProfileImg(imgfile);
 								SharePrefUtil.putSharedPreference("isLoggedIn", true);
 								Intent intent = new Intent(getApplicationContext(),PlanActivity.class);
 								startActivity(intent);

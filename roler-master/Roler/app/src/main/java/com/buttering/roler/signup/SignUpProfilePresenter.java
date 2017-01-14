@@ -2,6 +2,7 @@ package com.buttering.roler.signup;
 
 import android.app.Activity;
 
+import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.FileService;
@@ -85,6 +86,7 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 							public void onNext(ResponseBody responseBody) {
 								try {
 									String json = responseBody.string();
+									MyInfoDAO.getInstance().setPicUrl(json);
 									subscriber.onNext(parseUrl(json));
 								} catch (IOException e) {
 									e.printStackTrace();

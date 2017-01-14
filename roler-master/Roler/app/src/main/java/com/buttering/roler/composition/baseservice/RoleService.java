@@ -44,7 +44,8 @@ public class RoleService extends BaseService {
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-
+							subscriber.onCompleted();
+							subscriber.unsubscribe();
 						}
 
 						@Override
@@ -60,6 +61,8 @@ public class RoleService extends BaseService {
 									List<Role> roleList = parseParams(result);
 									subscriber.onNext(roleList);
 
+								} else {
+									subscriber.onError(new Throwable());
 								}
 
 							} catch (IOException e) {

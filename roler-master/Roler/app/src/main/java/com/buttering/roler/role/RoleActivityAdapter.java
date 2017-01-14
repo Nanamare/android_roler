@@ -74,6 +74,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 		}
 
 		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
+//    색깔 불러오는데 자원을 많이 먹어서 주석처리
 //		viewHolder.cp_rolePercent.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 //		viewHolder.cp_rolePercent.setProgress(100);
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRolePrimary()));
@@ -85,7 +86,6 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 	public void setCommentList(List<Role> roles) {
 		this.roles = roles;
-		notifyDataSetChanged();
 	}
 
 	final int[] bgColor= {R.color.primaryColor,R.color.primary,R.color.hard_grey};

@@ -44,7 +44,6 @@ public class FileService extends BaseService {
 		return getAPI()
 				.uploadProfileImg(
 						MyInfoDAO.getInstance().getMyUserInfo().getEmail(),
-						"profile",
 						file)
 				.subscribeOn(Schedulers.io());
 	}
@@ -61,10 +60,9 @@ public class FileService extends BaseService {
 
 
 		@Multipart
-		@POST("/files")
+		@POST("sign/photo")
 		Observable<ResponseBody> uploadProfileImg(
 				@Query("email") String email,
-				@Query("fileType") String fileType,
 				@Part MultipartBody.Part file);
 
 

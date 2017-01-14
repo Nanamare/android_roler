@@ -1,6 +1,7 @@
 package com.buttering.roler.login;
 
 import android.app.Activity;
+import android.content.pm.ProviderInfo;
 
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.UserService;
@@ -15,10 +16,10 @@ import rx.android.schedulers.AndroidSchedulers;
 public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 	private UserService userService;
-	private Activity activity;
+	private ILoginView view;
 
-	public LoginPresenter(Activity activity){
-		this.activity = activity;
+	public LoginPresenter(ILoginView view){
+		this.view = view;
 		this.userService = new UserService();
 
 	}
@@ -26,6 +27,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 	@Override
 	public Observable<String> signIn(String email, String pwd) {
+		view.showLoadingBar();
 
 		return userService
 				.signIn(email,pwd)

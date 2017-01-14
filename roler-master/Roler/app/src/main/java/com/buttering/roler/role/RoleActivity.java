@@ -38,19 +38,23 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
  */
 public class RoleActivity extends AppCompatActivity implements IRoleView {
 
-	Button bt_editProfile;
-	TextView tv_name;
+
 	@BindView(R.id.iv_picture)
 	CircleImageView iv_picture;
 	@BindView(R.id.tv_editRoleInfo)
 	TextView tv_editRoleInfo;
 	@BindView(R.id.bt_editRoleInfo)
 	Button bt_editRoleInfo;
+	@BindView(R.id.bt_editProfile)
+	Button bt_editProfile;
+	@BindView(R.id.tv_name)
+	TextView tv_name;
+	@BindView(R.id.vp_roleDetail)
+	FeatureCoverFlow vp_roleDetail;
 
 	List<Role> allRoleList = null;
 	RoleActivityAdapter adapter = null;
 
-	FeatureCoverFlow vp_roleDetail = null;
 
 	final int REQ_CODE_SELECT_IMAGE = 100;
 
@@ -65,44 +69,25 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 		presenter = new RolePresenter(RoleActivity.this, this);
 
-		bt_editProfile = (Button) findViewById(R.id.bt_editProfile);
-		tv_name = (TextView) findViewById(R.id.tv_name);
-		vp_roleDetail = (FeatureCoverFlow) findViewById(R.id.vp_roleDetail);
-
+		//mock data
 		allRoleList = receiveRoles();
-		adapter = new RoleActivityAdapter(this, presenter, allRoleList);
 
+		//set a adapter
+		adapter = new RoleActivityAdapter(this, presenter, allRoleList);
 		vp_roleDetail.setAdapter(adapter);
 
+		//load RoleContent
 		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 
-		vp_roleDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		editRole();
 
-				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
-				intentSubActivity.putExtra("Role", allRoleList.get(position));
-				startActivity(intentSubActivity);
-			}
-		});
+		setProfileImage();
 
 		getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
 
-		Glide.with(this)
-				.load(MyInfoDAO.getInstance().getPicUrl())
-				.into(iv_picture);
+		editImage();
 
-		iv_picture.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_PICK);
-				intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-				intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
-
-			}
-		});
-
+//    deserialization 나중에 쓸지도 모름
 //		Intent intent = getIntent();
 //		Role role = (Role) intent.getSerializableExtra("Role");
 //		if (role != null) {
@@ -116,7 +101,38 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 //			}
 //		}
 
+	}
 
+
+	private void editImage() {
+		iv_picture.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_PICK);
+				intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+				intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
+
+			}
+		});
+	}
+
+	private void setProfileImage() {
+		Glide.with(this)
+				.load(MyInfoDAO.getInstance().getPicUrl())
+				.into(iv_picture);
+	}
+
+	private void editRole() {
+		vp_roleDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
+				intentSubActivity.putExtra("Role", allRoleList.get(position));
+				startActivity(intentSubActivity);
+			}
+		});
 	}
 
 	@Override
@@ -166,7 +182,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 					Bitmap resize = Bitmap.createScaledBitmap(image_bitmap, resizeX, resizeY, true);
 
 					iv_picture.setImageBitmap(resize);
-
 
 
 				} catch (FileNotFoundException e) {

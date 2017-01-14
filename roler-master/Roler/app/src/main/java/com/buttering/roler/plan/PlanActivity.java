@@ -19,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buttering.roler.login.ILoginView;
+import com.buttering.roler.role.IRolePresenter;
+import com.buttering.roler.role.IRoleView;
+import com.buttering.roler.role.RolePresenter;
 import com.buttering.roler.timetable.BaseActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.setting.SettingActivity;
@@ -35,9 +39,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class PlanActivity extends AppCompatActivity {
+public class PlanActivity extends AppCompatActivity implements IRoleView {
 
 	@BindView(R.id.activity_plan_name_tv)
 	TextView name;
@@ -63,6 +69,9 @@ public class PlanActivity extends AppCompatActivity {
 	private PlanActivityAdapter adapter = null;
 	private PlanActivityTodoAdapter todoAdapter = null;
 	private int currentPosition;
+	private IRolePresenter presenter;
+	private ILoginView view;
+	private ACProgressFlower dialog;
 	List<Role> roles = new ArrayList<>();
 	private Todo todo = null;
 	List<Todo> todolist;
@@ -77,14 +86,66 @@ public class PlanActivity extends AppCompatActivity {
 		ButterKnife.bind(this);
 
 		setToolbar();
-		setUserInfo();
+		setUserName();
 		setDate();
 
-
+		//get mock data
 		allRoleList = receiveRoles();
+
+		presenter = new RolePresenter(PlanActivity.this, this);
+
 		adapter = new PlanActivityAdapter(this, allRoleList);
+		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 		vp_rolePlanPage.setAdapter(adapter);
 
+		//get a current role id
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getId();
+
+		addTodoList();
+
+		swipeRole();
+
+		//initSet LayoutManager
+		linearLayoutManager = new LinearLayoutManager(this);
+		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		rv_todolist.setLayoutManager(linearLayoutManager);
+
+		//make a adapter
+		listRecall();
+
+
+	}
+
+	private void swipeRole() {
+		left_arrow_iv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				currentPosition = vp_rolePlanPage.getScrollPosition();
+				if (currentPosition == 0) {
+					currentPosition = vp_rolePlanPage.getCount();
+				}
+				if (currentPosition > 0) {
+					currentPosition -= 1;
+					vp_rolePlanPage.scrollToPosition(currentPosition);
+				}
+
+				listRecall();
+			}
+		});
+
+		right_arrow_iv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				currentPosition = vp_rolePlanPage.getScrollPosition();
+				if (currentPosition < vp_rolePlanPage.getCount()) {
+					vp_rolePlanPage.scrollToPosition(currentPosition + 1);
+				}
+				listRecall();
+			}
+		});
+	}
+
+	private void addTodoList() {
 		rl_planBelowBottom.setOnClickListener(v -> {
 			AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
 
@@ -117,45 +178,6 @@ public class PlanActivity extends AppCompatActivity {
 			alert.show();
 
 		});
-
-
-		left_arrow_iv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				currentPosition = vp_rolePlanPage.getScrollPosition();
-				if (currentPosition == 0) {
-					currentPosition = vp_rolePlanPage.getCount();
-				}
-				if (currentPosition > 0) {
-					currentPosition -= 1;
-					vp_rolePlanPage.scrollToPosition(currentPosition);
-				}
-
-				listRecall();
-			}
-		});
-
-		right_arrow_iv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				currentPosition = vp_rolePlanPage.getScrollPosition();
-				if (currentPosition < vp_rolePlanPage.getCount()) {
-					vp_rolePlanPage.scrollToPosition(currentPosition + 1);
-				}
-				listRecall();
-			}
-		});
-
-
-		//LayoutManager 생성 START
-		linearLayoutManager = new LinearLayoutManager(this);
-		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-		//LayoutManager 생성 END
-
-		rv_todolist.setLayoutManager(linearLayoutManager);
-		listRecall();   //adapter 생성
-
-
 	}
 
 	private void setDate() {
@@ -171,16 +193,18 @@ public class PlanActivity extends AppCompatActivity {
 		tv_day.setText(week[calendar.get(calendar.DAY_OF_WEEK) - 1] + "요일");
 	}
 
-	private void setUserInfo() {
+	private void setUserName() {
 		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
 
 	}
 
 	private void listRecall() {
 
+		//get a mock data
 		allTodoList = receiveTodoItems();
+
 		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-		rv_todolist.setAdapter(todoAdapter);//adapter 다시 만들어서 연결
+		rv_todolist.setAdapter(todoAdapter);
 
 	}
 
@@ -222,17 +246,30 @@ public class PlanActivity extends AppCompatActivity {
 		todolist.add(todo);
 		allTodoList.add(todolist);
 
+		todo = new Todo();
+		todo.setRole_id(3);
+		todo.setId(1);
+		todo.setContent("test 0");
+		todo.setDone(true);
+		todolist.add(todo);
+
+		todo = new Todo();
+		todo.setRole_id(3);
+		todo.setId(1);
+		todo.setContent("test 0");
+		todo.setDone(true);
+		todolist.add(todo);
+		allTodoList.add(todolist);
+
 		//테스트용 for문 END
 		return allTodoList;
 
 	}
 
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		allRoleList = receiveRoles();
-//		adapter = new PlanActivityAdapter(this, allRoleList);
-//		vp_rolePlanPage.setAdapter(adapter);
 	}
 
 	public List<Role> receiveRoles() {
@@ -257,12 +294,6 @@ public class PlanActivity extends AppCompatActivity {
 		role.setUser_id(2);
 		roles.add(role);
 
-
-		//테스트용 for문 END
-		//서버에서 받아오거나 혹은 SharedPreference에 있는 정보를 넣을 것(협의 안됨)
-
-		Log.d("PlanActivity", "role list 정보: " + roles);
-		Log.d("PlanActivity", "receiveRoles END");
 		return roles;
 	}
 
@@ -277,14 +308,13 @@ public class PlanActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
-		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_setting) {
 
 			Intent setIntent = new Intent(this, SettingActivity.class);
 			startActivity(setIntent);
 
 		} else if (id == R.id.action_refresh) {
-			// signin 정보 재확인 후 main으로 이동
+
 			Toast.makeText(this, "refresh", Toast.LENGTH_SHORT).show();
 		}
 
@@ -332,6 +362,30 @@ public class PlanActivity extends AppCompatActivity {
 
 		AlertDialog alertDialog = alert.create();
 		alertDialog.show();
+	}
+
+	@Override
+	public void setRoleContent(List<Role> roleList) {
+		if (adapter != null) {
+			adapter.setCommentList(roleList);
+			adapter.notifyDataSetChanged();
+		}
+
+	}
+
+	@Override
+	public void showLoadingBar() {
+		dialog = new ACProgressFlower.Builder(this)
+				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
+				.themeColor(Color.WHITE)
+				.fadeColor(Color.DKGRAY).build();
+		dialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (dialog != null)
+			dialog.dismiss();
 	}
 
 
