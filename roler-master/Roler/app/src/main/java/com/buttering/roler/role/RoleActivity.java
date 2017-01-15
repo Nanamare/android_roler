@@ -129,7 +129,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
-				intentSubActivity.putExtra("Role", allRoleList.get(position));
+				intentSubActivity.putExtra("Role", (Role)adapter.getItem(position));
 				startActivity(intentSubActivity);
 			}
 		});
@@ -155,8 +155,8 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		Role role = null;
 		role = new Role();
 		role.setId(0);
-		role.setRoleContent("역할에 대한 설명을 적어 보세요");
-		role.setRoleName("역할 정하기");
+		role.setRoleContent("역할에 대한 설명을 적어 보세요!!");
+		role.setRoleName("안녕하세요 역할을 정해보세요");
 		role.setRolePrimary(0);
 		role.setUser_id(1);
 		roles.add(role);

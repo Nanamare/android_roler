@@ -1,5 +1,6 @@
 package com.buttering.roler.plan;
 
+import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
 
 import java.util.List;
@@ -10,4 +11,6 @@ import java.util.List;
 
 public interface IPlanView {
 	void setTodoList(List<Todo> todoList);
+	void setRoleContent(List<Role> role);
+	void setCurrentPosition();
 }

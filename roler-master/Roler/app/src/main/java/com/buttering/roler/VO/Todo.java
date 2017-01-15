@@ -15,7 +15,7 @@ public class Todo implements Serializable {
 	private String content;
 	private int todoOrder;
 	private String todoDate;
-	private int isDone;
+	private boolean isDone;
 	private int role_id;
 	private int user_id;
 
@@ -35,11 +35,11 @@ public class Todo implements Serializable {
 		this.id = id;
 	}
 
-	public int getDone() {
+	public boolean getDone() {
 		return isDone;
 	}
 
-	public void setDone(int done) {
+	public void setDone(boolean done) {
 		isDone = done;
 	}
 

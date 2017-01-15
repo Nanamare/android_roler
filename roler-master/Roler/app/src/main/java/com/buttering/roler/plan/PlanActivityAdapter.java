@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
+import com.buttering.roler.role.RoleActivityAdapter;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by WonYoung on 16. 7. 31..
@@ -27,6 +31,7 @@ public class PlanActivityAdapter extends BaseAdapter {
 
 
 	public void setRoleList(List<Role> roles) {
+		this.roles.clear();
 		this.roles = roles;
 	}
 
@@ -48,36 +53,41 @@ public class PlanActivityAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		View rowView = convertView;
+		final ViewHolder viewHolder;
 
-		if (rowView == null) {
+		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.activity_plan_item, null);
+			convertView = inflater.inflate(R.layout.activity_plan_item, null);
 
-			ViewHolder viewHolder = new ViewHolder();
+			viewHolder = new ViewHolder(convertView);
+			convertView.setTag(viewHolder);
 
-			viewHolder.tv_rolePrimaryPlan = (TextView) rowView.findViewById(R.id.tv_rolePrimaryPlan);
-			viewHolder.tv_roleNamePlan = (TextView) rowView.findViewById(R.id.tv_roleNamePlan);
-			viewHolder.tv_roleContentPlan = (TextView) rowView.findViewById(R.id.tv_roleContentPlan);
-
-			rowView.setTag(viewHolder);
-
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ViewHolder holder = (ViewHolder) rowView.getTag();
 
-		holder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
-		holder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
-		holder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
+		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
+		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
+		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
 
-		return rowView;
+		return convertView;
 	}
 
 
 	public static class ViewHolder {
-		TextView tv_rolePrimaryPlan = null;
-		TextView tv_roleNamePlan = null;
-		TextView tv_roleContentPlan = null;
+
+		@BindView(R.id.tv_rolePrimaryPlan)
+		TextView tv_rolePrimaryPlan;
+		@BindView(R.id.tv_roleNamePlan)
+		TextView tv_roleNamePlan;
+		@BindView(R.id.tv_roleContentPlan)
+		TextView tv_roleContentPlan;
+
+		public ViewHolder(View view) {
+			ButterKnife.bind(this, view);
+		}
+
 	}
 
 

@@ -85,10 +85,12 @@ public class RoleActivityAdapter extends BaseAdapter {
 	}
 
 	public void setCommentList(List<Role> roles) {
+		this.roles.clear();
 		this.roles = roles;
 	}
 
-	final int[] bgColor= {R.color.primaryColor,R.color.primary,R.color.hard_grey};
+	final int[] bgColor= {R.color.holo_green_dark,R.color.primary,R.color.colorAccent,R.color.body_background_green,
+	R.color.suggestion_highlight_text,R.color.primary};
 
 	public static class ViewHolder {
 		@BindView(R.id.tv_rolePrimary)

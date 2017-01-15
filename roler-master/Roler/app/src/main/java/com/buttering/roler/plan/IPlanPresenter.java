@@ -6,4 +6,5 @@ package com.buttering.roler.plan;
 
 public interface IPlanPresenter {
 	void loadToList(int userId, int roleId);
+	void getRoleContent(int id);
 }

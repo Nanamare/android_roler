@@ -122,8 +122,8 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	}
 
 	public void setTodoList(List<Todo> todoList){
+		this.todos.clear();
 		this.todos = todoList;
-		notifyDataSetChanged();
 	}
 
 

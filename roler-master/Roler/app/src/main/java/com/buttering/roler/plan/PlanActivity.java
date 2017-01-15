@@ -69,7 +69,6 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	private PlanActivityAdapter adapter = null;
 	private PlanActivityTodoAdapter todoAdapter = null;
 	private int currentPosition;
-	private IRolePresenter rolePresenter;
 	private IPlanPresenter planPresenter;
 	private ILoginView view;
 	private ACProgressFlower dialog;
@@ -93,12 +92,11 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		//get mock data
 		allRoleList = receiveRoles();
 
-		rolePresenter = new RolePresenter(this);
 		planPresenter = new PlanPresenter(this);
 
 		adapter = new PlanActivityAdapter(this, allRoleList);
-		rolePresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 		vp_rolePlanPage.setAdapter(adapter);
+		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 
 		//get a current role id
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getId();
@@ -206,7 +204,6 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		allTodoList = receiveTodoItems();
 		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 		rv_todolist.setAdapter(todoAdapter);
-		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()),currentPosition);
 
 	}
 
@@ -220,48 +217,49 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		todo = new Todo();
 		todo.setRole_id(0);
 		todo.setId(0);
-		todo.setContent("test 0");
-		todo.setDone(0);
-		todolist.add(todo);
-
-		todo = new Todo();
-		todo.setRole_id(0);
-		todo.setId(0);
-		todo.setContent("test 0");
-		todo.setDone(0);
+		todo.setContent("역할별로 할일을 적어 보세요!");
+		todo.setDone(false);
 		todolist.add(todo);
 		allTodoList.add(todolist);
-
-		todolist = new ArrayList<>();
-		todo = new Todo();
-		todo.setRole_id(1);
-		todo.setId(0);
-		todo.setContent("test 1");
-		todo.setDone(0);
-		todolist.add(todo);
-
-		todo = new Todo();
-		todo.setRole_id(1);
-		todo.setId(0);
-		todo.setContent("test 1");
-		todo.setDone(0);
-		todolist.add(todo);
-		allTodoList.add(todolist);
-
-		todo = new Todo();
-		todo.setRole_id(3);
-		todo.setId(1);
-		todo.setContent("test 0");
-		todo.setDone(0);
-		todolist.add(todo);
-
-		todo = new Todo();
-		todo.setRole_id(3);
-		todo.setId(1);
-		todo.setContent("test 0");
-		todo.setDone(0);
-		todolist.add(todo);
-		allTodoList.add(todolist);
+//
+//		todo = new Todo();
+//		todo.setRole_id(0);
+//		todo.setId(0);
+//		todo.setContent("test 0");
+//		todo.setDone(false);
+//		todolist.add(todo);
+//		allTodoList.add(todolist);
+//
+//		todolist = new ArrayList<>();
+//		todo = new Todo();
+//		todo.setRole_id(1);
+//		todo.setId(0);
+//		todo.setContent("test 1");
+//		todo.setDone(false);
+//		todolist.add(todo);
+//
+//		todo = new Todo();
+//		todo.setRole_id(1);
+//		todo.setId(0);
+//		todo.setContent("test 1");
+//		todo.setDone(false);
+//		todolist.add(todo);
+//		allTodoList.add(todolist);
+//
+//		todo = new Todo();
+//		todo.setRole_id(3);
+//		todo.setId(1);
+//		todo.setContent("test 0");
+//		todo.setDone(false);
+//		todolist.add(todo);
+//
+//		todo = new Todo();
+//		todo.setRole_id(3);
+//		todo.setId(1);
+//		todo.setContent("test 0");
+//		todo.setDone(false);
+//		todolist.add(todo);
+//		allTodoList.add(todolist);
 
 		//테스트용 for문 END
 		return allTodoList;
@@ -281,19 +279,11 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		//테스트용 for문 START
 		Role role = null;
 		role = new Role();
-		role.setId(1);
+		role.setId(0);
 		role.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
 		role.setRoleName("사랑하는 사람");
 		role.setRolePrimary(2);
 		role.setUser_id(1);
-		roles.add(role);
-
-		role = new Role();
-		role.setId(2);
-		role.setRoleContent("경영학적인 도전을 게을리하지 않는다. 수익과 니즈, 시장을 항상 살피며, 생각하고, 공부한다,");
-		role.setRoleName("경영학도로서의 나");
-		role.setRolePrimary(3);
-		role.setUser_id(2);
 		roles.add(role);
 
 		return roles;
@@ -373,6 +363,12 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 			adapter.notifyDataSetChanged();
 		}
 
+	}
+
+	@Override
+	public void setCurrentPosition() {
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getId();
+		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()),currentPosition);
 	}
 
 	@Override

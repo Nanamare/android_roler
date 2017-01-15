@@ -18,7 +18,6 @@ import rx.android.schedulers.AndroidSchedulers;
 public class RolePresenter extends BasePresenter implements IRolePresenter {
 
 	private RoleService roleService;
-	private Activity activity;
 	private IRoleView view;
 
 
@@ -31,7 +30,6 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 
 	@Override
 	public void getRoleContent(int id) {
-		view.showLoadingBar();
 
 		addSubscription(roleService
 				.getRoleContent(id)
@@ -39,7 +37,6 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-						view.hideLoadingBar();
 
 					}
 
