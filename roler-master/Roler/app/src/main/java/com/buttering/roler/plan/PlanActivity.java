@@ -124,8 +124,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
                     vp_rolePlanPage.scrollToPosition(currentPosition);
                 }
 
-                int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-
+                int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
                 planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
             }
         });
