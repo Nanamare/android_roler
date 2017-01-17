@@ -76,14 +76,14 @@
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_rolePlanPage"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll_swipe_arrow"
             coverflow:coverHeight="250dp"
             coverflow:coverWidth="200dp"
             coverflow:maxScaleFactor="1.7"
-            coverflow:reflectionGap="-1px"
+            coverflow:reflectionGap="1px"
             coverflow:rotationThreshold="1.3"
             coverflow:scalingThreshold="0.2"
             coverflow:spacing="0.34">

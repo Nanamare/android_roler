@@ -124,7 +124,9 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
                     vp_rolePlanPage.scrollToPosition(currentPosition);
                 }
 
-                planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+                int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+
+                planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
             }
         });
 
@@ -132,14 +134,18 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
             @Override
             public void onClick(View v) {
                 currentPosition = vp_rolePlanPage.getScrollPosition();
-                if (currentPosition < vp_rolePlanPage.getCount()) {
-                    vp_rolePlanPage.scrollToPosition(currentPosition + 1);
+                if (currentPosition < vp_rolePlanPage.getCount()-1) {
+                    currentPosition += 1;
+                    vp_rolePlanPage.scrollToPosition(currentPosition);
 
-                } else if (currentPosition == vp_rolePlanPage.getCount()){
+                } else if (currentPosition == vp_rolePlanPage.getCount()-1){
                     vp_rolePlanPage.scrollToPosition(0);
+                    currentPosition = 0;
 
                 }
-                planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+
+                int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
+                planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
             }
         });
     }
@@ -162,7 +168,9 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
                     Todo todo = new Todo();
                     todo.setContent(value);
                     allTodoList.get(currentPosition).add(todo);
-                    todoAdapter.notifyDataSetChanged();
+                    todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+                    rv_todolist.setAdapter(todoAdapter);
+//                    todoAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
@@ -433,10 +441,12 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
     @Override
     public void setRoleContent(List<Role> roleList) {
-        allRoleList = roleList;
         if (adapter != null) {
-            adapter.setRoleList(roleList);
-            adapter.notifyDataSetChanged();
+            allRoleList = roleList;
+            adapter = new PlanActivityAdapter(this, allRoleList);
+            vp_rolePlanPage.setAdapter(adapter);
+//            adapter.setRoleList(roleList);
+//            adapter.notifyDataSetChanged();
         }
 
     }
@@ -466,9 +476,11 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
     @Override
     public void setTodoList(List<Todo> todoList) {
         if (todoAdapter != null) {
-            todoAdapter.setTodoList(todoList);
-            todoAdapter.notifyDataSetChanged();
+//            todoAdapter.setTodoList(todoList);
+//            todoAdapter.notifyDataSetChanged();
             allTodoList.set(currentPosition, todoList);
+            todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+            rv_todolist.setAdapter(todoAdapter);
         }
     }
 }

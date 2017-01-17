@@ -187,10 +187,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
     @Override
     public void setRoleContent(List<Role> roleList) {
-        allRoleList = roleList;
         if (adapter != null) {
-            adapter.setCommentList(roleList);
-            adapter.notifyDataSetChanged();
+            allRoleList = roleList;
+            adapter = new RoleActivityAdapter(this, allRoleList);
+            vp_roleDetail.setAdapter(adapter);
+//            adapter.setCommentList(roleList);
+//            adapter.notifyDataSetChanged();
         }
     }
 
@@ -220,12 +222,14 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
                     if (allRoleList.get(i).getRole_id() == role.getRole_id()) {
                         allRoleList.remove(i);
                         allRoleList.add(i, role);
-                        adapter.notifyDataSetChanged();
+                        adapter = new RoleActivityAdapter(this, allRoleList);
+                        vp_roleDetail.setAdapter(adapter);
                     } else {
                         //새로추가
-                        if(i == allRoleList.size()-1) {
+                        if (i == allRoleList.size() - 1) {
                             allRoleList.add(role);
-                            adapter.notifyDataSetChanged();
+                            adapter = new RoleActivityAdapter(this, allRoleList);
+                            vp_roleDetail.setAdapter(adapter);
                         }
                     }
                 }
