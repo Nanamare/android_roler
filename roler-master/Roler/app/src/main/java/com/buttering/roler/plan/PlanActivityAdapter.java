@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buttering.roler.R;
@@ -29,11 +30,6 @@ public class PlanActivityAdapter extends BaseAdapter {
 		this.roles = roles;
 	}
 
-
-	public void setRoleList(List<Role> roles) {
-		this.roles.clear();
-		this.roles = roles;
-	}
 
 	@Override
 	public int getCount() {
@@ -66,7 +62,7 @@ public class PlanActivityAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-
+		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
@@ -75,8 +71,18 @@ public class PlanActivityAdapter extends BaseAdapter {
 	}
 
 
-	public static class ViewHolder {
+	public void setRoleList(List<Role> roles) {
+		this.roles.clear();
+		this.roles = roles;
+	}
 
+	final int[] bgColor= {R.color.holo_green_dark,R.color.primary,R.color.colorAccent,R.color.body_background_green,
+			R.color.suggestion_highlight_text,R.color.primary};
+
+
+	public static class ViewHolder {
+		@BindView(R.id.rl_roleItemTop)
+		RelativeLayout rl_roleItemTop;
 		@BindView(R.id.tv_rolePrimaryPlan)
 		TextView tv_rolePrimaryPlan;
 		@BindView(R.id.tv_roleNamePlan)

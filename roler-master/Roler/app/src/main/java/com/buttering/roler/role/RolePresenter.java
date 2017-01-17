@@ -37,6 +37,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
+						view.addRole();
 
 					}
 
@@ -49,6 +50,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 					@Override
 					public void onNext(List<Role> role) {
 						view.setRoleContent(role);
+						onCompleted();
 
 					}
 				}));
