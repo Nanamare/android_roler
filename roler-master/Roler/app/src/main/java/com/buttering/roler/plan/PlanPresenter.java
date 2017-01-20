@@ -13,6 +13,7 @@ import rx.Observable;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by kinamare on 2016-12-31.
@@ -83,5 +84,29 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
                 }));
 
 
+    }
+
+    @Override
+    public void addTodo(String content, int todoOrder, String todoDate, int role_id, int user_id, boolean isDone) {
+
+        addSubscription(todoService
+        .addTodoList(content, todoOrder, todoDate, role_id, user_id, isDone)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Subscriber<Todo>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Todo todo) {
+                view.setTodo(todo);
+            }
+        }));
     }
 }

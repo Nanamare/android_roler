@@ -15,4 +15,5 @@ public interface IPlanView {
 	void setCurrentPosition();
 	void hideLoadingBar();
 	void showLoadingBar();
+	void setTodo(Todo todo);
 }

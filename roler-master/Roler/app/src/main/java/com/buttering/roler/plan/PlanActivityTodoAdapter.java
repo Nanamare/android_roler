@@ -16,11 +16,12 @@ import com.buttering.roler.VO.Todo;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SwipeLayout;
+import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import java.util.List;
 
 /**
- * Created by WonYoung on 16. 7. 31..
+ * Created by nanamare on 16. 7. 31..
  */
 public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTodoAdapter.ViewHolder> {
 
@@ -50,12 +51,15 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			if (holder.cb_todo.isChecked()) {
 				holder.tv_list.setTextColor(Color.LTGRAY);
 				holder.tv_no.setTextColor(Color.LTGRAY);
+				todos.get(position).setDone(true);
+
 			} else {
 				AlertDialog.Builder alert = new AlertDialog.Builder(context);
 				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
 							holder.tv_list.setTextColor(Color.BLACK);
 							holder.tv_no.setTextColor(Color.BLACK);
+							todos.get(position).setDone(false);
 
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
@@ -69,6 +73,23 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 				alertDialog.show();
 
 			}
+
+
+			float trueCount = 0;
+			float falseCount = 0;
+			for(int i = 0; i<todos.size(); i++) {
+				if (todos.get(i).getDone()) {
+					trueCount++;
+				} else {
+					falseCount++;
+				}
+			}
+			float percent = trueCount/(trueCount+falseCount) * 100;
+			int parserPercent = (int) percent;
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View convertView = inflater.inflate(R.layout.activity_plan_item, null);
+			CircleProgress circle = (CircleProgress)convertView.findViewById(R.id.cp_planPercent);
+			circle.setProgress(parserPercent);
 		});
 
 		holder.swipe_layout.setShowMode(SwipeLayout.ShowMode.LayDown);
@@ -124,6 +145,11 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	public void setTodoList(List<Todo> todoList){
 		this.todos.clear();
 		this.todos = todoList;
+	}
+
+
+	public void setTodo(Todo todo){
+		this.todos.add(todo);
 	}
 
 

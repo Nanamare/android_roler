@@ -71,8 +71,7 @@
                     custom:circle_finished_color="#f5a4c8"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    custom:circle_progress="35"
-                    />
+                    custom:circle_progress="0" />
             </RelativeLayout>
 
         </RelativeLayout>

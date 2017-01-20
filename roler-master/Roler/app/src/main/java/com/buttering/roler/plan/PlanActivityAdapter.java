@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.role.RoleActivityAdapter;
+import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.wdullaer.materialdatetimepicker.time.CircleView;
 
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class PlanActivityAdapter extends BaseAdapter {
 		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
+		viewHolder.cp_planPercent.setProgress(0);
 
 		return convertView;
 	}
@@ -89,6 +92,8 @@ public class PlanActivityAdapter extends BaseAdapter {
 		TextView tv_roleNamePlan;
 		@BindView(R.id.tv_roleContentPlan)
 		TextView tv_roleContentPlan;
+		@BindView(R.id.cp_planPercent)
+		CircleProgress cp_planPercent;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

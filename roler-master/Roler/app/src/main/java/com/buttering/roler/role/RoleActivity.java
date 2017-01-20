@@ -143,7 +143,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
         role = new Role();
         role.setId(0);
         role.setRoleContent("역할에 대한 설명을 적어 보세요!!");
-        role.setRoleName("안녕하세요 역할을 정해보세요");
+        role.setRoleName("안녕하세요!");
         role.setRolePrimary(0);
         role.setUser_id(1);
         roles.add(role);

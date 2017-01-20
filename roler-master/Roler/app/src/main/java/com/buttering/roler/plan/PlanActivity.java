@@ -10,7 +10,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +25,7 @@ import com.buttering.roler.VO.Todo;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -97,6 +97,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
         addTodoList();
 
         swipeRole();
+        scrollPostion();
 
         //initSet LayoutManager
         linearLayoutManager = new LinearLayoutManager(this);
@@ -108,6 +109,24 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 
 
+    }
+
+
+    private void scrollPostion() {
+        vp_rolePlanPage.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
+            @Override
+            public void onScrolledToPosition(int position) {
+                //TODO CoverFlow stopped to position
+                int role_id = ((Role) adapter.getItem(position)).getRole_id();
+                planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+            }
+
+            @Override
+            public void onScrolling() {
+                //TODO CoverFlow began scrolling
+                Toast.makeText(PlanActivity.this, "Todolist 로딩중", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void swipeRole() {
@@ -201,7 +220,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
     private void setUserName() {
         name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
-
     }
 
     private void listRecall() {
@@ -214,10 +232,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
     }
 
     private List<List<Todo>> receiveTodoItems() {
-
-        //테스트용 for문 START
         todolist = new ArrayList<>();
-
 
         todo = new Todo();
         todo.setRole_id(0);
@@ -235,48 +250,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
         allTodoList.add(todolist);
         allTodoList.add(todolist);
 
-
-//
-//		todo = new Todo();
-//		todo.setRole_id(0);
-//		todo.setId(0);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
-//
-//		todolist = new ArrayList<>();
-//		todo = new Todo();
-//		todo.setRole_id(1);
-//		todo.setId(0);
-//		todo.setContent("test 1");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//
-//		todo = new Todo();
-//		todo.setRole_id(1);
-//		todo.setId(0);
-//		todo.setContent("test 1");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
-//
-//		todo = new Todo();
-//		todo.setRole_id(3);
-//		todo.setId(1);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//
-//		todo = new Todo();
-//		todo.setRole_id(3);
-//		todo.setId(1);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
-
-        //테스트용 for문 END
         return allTodoList;
 
     }
@@ -291,82 +264,12 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
         Role role = null;
         role = new Role();
         role.setId(0);
-        role.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-        role.setRoleName("사랑하는 사람");
-        role.setRolePrimary(2);
+        role.setRoleContent("역할에 대한 목표,설명을 적어 주세요");
+        role.setRoleName("역할을 정해보세요!");
+        role.setRolePrimary(1);
         role.setUser_id(1);
         role.setRole_id(0);
         roles.add(role);
-
-//        Role role5 = null;
-//        role5 = new Role();
-//        role5.setId(1);
-//        role5.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role5.setRoleName("사랑하는 사람22");
-//        role5.setRolePrimary(2);
-//        role5.setUser_id(1);
-//        role5.setRole_id(0);
-//        roles.add(role5);
-//
-//        Role role2 = null;
-//        role2 = new Role();
-//        role2.setId(2);
-//        role2.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role2.setRoleName("사랑하는 사람33");
-//        role2.setRolePrimary(2);
-//        role2.setUser_id(1);
-//        role2.setRole_id(0);
-//        roles.add(role2);
-//
-//        Role role3 = null;
-//        role3 = new Role();
-//        role3.setId(4);
-//        role3.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role3.setRoleName("사랑하는 사람44");
-//        role3.setRolePrimary(2);
-//        role3.setUser_id(1);
-//        role3.setRole_id(0);
-//        roles.add(role3);
-//
-//        Role role4 = null;
-//        role4 = new Role();
-//        role4.setId(3);
-//        role4.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role4.setRoleName("사랑하는 사람55");
-//        role4.setRolePrimary(2);
-//        role4.setUser_id(1);
-//        role4.setRole_id(0);
-//        roles.add(role4);
-//
-//        Role role6 = null;
-//        role6 = new Role();
-//        role6.setId(0);
-//        role6.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role6.setRoleName("사랑하는 사람66");
-//        role6.setRolePrimary(2);
-//        role6.setUser_id(1);
-//        role6.setRole_id(0);
-//        roles.add(role6);
-//
-//        Role role7 = null;
-//        role7 = new Role();
-//        role7.setId(0);
-//        role7.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role7.setRoleName("사랑하는 사람77");
-//        role7.setRolePrimary(2);
-//        role7.setUser_id(1);
-//        role7.setRole_id(0);
-//        roles.add(role7);
-//
-//        Role role88 = null;
-//        role88 = new Role();
-//        role88.setId(0);
-//        role88.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-//        role88.setRoleName("사랑하는 사람88");
-//        role88.setRolePrimary(2);
-//        role88.setUser_id(1);
-//        role88.setRole_id(0);
-//        roles.add(role88);
 
         return roles;
     }
@@ -466,6 +369,18 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
     }
 
     @Override
+    public void setTodo(Todo todo) {
+        if (todoAdapter != null) {
+            todoAdapter.setTodo(todo);
+            todoAdapter.notifyDataSetChanged();
+//            allTodoList.set(currentPosition, todoList);
+//            todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+//            rv_todolist.setAdapter(todoAdapter);
+        }
+
+    }
+
+    @Override
     public void hideLoadingBar() {
         if (dialog != null)
             dialog.dismiss();
@@ -476,7 +391,9 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
     public void setTodoList(List<Todo> todoList) {
         if (todoAdapter != null) {
 //            todoAdapter.setTodoList(todoList);
-//            todoAdapter.notifyDataSetChanged();
+    //            todoAdapter.notifyDataSetChanged();
+            todolist.clear();
+            todolist.addAll(todoList);
             allTodoList.set(currentPosition, todoList);
             todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
             rv_todolist.setAdapter(todoAdapter);
