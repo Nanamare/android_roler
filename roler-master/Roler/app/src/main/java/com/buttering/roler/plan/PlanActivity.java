@@ -19,17 +19,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buttering.roler.login.ILoginView;
-import com.buttering.roler.role.IRolePresenter;
-import com.buttering.roler.role.IRoleView;
-import com.buttering.roler.role.RolePresenter;
-import com.buttering.roler.timetable.BaseActivity;
 import com.buttering.roler.R;
-import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
+import com.buttering.roler.login.ILoginView;
+import com.buttering.roler.role.IRoleView;
 import com.buttering.roler.role.RoleActivity;
+import com.buttering.roler.setting.SettingActivity;
+import com.buttering.roler.timetable.BaseActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -334,6 +332,7 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 
 
 	}
+
 
 	@Override
 	public void onBackPressed() {
