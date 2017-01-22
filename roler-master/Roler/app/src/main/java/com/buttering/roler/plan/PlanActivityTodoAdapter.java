@@ -1,6 +1,8 @@
 package com.buttering.roler.plan;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -20,19 +22,23 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.List;
 
 /**
- * Created by WonYoung on 16. 7. 31..
+ * Created by nanamare on 16. 7. 31..
  */
 public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTodoAdapter.ViewHolder> {
 
 	private static Context context;
 	private List<Todo> todos;
 	private int itemLayout;
+	private IPlanPresenter presenter;
+
+
 
 	public PlanActivityTodoAdapter(PlanActivity context, List<Todo> todos, int itemLayout) {
 		this.context = context;
 		this.todos = todos;
 		this.itemLayout = itemLayout;
 	}
+
 
 	@Override
 	public PlanActivityTodoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,6 +49,8 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	@Override
 	public void onBindViewHolder(PlanActivityTodoAdapter.ViewHolder holder, int position) {
 
+		presenter = new PlanPresenter(context);
+
 		holder.tv_no.setText(String.valueOf(position));
 		holder.tv_list.setText(todos.get(position).getContent());
 
@@ -50,12 +58,15 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			if (holder.cb_todo.isChecked()) {
 				holder.tv_list.setTextColor(Color.LTGRAY);
 				holder.tv_no.setTextColor(Color.LTGRAY);
+				todos.get(position).setDone(true);
+
 			} else {
 				AlertDialog.Builder alert = new AlertDialog.Builder(context);
 				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
 							holder.tv_list.setTextColor(Color.BLACK);
 							holder.tv_no.setTextColor(Color.BLACK);
+							todos.get(position).setDone(false);
 
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
@@ -69,6 +80,10 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 				alertDialog.show();
 
 			}
+
+
+			presenter.conveyProgress(todos);
+
 		});
 
 		holder.swipe_layout.setShowMode(SwipeLayout.ShowMode.LayDown);
@@ -113,6 +128,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 		holder.ll_swipe_left.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				presenter.deleteTodo(todos.get(position).getId());
 				todos.remove(position);
 				notifyDataSetChanged();
 			}
@@ -121,9 +137,14 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 	}
 
-	public void setTodoList(List<Todo> todoList){
+	public void setTodoList(List<Todo> todoList) {
 		this.todos.clear();
 		this.todos = todoList;
+	}
+
+
+	public void setTodo(Todo todo) {
+		this.todos.add(todo);
 	}
 
 

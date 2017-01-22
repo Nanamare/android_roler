@@ -3,14 +3,21 @@ package com.buttering.roler.signup;
 import android.app.Activity;
 
 import com.buttering.roler.VO.MyInfoDAO;
+import com.buttering.roler.VO.Todo;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.FileService;
 import com.buttering.roler.composition.baseservice.UserService;
 import com.buttering.roler.composition.serialization.RolerResponse;
 import com.buttering.roler.util.FileUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +40,7 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 	private UserService userService;
 	private FileService fileService;
 
-	public  SignUpProfilePresenter(Activity activity, ISignUpProfileView view){
+	public SignUpProfilePresenter(Activity activity, ISignUpProfileView view) {
 		this.view = view;
 		this.activity = activity;
 		this.userService = new UserService();
@@ -45,7 +52,7 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 	public Observable<User> signUp(String email, String pwd, String name) {
 		view.showLoadingBar();
 
-		User user = generateUser(email, pwd,name);
+		User user = generateUser(email, pwd, name);
 
 		return userService
 				.signUp(user)
@@ -86,22 +93,33 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 							public void onNext(ResponseBody responseBody) {
 								try {
 									String json = responseBody.string();
-									MyInfoDAO.getInstance().setPicUrl(json);
-									subscriber.onNext(parseUrl(json));
+									if (parseResult(json) == "true") {
+										MyInfoDAO.getInstance().setPicUrl(json);
+										subscriber.onNext(parseUrl(json));
+									}
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
 							}
 
 							private String parseUrl(String json) {
-								JsonElement jsonElement = new JsonParser().parse(json);
-								String url = jsonElement
-										.getAsJsonObject()
-										.getAsJsonObject("result")
-										.getAsJsonPrimitive("uploadUrl").getAsString();
-
-								return url;
+								try {
+									JSONObject object = new JSONObject(json);
+									JSONArray jsonArray = new JSONArray(object.getString("params"));
+									String todoJson = jsonArray.toString();
+									return todoJson;
+								} catch (JSONException e) {
+									e.printStackTrace();
+									return "false";
+								}
 							}
+
+							private String parseResult(String json) {
+								JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+								String result = ja.get("result").getAsString();
+								return result;
+							}
+
 						});
 			}
 

@@ -13,4 +13,8 @@ public interface IPlanView {
 	void setTodoList(List<Todo> todoList);
 	void setRoleContent(List<Role> role);
 	void setCurrentPosition();
+	void hideLoadingBar();
+	void showLoadingBar();
+	void setTodo(Todo todo);
+	void setTodoListId(int id);
 }

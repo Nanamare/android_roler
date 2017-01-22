@@ -49,6 +49,7 @@ public class EditRoleActivity extends AppCompatActivity {
 	private int user_id;
 	private int id;
 	private int priority;
+	private int role_id;
 
 
 	@Override
@@ -63,11 +64,13 @@ public class EditRoleActivity extends AppCompatActivity {
 			//새로 추가 더하기
 			et_roleContent.setText("");
 			et_roleName.setText("");
+			role_id = 5;
 
 		} else {
 			// 기존의 아이템을 가지고 와서 보여주기
 			user_id = role.getUser_id();
 			priority = role.getRolePrimary();
+			role_id = role.getRole_id();
 			id = role.getId();
 			et_roleContent.setText(role.getRoleContent());
 			et_roleName.setText(role.getRoleName());
@@ -97,6 +100,7 @@ public class EditRoleActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				Role role = new Role();
 				role.setId(id);
+				role.setRole_id(role_id);
 				role.setRoleContent(et_roleContent.getText().toString());
 				role.setRoleName(et_roleName.getText().toString());
 				role.setRolePrimary(Integer.parseInt(""+et_priority.getText().charAt(0)));

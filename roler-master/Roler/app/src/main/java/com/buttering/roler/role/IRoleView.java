@@ -12,4 +12,5 @@ public interface IRoleView {
 	void setRoleContent(List<Role> roleList);
 	void showLoadingBar();
 	void hideLoadingBar();
+	void addRole();
 }

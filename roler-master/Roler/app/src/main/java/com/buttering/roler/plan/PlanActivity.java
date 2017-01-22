@@ -10,7 +10,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +22,10 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
-import com.buttering.roler.login.ILoginView;
-import com.buttering.roler.role.IRoleView;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.buttering.roler.util.SharePrefUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +39,7 @@ import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanView {
+public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@BindView(R.id.activity_plan_name_tv)
 	TextView name;
@@ -62,26 +60,25 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	@BindView(R.id.activity_plan_arrow_right_iv)
 	ImageView right_arrow_iv;
 
-	private List<Role> allRoleList = null;
-	private List<List<Todo>> allTodoList = null;
-	private PlanActivityAdapter adapter = null;
-	private PlanActivityTodoAdapter todoAdapter = null;
+	private List<Role> allRoleList;
+	private List<List<Todo>> allTodoList = new ArrayList<>();
+	private PlanActivityAdapter adapter;
+	private PlanActivityTodoAdapter todoAdapter;
 	private int currentPosition;
 	private IPlanPresenter planPresenter;
-	private ILoginView view;
 	private ACProgressFlower dialog;
-	List<Role> roles = new ArrayList<>();
+	private List<Role> roles = new ArrayList<>();
 	private Todo todo = null;
-	List<Todo> todolist;
+	private List<Todo> todolist;
 
-
-	LinearLayoutManager linearLayoutManager;
+	private LinearLayoutManager linearLayoutManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plan);
 		ButterKnife.bind(this);
+
 
 		setToolbar();
 		setUserName();
@@ -90,18 +87,18 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		//get mock data
 		allRoleList = receiveRoles();
 
-		planPresenter = new PlanPresenter(this);
+		planPresenter = new PlanPresenter(this, getApplicationContext());
 
 		adapter = new PlanActivityAdapter(this, allRoleList);
 		vp_rolePlanPage.setAdapter(adapter);
 		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
-
 		//get a current role id
-		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getId();
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 
 		addTodoList();
 
 		swipeRole();
+		scrollPostion();
 
 		//initSet LayoutManager
 		linearLayoutManager = new LinearLayoutManager(this);
@@ -114,6 +111,24 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 
 	}
 
+
+	private void scrollPostion() {
+		vp_rolePlanPage.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
+			@Override
+			public void onScrolledToPosition(int position) {
+				//TODO CoverFlow stopped to position
+				int role_id = ((Role) adapter.getItem(position)).getRole_id();
+				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+			}
+
+			@Override
+			public void onScrolling() {
+				//TODO CoverFlow began scrolling
+				Toast.makeText(PlanActivity.this, "Todolist 로딩중", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
 	private void swipeRole() {
 		left_arrow_iv.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -121,13 +136,15 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 				currentPosition = vp_rolePlanPage.getScrollPosition();
 				if (currentPosition == 0) {
 					currentPosition = vp_rolePlanPage.getCount();
+					vp_rolePlanPage.scrollToPosition(currentPosition);
 				}
 				if (currentPosition > 0) {
 					currentPosition -= 1;
 					vp_rolePlanPage.scrollToPosition(currentPosition);
 				}
 
-				listRecall();
+				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
+				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
 			}
 		});
 
@@ -135,10 +152,18 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 			@Override
 			public void onClick(View v) {
 				currentPosition = vp_rolePlanPage.getScrollPosition();
-				if (currentPosition < vp_rolePlanPage.getCount()) {
-					vp_rolePlanPage.scrollToPosition(currentPosition + 1);
+				if (currentPosition < vp_rolePlanPage.getCount() - 1) {
+					currentPosition += 1;
+					vp_rolePlanPage.scrollToPosition(currentPosition);
+
+				} else if (currentPosition == vp_rolePlanPage.getCount() - 1) {
+					vp_rolePlanPage.scrollToPosition(0);
+					currentPosition = 0;
+
 				}
-				listRecall();
+
+				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
+				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
 			}
 		});
 	}
@@ -161,7 +186,16 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 					Todo todo = new Todo();
 					todo.setContent(value);
 					allTodoList.get(currentPosition).add(todo);
-					todoAdapter.notifyDataSetChanged();
+					todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+					rv_todolist.setAdapter(todoAdapter);
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Calendar calendar = Calendar.getInstance();
+					String date = sdf.format(calendar.getTime());
+					int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+					planPresenter.addTodo(value
+							, 1, date, role_id
+							, Integer.valueOf(MyInfoDAO.getInstance().getUserId()),false);
+//                    todoAdapter.notifyDataSetChanged();
 				} else {
 					Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
 				}
@@ -193,7 +227,6 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 
 	private void setUserName() {
 		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
-
 	}
 
 	private void listRecall() {
@@ -206,11 +239,7 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	}
 
 	private List<List<Todo>> receiveTodoItems() {
-
-		allTodoList = new ArrayList<>();
-		//테스트용 for문 START
 		todolist = new ArrayList<>();
-
 
 		todo = new Todo();
 		todo.setRole_id(0);
@@ -219,47 +248,15 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 		todo.setDone(false);
 		todolist.add(todo);
 		allTodoList.add(todolist);
-//
-//		todo = new Todo();
-//		todo.setRole_id(0);
-//		todo.setId(0);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
-//
-//		todolist = new ArrayList<>();
-//		todo = new Todo();
-//		todo.setRole_id(1);
-//		todo.setId(0);
-//		todo.setContent("test 1");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//
-//		todo = new Todo();
-//		todo.setRole_id(1);
-//		todo.setId(0);
-//		todo.setContent("test 1");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
-//
-//		todo = new Todo();
-//		todo.setRole_id(3);
-//		todo.setId(1);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//
-//		todo = new Todo();
-//		todo.setRole_id(3);
-//		todo.setId(1);
-//		todo.setContent("test 0");
-//		todo.setDone(false);
-//		todolist.add(todo);
-//		allTodoList.add(todolist);
 
-		//테스트용 for문 END
+		//꼭 고쳐야하는 코드
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+
 		return allTodoList;
 
 	}
@@ -271,17 +268,14 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	}
 
 	public List<Role> receiveRoles() {
-		Log.d("PlanActivity", "receiveRoles START");
-
-
-		//테스트용 for문 START
 		Role role = null;
 		role = new Role();
 		role.setId(0);
-		role.setRoleContent("사랑하는 이를 아끼는 사람이 된다. 상대방을 탓하지 않고 평가하지 않으며, 연인으로서 이해하고 공감한다.");
-		role.setRoleName("사랑하는 사람");
-		role.setRolePrimary(2);
+		role.setRoleContent("역할에 대한 목표,설명을 적어 주세요");
+		role.setRoleName("역할을 정해보세요!");
+		role.setRolePrimary(1);
 		role.setUser_id(1);
+		role.setRole_id(0);
 		roles.add(role);
 
 		return roles;
@@ -333,7 +327,6 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 
 	}
 
-
 	@Override
 	public void onBackPressed() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -358,16 +351,20 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	@Override
 	public void setRoleContent(List<Role> roleList) {
 		if (adapter != null) {
-			adapter.setRoleList(roleList);
-			adapter.notifyDataSetChanged();
+			allRoleList = roleList;
+			int percent = SharePrefUtil.getIntSharedPreference("percent");
+			adapter = new PlanActivityAdapter(this, allRoleList, percent);
+			vp_rolePlanPage.setAdapter(adapter);
+//            adapter.setRoleList(roleList);
+//            adapter.notifyDataSetChanged();
 		}
 
 	}
 
 	@Override
 	public void setCurrentPosition() {
-		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getId();
-		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()),currentPosition);
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
 	}
 
 	@Override
@@ -380,6 +377,23 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	}
 
 	@Override
+	public void setTodo(Todo todo) {
+		if (todoAdapter != null) {
+			todoAdapter.setTodo(todo);
+			todoAdapter.notifyDataSetChanged();
+//            allTodoList.set(currentPosition, todoList);
+//            todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+//            rv_todolist.setAdapter(todoAdapter);
+		}
+
+	}
+
+	@Override
+	public void setTodoListId(int id) {
+		allTodoList.get(currentPosition).get(allTodoList.get(currentPosition).size()-1).setId(id);
+	}
+
+	@Override
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
@@ -389,8 +403,15 @@ public class PlanActivity extends AppCompatActivity implements IRoleView, IPlanV
 	@Override
 	public void setTodoList(List<Todo> todoList) {
 		if (todoAdapter != null) {
-			todoAdapter.setTodoList(todoList);
-			todoAdapter.notifyDataSetChanged();
+//            todoAdapter.setTodoList(todoList);
+			//            todoAdapter.notifyDataSetChanged();
+			todolist.clear();
+			todolist.addAll(todoList);
+			allTodoList.set(currentPosition, todoList);
+			todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+			rv_todolist.setAdapter(todoAdapter);
 		}
 	}
+
+
 }

@@ -29,15 +29,14 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Role> roles;
-	IRolePresenter presenter;
 
-	public RoleActivityAdapter(Context context, List<Role> roles) {
+
+//	public RoleActivityAdapter(Context context, List<Role> roles) {
+//		this.context = context;
+//		this.roles = roles;
+//	}
+	public RoleActivityAdapter(Context context,List<Role> roles) {
 		this.context = context;
-		this.roles = roles;
-	}
-	public RoleActivityAdapter(Context context, IRolePresenter presenter,List<Role> roles) {
-		this.context = context;
-		this.presenter = presenter;
 		this.roles = new ArrayList<>();
 		this.roles = roles;
 	}
