@@ -67,7 +67,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
         setContentView(R.layout.activity_role);
         ButterKnife.bind(this);
 
-        presenter = new RolePresenter(this);
+        presenter = new RolePresenter(this,this);
 
         //mock data
         allRoleList = receiveRoles();
@@ -78,7 +78,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
         //load RoleContent
         presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
-
 
         editRole();
 
@@ -106,8 +105,9 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
     private void setProfileImage() {
         Glide.with(this)
-                .load(MyInfoDAO.getInstance().getPicUrl())
+                .load("http://52.78.65.255:3000/sign/kozy@naver.com")
                 .into(iv_picture);
+//        .load parameter init : MyInfoDAO.getInstance().getPicUrl()
     }
 
     private void editRole() {

@@ -16,4 +16,6 @@ public interface ISignUpProfilePresenter {
 	Observable<String> uploadProfileImg(File file);
 
 	Observable<Void> setProfileImg(String profileImgUrl);
+
+	Observable<String> loadProfileImg(String email);
 }

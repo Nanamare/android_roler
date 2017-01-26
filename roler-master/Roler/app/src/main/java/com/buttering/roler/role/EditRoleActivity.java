@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,15 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buttering.roler.R;
+import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
-import com.buttering.roler.role.RoleActivity;
 import com.dpizarro.uipicker.library.picker.PickerUI;
 import com.dpizarro.uipicker.library.picker.PickerUISettings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * Created by WonYoung on 16. 7. 31..
  */
-public class EditRoleActivity extends AppCompatActivity {
+public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 
 	@BindView(R.id.activity_edit_role_btn)
 	Button done_role_btn;
@@ -50,6 +49,7 @@ public class EditRoleActivity extends AppCompatActivity {
 	private int id;
 	private int priority;
 	private int role_id;
+	private IRolePresenter presenter;
 
 
 	@Override
@@ -58,13 +58,15 @@ public class EditRoleActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_edit_role);
 		ButterKnife.bind(this);
 		setToolbar();
+		presenter = new RolePresenter(this,this);
+
 		Intent intent = getIntent();
 		Role role = (Role) intent.getSerializableExtra("Role");
 		if (role == null) {
 			//새로 추가 더하기
 			et_roleContent.setText("");
 			et_roleName.setText("");
-			role_id = 5;
+			user_id = Integer.valueOf(MyInfoDAO.getInstance().getUserId());
 
 		} else {
 			// 기존의 아이템을 가지고 와서 보여주기
@@ -83,12 +85,10 @@ public class EditRoleActivity extends AppCompatActivity {
 		score.add("4순위");
 		score.add("5순위");
 
-
 		setPriority();
 		generatePicker();
+		presenter.check_blank(et_priority,et_roleName,et_roleContent);
 		putData();
-
-
 
 
 
@@ -98,20 +98,36 @@ public class EditRoleActivity extends AppCompatActivity {
 		done_role_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Role role = new Role();
-				role.setId(id);
-				role.setRole_id(role_id);
-				role.setRoleContent(et_roleContent.getText().toString());
-				role.setRoleName(et_roleName.getText().toString());
-				role.setRolePrimary(Integer.parseInt(""+et_priority.getText().charAt(0)));
-				role.setUser_id(user_id);
-				Intent intent = new Intent(getApplicationContext(), RoleActivity.class);
-				intent.putExtra("Role",role);
-				startActivity(intent);
-
+				if (checkRolePrimary(et_priority.getText().toString())) {
+					Role role = new Role();
+					role.setId(id);
+					//아직 필요 없는 코드
+					role.setRole_id(role_id);
+					role.setRoleContent(et_roleContent.getText().toString());
+					role.setRoleName(et_roleName.getText().toString());
+					role.setRolePrimary(Integer.parseInt("" + et_priority.getText().charAt(0)));
+					role.setUser_id(user_id);
+					Intent intent = new Intent(getApplicationContext(), RoleActivity.class);
+					presenter.addRole(Integer.parseInt("" + et_priority.getText().charAt(0))
+							, et_roleName.getText().toString()
+							, et_roleContent.getText().toString(), user_id);
+					intent.putExtra("Role", role);
+					startActivity(intent);
+				}
 			}
 		});
 	}
+
+	private boolean checkRolePrimary(String primary) {
+		if (!primary.isEmpty()) {
+			return true;
+		} else {
+			Toast.makeText(this, "우선순위를 선택해주세요.", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+	}
+
 
 	private void setPriority() {
 		picker_ui_view.setItems(this, score);
@@ -149,10 +165,9 @@ public class EditRoleActivity extends AppCompatActivity {
 
 				picker_ui_view.setSettings(pickerUISettings);
 
-				if(currentPosition==-1) {
+				if (currentPosition == -1) {
 					picker_ui_view.slide();
-				}
-				else{
+				} else {
 					picker_ui_view.slide(currentPosition);
 				}
 
@@ -180,5 +195,25 @@ public class EditRoleActivity extends AppCompatActivity {
 	private void hideKeyboard() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+	}
+
+	@Override
+	public void setRoleContent(List<Role> roleList) {
+
+	}
+
+	@Override
+	public void showLoadingBar() {
+
+	}
+
+	@Override
+	public void hideLoadingBar() {
+
+	}
+
+	@Override
+	public void addRole() {
+
 	}
 }

@@ -271,7 +271,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				// Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
 				if (shortDate)
 					weekday = String.valueOf(weekday.charAt(0));
-				return "              " + weekday.toUpperCase() + "요일 " + format.format(date.getTime()) + "              ";
+				return "              " + weekday.toUpperCase() + " " + format.format(date.getTime()) + "              ";
 			}
 
 			@Override

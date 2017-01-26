@@ -35,6 +35,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 //		this.context = context;
 //		this.roles = roles;
 //	}
+
 	public RoleActivityAdapter(Context context,List<Role> roles) {
 		this.context = context;
 		this.roles = new ArrayList<>();
@@ -72,11 +73,13 @@ public class RoleActivityAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
+
+		viewHolder.role_title.setText("우선순위 "+String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
-//    색깔 불러오는데 자원을 많이 먹어서 주석처리
-//		viewHolder.cp_rolePercent.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 //		viewHolder.cp_rolePercent.setProgress(100);
-		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRolePrimary()));
+		//하나하나 증가하게 만들기기
+		viewHolder.role_subTitle.setText("역할을 하나하나 실천해 나가세요!");
+		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getId()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());
 
@@ -88,6 +91,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 		this.roles = roles;
 	}
 
+	//색 추가로 더 넣어줘야 함
 	final int[] bgColor= {R.color.holo_green_dark,R.color.primary,R.color.colorAccent,R.color.body_background_green,
 	R.color.suggestion_highlight_text,R.color.primary};
 
@@ -102,6 +106,10 @@ public class RoleActivityAdapter extends BaseAdapter {
 		RelativeLayout rl_roleItemTop;
 		@BindView(R.id.cp_rolePercent)
 		CircleProgress cp_rolePercent;
+		@BindView(R.id.activity_role_title)
+		TextView role_title;
+		@BindView(R.id.activity_role_subTitle)
+		TextView role_subTitle;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

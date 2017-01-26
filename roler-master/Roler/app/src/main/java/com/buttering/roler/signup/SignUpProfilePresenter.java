@@ -24,6 +24,7 @@ import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -151,6 +152,33 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 		}).observeOn(AndroidSchedulers.mainThread());
 
+	}
+
+
+	@Override
+	public Observable<String> loadProfileImg(String email) {
+
+		return Observable.create(subscriber -> {
+			addSubscription(fileService
+					.loadProfileImg(email)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(new Observer<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+
+						}
+					}));
+		});
 	}
 
 }

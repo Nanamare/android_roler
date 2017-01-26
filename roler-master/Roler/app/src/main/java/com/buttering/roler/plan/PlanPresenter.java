@@ -65,7 +65,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 					@Override
 					public void onError(Throwable e) {
-
+						e.printStackTrace();
 					}
 
 					@Override
@@ -140,7 +140,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<Integer>() {
 					@Override
 					public void onCompleted() {
-
 					}
 
 					@Override
@@ -177,24 +176,24 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 	@Override
 	public void deleteTodo(int id) {
 		addSubscription(todoService
-		.deleteTodo(id)
-		.observeOn(AndroidSchedulers.mainThread())
-		.subscribe(new Subscriber<Void>() {
-			@Override
-			public void onCompleted() {
-				unsubscribe();
-			}
+				.deleteTodo(id)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+						unsubscribe();
+					}
 
-			@Override
-			public void onError(Throwable e) {
-				onError(e);
-			}
+					@Override
+					public void onError(Throwable e) {
+						onError(e);
+					}
 
-			@Override
-			public void onNext(Void aVoid) {
-				onCompleted();
-			}
-		}));
+					@Override
+					public void onNext(Void aVoid) {
+						onCompleted();
+					}
+				}));
 	}
 
 

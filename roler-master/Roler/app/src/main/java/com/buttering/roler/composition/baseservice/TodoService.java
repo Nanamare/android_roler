@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,8 @@ public class TodoService extends BaseService {
 									subscriber.onNext(todoList);
 
 								} else {
-									subscriber.onError(new Throwable());
+									List<Todo> emptyTodo = new ArrayList<>();
+									subscriber.onNext(emptyTodo);
 								}
 
 							} catch (IOException e) {
@@ -138,7 +140,7 @@ public class TodoService extends BaseService {
 						private int parseParams(String json) {
 
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String result = ja.get("result").getAsString();
+							String result = ja.get("id").getAsString();
 							int id = Integer.valueOf(result);
 
 							return id;

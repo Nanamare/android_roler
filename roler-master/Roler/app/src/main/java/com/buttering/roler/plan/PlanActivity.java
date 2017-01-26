@@ -188,14 +188,16 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 					allTodoList.get(currentPosition).add(todo);
 					todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 					rv_todolist.setAdapter(todoAdapter);
+//					todoAdapter.notifyDataSetChanged();
 					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Calendar calendar = Calendar.getInstance();
 					String date = sdf.format(calendar.getTime());
 					int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 					planPresenter.addTodo(value
 							, 1, date, role_id
-							, Integer.valueOf(MyInfoDAO.getInstance().getUserId()),false);
-//                    todoAdapter.notifyDataSetChanged();
+							, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), false);
+//					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+//					todoAdapter.notifyDataSetChanged();
 				} else {
 					Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
 				}
@@ -250,6 +252,16 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		allTodoList.add(todolist);
 
 		//꼭 고쳐야하는 코드
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
 		allTodoList.add(todolist);
 		allTodoList.add(todolist);
 		allTodoList.add(todolist);
@@ -390,7 +402,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void setTodoListId(int id) {
-		allTodoList.get(currentPosition).get(allTodoList.get(currentPosition).size()-1).setId(id);
+		allTodoList.get(currentPosition).get(allTodoList.get(currentPosition).size() - 1).setId(id);
 	}
 
 	@Override
@@ -410,6 +422,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			allTodoList.set(currentPosition, todoList);
 			todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 			rv_todolist.setAdapter(todoAdapter);
+//			todoAdapter.notifyDataSetChanged();
 		}
 	}
 
