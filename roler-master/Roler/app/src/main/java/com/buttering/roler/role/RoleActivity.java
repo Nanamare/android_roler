@@ -105,7 +105,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
     private void setProfileImage() {
         Glide.with(this)
-                .load("http://52.78.65.255:3000/sign/kozy@naver.com")
+                .load(MyInfoDAO.getInstance().getPicUrl())
                 .into(iv_picture);
 //        .load parameter init : MyInfoDAO.getInstance().getPicUrl()
     }

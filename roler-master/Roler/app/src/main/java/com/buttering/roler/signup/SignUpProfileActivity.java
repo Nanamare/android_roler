@@ -29,11 +29,14 @@ import android.widget.Toast;
 
 import com.buttering.roler.*;
 import com.buttering.roler.VO.MyInfoDAO;
+import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.util.SharePrefUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,6 +45,8 @@ import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SignUpProfileActivity extends AppCompatActivity implements ISignUpProfileView {
 
@@ -123,7 +128,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 		setLayoutInit();
 
-		presenter = new SignUpProfilePresenter(SignUpProfileActivity.this, this);
+		presenter = new SignUpProfilePresenter(this);
 
 		setGender();
 
@@ -240,16 +245,36 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 						.signUp(email, passwd, fullName)
 						.flatMap(user -> {
 							MyInfoDAO.getInstance().setMyUserInfo(user);
-							MyInfoDAO.getInstance().saveAccountInfo(MyInfoDAO.getInstance().getUserId(),email, passwd,fullName,"NULL");
+							MyInfoDAO.getInstance().saveAccountInfo(MyInfoDAO.getInstance().getUserId(), email, passwd, fullName, "NULL");
 							return null;
 						})
 						.subscribe(new Subscriber<Object>() {
 							@Override
 							public void onCompleted() {
+
+								if (imgfile != null) {
+									presenter.uploadProfileImg(imgfile)
+											.subscribe(new Subscriber<String>() {
+												@Override
+												public void onCompleted() {
+													unsubscribe();
+												}
+
+												@Override
+												public void onError(Throwable e) {
+													e.printStackTrace();
+												}
+
+												@Override
+												public void onNext(String s) {
+													onCompleted();
+												}
+											});
+								}
+
 								hideLoadingBar();
-								presenter.uploadProfileImg(imgfile);
 								SharePrefUtil.putSharedPreference("isLoggedIn", true);
-								Intent intent = new Intent(getApplicationContext(),PlanActivity.class);
+								Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 								startActivity(intent);
 								finish();
 							}
@@ -261,6 +286,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 							@Override
 							public void onNext(Object o) {
+
 
 							}
 						});
@@ -343,7 +369,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	private File createImageFile() throws IOException {
 		// Create an image file name
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-		String imageFileName = ""+ timeStamp + "_";
+		String imageFileName = "" + timeStamp + "_";
 		File storageDir = Environment.getExternalStoragePublicDirectory(
 				Environment.DIRECTORY_PICTURES);
 		File image = File.createTempFile(
@@ -355,7 +381,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		// Save a file: path for use with ACTION_VIEW intents
 		mCurrentPhotoPath = "file:" + image.getAbsolutePath();
 		return image;
-
 	}
 
 	@Override
@@ -415,6 +440,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 					if (bp != null) {
 						Bitmap rotatedBitmap = Bitmap.createBitmap(bp, 0, 0, bp.getWidth(), bp.getHeight(), matrix, true);
 						circleImageView.setImageBitmap(resizeBitmap(rotatedBitmap, 2048));
+						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath(), imgfile.getName());
 
 					}
 				} else {
@@ -466,6 +492,37 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 		return Bitmap.createScaledBitmap(
 				src, newWidth, newHeight, true);
+	}
+
+	// Bitmap to File
+	public void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath,
+	                                  String filename) {
+
+		imgfile = new File(strFilePath);
+
+		// If no folders
+		if (!imgfile.exists()) {
+			imgfile.mkdirs();
+			// Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+		}
+
+		File fileCacheItem = new File(strFilePath + filename);
+		OutputStream out = null;
+
+		try {
+			fileCacheItem.createNewFile();
+			out = new FileOutputStream(fileCacheItem);
+
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 

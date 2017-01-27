@@ -1,5 +1,6 @@
 package com.buttering.roler.plan;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ import rx.schedulers.Schedulers;
 public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 	private TodoService todoService;
-	private IPlanView view;
+	static private IPlanView view;
 	private RoleService roleService;
 	private List<Role> roles;
 	private Context context;
@@ -97,7 +98,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 					@Override
 					public void onNext(List<Role> role) {
-						roles = role;
 						view.setRoleContent(role);
 						onCompleted();
 
@@ -169,7 +169,10 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 		float percent = trueCount / (trueCount + falseCount) * 100;
 		int parserPercent = (int) percent;
-		SharePrefUtil.putSharedPreference("percent", parserPercent);
+
+		//전달 하는 함수 만들기
+		view.refreshProgress(parserPercent);
+
 
 	}
 

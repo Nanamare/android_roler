@@ -4,7 +4,10 @@ import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.composition.serialization.RolerResponse;
+import com.buttering.roler.util.FileUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +18,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -24,6 +28,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 /**
@@ -42,14 +47,64 @@ public class FileService extends BaseService {
 	}
 
 
-	public Observable<ResponseBody> uploadProfileImg(MultipartBody.Part file) {
+	public Observable<String> uploadProfileImg(MultipartBody.Part file) {
 
-		// finally, execute the request
-		return getAPI()
-				.uploadProfileImg(
-						file,
-						MyInfoDAO.getInstance().getMyUserInfo().getEmail())
-				.subscribeOn(Schedulers.io());
+		return Observable.create(subscriber -> {
+
+			if (file == null) {
+				subscriber.onNext("");
+				subscriber.onCompleted();
+			} else {
+				getAPI()
+						.uploadProfileImg(file,MyInfoDAO.getInstance().getEmail())
+						.subscribeOn(Schedulers.io())
+						.subscribe(new Subscriber<ResponseBody>() {
+							@Override
+							public void onCompleted() {
+								subscriber.onCompleted();
+							}
+
+							@Override
+							public void onError(Throwable e) {
+								subscriber.onNext("");
+							}
+
+							@Override
+							public void onNext(ResponseBody responseBody) {
+								try {
+									String json = responseBody.string();
+									if (getStatusResult(json) == "true") {
+										MyInfoDAO.getInstance().setPicUrl(parseResult(json));
+										subscriber.onNext(parseResult(json));
+									}
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+
+//							private String parseUrl(String json) {
+//								try {
+//									JSONObject object = new JSONObject(json);
+//									JSONArray jsonArray = new JSONArray(object.getString("params"));
+//									String todoJson = jsonArray.toString();
+//									return todoJson;
+//								} catch (JSONException e) {
+//									e.printStackTrace();
+//									return "false";
+//								}
+//							}
+
+							private String parseResult(String json) {
+								JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+								String result = ja.get("imageUrl").getAsString();
+								return result;
+							}
+
+						});
+			}
+
+
+		});
 	}
 
 	public Observable<ResponseBody> loadProfileImg(String email){
@@ -75,11 +130,10 @@ public class FileService extends BaseService {
 
 
 		@Multipart
-		@POST("sign/photo")
+		@POST("sign/upload/{email}")
 		Observable<ResponseBody> uploadProfileImg(
 				@Part MultipartBody.Part file,
-				@Field("email") String email);
-
+				@Path("email") String email);
 
 	}
 

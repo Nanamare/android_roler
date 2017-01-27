@@ -28,6 +28,7 @@ import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by kinamare on 2016-12-17.
@@ -36,15 +37,13 @@ import rx.android.schedulers.AndroidSchedulers;
 public class SignUpProfilePresenter extends BasePresenter implements ISignUpProfilePresenter {
 
 	private ISignUpProfileView view;
-	private Activity activity;
-	private Subscription signUpSubscription;
 	private UserService userService;
 	private FileService fileService;
 
-	public SignUpProfilePresenter(Activity activity, ISignUpProfileView view) {
+	public SignUpProfilePresenter(ISignUpProfileView view) {
 		this.view = view;
-		this.activity = activity;
 		this.userService = new UserService();
+		this.fileService = new FileService();
 
 	}
 
@@ -68,64 +67,72 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 		return user;
 	}
 
+//	@Override
+//	public Observable<String> uploadProfileImg(File file) {
+//
+//		return Observable.create(subscriber -> {
+//
+//			if (file == null) {
+//				subscriber.onNext("");
+//				subscriber.onCompleted();
+//			} else {
+//				fileService
+//						.uploadProfileImg(FileUtil.makeMultiPartBody(file))
+//						.subscribe(new Subscriber<ResponseBody>() {
+//							@Override
+//							public void onCompleted() {
+//								subscriber.onCompleted();
+//							}
+//
+//							@Override
+//							public void onError(Throwable e) {
+//								subscriber.onNext("");
+//							}
+//
+//							@Override
+//							public void onNext(ResponseBody responseBody) {
+//								try {
+//									String json = responseBody.string();
+//									if (parseResult(json) == "true") {
+//										MyInfoDAO.getInstance().setPicUrl(parseResult(json));
+//										subscriber.onNext(parseResult(json));
+//									}
+//								} catch (IOException e) {
+//									e.printStackTrace();
+//								}
+//							}
+//
+////							private String parseUrl(String json) {
+////								try {
+////									JSONObject object = new JSONObject(json);
+////									JSONArray jsonArray = new JSONArray(object.getString("params"));
+////									String todoJson = jsonArray.toString();
+////									return todoJson;
+////								} catch (JSONException e) {
+////									e.printStackTrace();
+////									return "false";
+////								}
+////							}
+//
+//							private String parseResult(String json) {
+//								JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+//								String result = ja.get("imageUrl").getAsString();
+//								return result;
+//							}
+//
+//						});
+//			}
+//
+//
+//		});
+//	}
+
 	@Override
 	public Observable<String> uploadProfileImg(File file) {
 
-		return Observable.create(subscriber -> {
-
-			if (file == null) {
-				subscriber.onNext("");
-				subscriber.onCompleted();
-			} else {
-				fileService
-						.uploadProfileImg(FileUtil.makeMultiPartBody(file))
-						.subscribe(new Subscriber<ResponseBody>() {
-							@Override
-							public void onCompleted() {
-								subscriber.onCompleted();
-							}
-
-							@Override
-							public void onError(Throwable e) {
-								subscriber.onNext("");
-							}
-
-							@Override
-							public void onNext(ResponseBody responseBody) {
-								try {
-									String json = responseBody.string();
-									if (parseResult(json) == "true") {
-										MyInfoDAO.getInstance().setPicUrl(json);
-										subscriber.onNext(parseUrl(json));
-									}
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}
-
-							private String parseUrl(String json) {
-								try {
-									JSONObject object = new JSONObject(json);
-									JSONArray jsonArray = new JSONArray(object.getString("params"));
-									String todoJson = jsonArray.toString();
-									return todoJson;
-								} catch (JSONException e) {
-									e.printStackTrace();
-									return "false";
-								}
-							}
-
-							private String parseResult(String json) {
-								JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-								String result = ja.get("result").getAsString();
-								return result;
-							}
-
-						});
-			}
-
-
-		});
+		return fileService
+				.uploadProfileImg(FileUtil.makeMultiPartBody(file))
+				.observeOn(AndroidSchedulers.mainThread());
 	}
 
 	@Override

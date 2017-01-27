@@ -17,4 +17,5 @@ public interface IPlanView {
 	void showLoadingBar();
 	void setTodo(Todo todo);
 	void setTodoListId(int id);
+	void refreshProgress(int score);
 }

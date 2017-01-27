@@ -18,6 +18,16 @@ public class Role implements Serializable {
 	private int user_id;
 	private int role_id;
 
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	private int progress;
+
 	public int getRole_id() {
 		return role_id;
 	}

@@ -39,7 +39,6 @@ public class PlanActivityAdapter extends BaseAdapter {
 	public PlanActivityAdapter(Context context, List<Role> roles, int progress) {
 		this.context = context;
 		this.roles = roles;
-		this.progress = progress;
 	}
 
 
@@ -78,7 +77,7 @@ public class PlanActivityAdapter extends BaseAdapter {
 		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
-		viewHolder.cp_planPercent.setProgress(progress);
+		viewHolder.cp_planPercent.setProgress(roles.get(position).getProgress());
 
 		return convertView;
 	}

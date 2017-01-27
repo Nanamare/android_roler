@@ -13,6 +13,6 @@ import okhttp3.RequestBody;
 public class FileUtil {
 	public static MultipartBody.Part makeMultiPartBody(File file) {
 		RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-		return MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+		return MultipartBody.Part.createFormData("myfile", file.getName(), requestFile);
 	}
 }

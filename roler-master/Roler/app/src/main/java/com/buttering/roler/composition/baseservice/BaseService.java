@@ -87,6 +87,8 @@ public class BaseService<T> {
 		return "false";
 	}
 
+
+	//토큰
 //	private void createAuthHTTPClient(String authToken) {
 //
 //		this.httpClient = new OkHttpClient().newBuilder();

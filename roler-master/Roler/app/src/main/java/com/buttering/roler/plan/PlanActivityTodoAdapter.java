@@ -30,6 +30,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	private List<Todo> todos;
 	private int itemLayout;
 	private IPlanPresenter presenter;
+	private IPlanView view;
 
 
 

@@ -364,8 +364,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	public void setRoleContent(List<Role> roleList) {
 		if (adapter != null) {
 			allRoleList = roleList;
-			int percent = SharePrefUtil.getIntSharedPreference("percent");
-			adapter = new PlanActivityAdapter(this, allRoleList, percent);
+			adapter = new PlanActivityAdapter(this, allRoleList);
 			vp_rolePlanPage.setAdapter(adapter);
 //            adapter.setRoleList(roleList);
 //            adapter.notifyDataSetChanged();
@@ -406,6 +405,17 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	@Override
+	public void refreshProgress(int score) {
+//		allRoleList.get(((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id())
+//				.setProgress(score);
+//		allRoleList.get(vp_rolePlanPage.getScrollPosition())
+//				.setProgress(score);
+//		adapter.notifyDataSetChanged();
+		adapter = new PlanActivityAdapter(this, allRoleList,score);
+		vp_rolePlanPage.setAdapter(adapter);
+	}
+
+	@Override
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
@@ -415,14 +425,13 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@Override
 	public void setTodoList(List<Todo> todoList) {
 		if (todoAdapter != null) {
-//            todoAdapter.setTodoList(todoList);
-			//            todoAdapter.notifyDataSetChanged();
 			todolist.clear();
 			todolist.addAll(todoList);
 			allTodoList.set(currentPosition, todoList);
 			todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 			rv_todolist.setAdapter(todoAdapter);
-//			todoAdapter.notifyDataSetChanged();
+			//            todoAdapter.setTodoList(todoList);
+			//            todoAdapter.notifyDataSetChanged();
 		}
 	}
 
