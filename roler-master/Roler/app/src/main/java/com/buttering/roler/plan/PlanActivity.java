@@ -268,6 +268,22 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		allTodoList.add(todolist);
 		allTodoList.add(todolist);
 		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+		allTodoList.add(todolist);
+
+
 
 		return allTodoList;
 
@@ -311,7 +327,9 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 		} else if (id == R.id.action_refresh) {
 
-			Toast.makeText(this, "refresh", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "refreshing...", Toast.LENGTH_SHORT).show();
+			planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+
 		}
 
 		return super.onOptionsItemSelected(item);

@@ -50,6 +50,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 	private int priority;
 	private int role_id;
 	private IRolePresenter presenter;
+	private boolean isAdd;
 
 
 	@Override
@@ -64,6 +65,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		Role role = (Role) intent.getSerializableExtra("Role");
 		if (role == null) {
 			//새로 추가 더하기
+			isAdd = true;
 			et_roleContent.setText("");
 			et_roleName.setText("");
 			user_id = Integer.valueOf(MyInfoDAO.getInstance().getUserId());
@@ -108,9 +110,12 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 					role.setRolePrimary(Integer.parseInt("" + et_priority.getText().charAt(0)));
 					role.setUser_id(user_id);
 					Intent intent = new Intent(getApplicationContext(), RoleActivity.class);
-					presenter.addRole(Integer.parseInt("" + et_priority.getText().charAt(0))
-							, et_roleName.getText().toString()
-							, et_roleContent.getText().toString(), user_id);
+					if(isAdd) {
+						presenter.addRole(Integer.parseInt("" + et_priority.getText().charAt(0))
+								, et_roleName.getText().toString()
+								, et_roleContent.getText().toString(), user_id);
+						isAdd = false;
+					}
 					intent.putExtra("Role", role);
 					startActivity(intent);
 				}

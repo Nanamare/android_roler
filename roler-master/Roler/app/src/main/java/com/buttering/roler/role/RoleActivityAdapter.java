@@ -1,6 +1,8 @@
 package com.buttering.roler.role;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 //		this.roles = roles;
 //	}
 
-	public RoleActivityAdapter(Context context,List<Role> roles) {
+	public RoleActivityAdapter(Context context, List<Role> roles) {
 		this.context = context;
 		this.roles = new ArrayList<>();
 		this.roles = roles;
@@ -74,7 +76,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 		}
 
 
-		viewHolder.role_title.setText("우선순위 "+String.valueOf(roles.get(position).getRolePrimary()));
+		viewHolder.role_title.setText("우선순위 " + String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 //		viewHolder.cp_rolePercent.setProgress(100);
 		//하나하나 증가하게 만들기기
@@ -82,6 +84,15 @@ public class RoleActivityAdapter extends BaseAdapter {
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getId()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());
+
+//		//delete
+//		viewHolder.role_card.setOnLongClickListener(new View.OnLongClickListener() {
+//			@Override
+//			public boolean onLongClick(View v) {
+//
+//				return true;
+//			}
+//		});
 
 		return convertView;
 	}
@@ -92,8 +103,8 @@ public class RoleActivityAdapter extends BaseAdapter {
 	}
 
 	//색 추가로 더 넣어줘야 함
-	final int[] bgColor= {R.color.holo_green_dark,R.color.primary,R.color.colorAccent,R.color.body_background_green,
-	R.color.suggestion_highlight_text,R.color.primary};
+	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
+			R.color.suggestion_highlight_text, R.color.primary};
 
 	public static class ViewHolder {
 		@BindView(R.id.tv_rolePrimary)
@@ -110,6 +121,8 @@ public class RoleActivityAdapter extends BaseAdapter {
 		TextView role_title;
 		@BindView(R.id.activity_role_subTitle)
 		TextView role_subTitle;
+		@BindView(R.id.role_card)
+		RelativeLayout role_card;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

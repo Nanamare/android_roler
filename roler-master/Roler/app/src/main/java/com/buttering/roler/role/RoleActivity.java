@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,6 +77,29 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		//set a adapter
 		adapter = new RoleActivityAdapter(this, allRoleList);
 		vp_roleDetail.setAdapter(adapter);
+
+		vp_roleDetail.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+
+				AlertDialog.Builder alert = new AlertDialog.Builder(RoleActivity.this);
+				alert.setMessage("역할을 삭제 하시겠습니까?").setCancelable(false)
+						.setPositiveButton("확인", (dialog, which) -> {
+							allRoleList.remove(vp_roleDetail.getScrollPosition());
+							adapter = new RoleActivityAdapter(RoleActivity.this, allRoleList);
+							vp_roleDetail.setAdapter(adapter);
+						})
+						.setNegativeButton("취소", (dialog, which) -> {
+
+						});
+
+				AlertDialog alertDialog = alert.create();
+				alertDialog.show();
+
+				return false;
+			}
+		});
+
 
 		//load RoleContent
 		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
