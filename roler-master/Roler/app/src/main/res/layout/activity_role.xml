@@ -8,11 +8,11 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_picture"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/abcde"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="40dp"/>
 
     <LinearLayout
         android:gravity="center_horizontal"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <TextView
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,9 +47,11 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/activity_role_email"
             android:layout_below="@id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Roler@roler.com"/>
 
     </LinearLayout>
@@ -59,13 +61,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_profileLayout"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="150dp">
 
         <TextView
+            android:textSize="18sp"
             android:id="@+id/tv_editRoleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="역할 정보 추가"
+            android:text="역할 정보 추가하기"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
@@ -85,11 +88,10 @@
             android:layout_below="@id/tv_editRoleInfo"
             coverflow:coverHeight="200dp"
             coverflow:coverWidth="170dp"
-            coverflow:maxScaleFactor="1.5"
-            coverflow:reflectionGap="0px"
-            coverflow:rotationThreshold="0.5"
-            coverflow:scalingThreshold="0.5"
-            coverflow:spacing="0.6">
+            coverflow:maxScaleFactor="2.0"
+            coverflow:reflectionGap="1px"
+            coverflow:rotationThreshold="1.0"
+            coverflow:scalingThreshold="0.2">
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
         <!--<android.support.v4.view.ViewPager-->

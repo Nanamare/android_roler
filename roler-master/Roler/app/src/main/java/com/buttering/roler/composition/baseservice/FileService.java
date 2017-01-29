@@ -29,6 +29,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,6 +59,12 @@ public class FileService extends BaseService {
 				getAPI()
 						.uploadProfileImg(file,MyInfoDAO.getInstance().getEmail())
 						.subscribeOn(Schedulers.io())
+						.retry((integer, throwable) -> {
+							if(integer < 3) {
+								return true;
+							}
+							return throwable instanceof  IllegalStateException;
+						})
 						.subscribe(new Subscriber<ResponseBody>() {
 							@Override
 							public void onCompleted() {

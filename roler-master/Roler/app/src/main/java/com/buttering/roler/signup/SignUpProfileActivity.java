@@ -353,9 +353,18 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 							}
 						}
 					} else if (index == 1) {
-						Intent intent = new Intent(Intent.ACTION_PICK);
-						intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-						startActivityForResult(intent, RUQUEST_IMAGE_FROM_ALBUM);
+						imgfile = null;
+						try {
+							imgfile = createImageFile();
+						} catch (IOException ex) {
+							// Error occurred while creating the File
+							ex.printStackTrace();
+						}
+						if (imgfile != null) {
+							Intent intent = new Intent(Intent.ACTION_PICK);
+							intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+							startActivityForResult(intent, RUQUEST_IMAGE_FROM_ALBUM);
+						}
 					} else {
 						Toast.makeText(getApplicationContext(), items[index], Toast.LENGTH_SHORT).show();
 					}
@@ -396,6 +405,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 						e.printStackTrace();
 					}
 
+					SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
 					circleImageView.setImageBitmap(resizeBitmap(bp, 2048));
 
 					break;
@@ -440,7 +450,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 					if (bp != null) {
 						Bitmap rotatedBitmap = Bitmap.createBitmap(bp, 0, 0, bp.getWidth(), bp.getHeight(), matrix, true);
 						circleImageView.setImageBitmap(resizeBitmap(rotatedBitmap, 2048));
-						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath(), imgfile.getName());
+						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
 
 					}
 				} else {
@@ -494,32 +504,30 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 				src, newWidth, newHeight, true);
 	}
 
-	// Bitmap to File
-	public void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath,
-	                                  String filename) {
+	private void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath) {
 
 		imgfile = new File(strFilePath);
-
-		// If no folders
-		if (!imgfile.exists()) {
-			imgfile.mkdirs();
-			// Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-		}
-
-		File fileCacheItem = new File(strFilePath + filename);
 		OutputStream out = null;
 
-		try {
-			fileCacheItem.createNewFile();
-			out = new FileOutputStream(fileCacheItem);
+		try
+		{
+			imgfile.createNewFile();
+			out = new FileOutputStream(imgfile);
 
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				out.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
