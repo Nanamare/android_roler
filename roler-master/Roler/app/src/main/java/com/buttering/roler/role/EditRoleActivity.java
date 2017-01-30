@@ -59,7 +59,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		setContentView(R.layout.activity_edit_role);
 		ButterKnife.bind(this);
 		setToolbar();
-		presenter = new RolePresenter(this,this);
+		presenter = new RolePresenter(this, this);
 
 		Intent intent = getIntent();
 		Role role = (Role) intent.getSerializableExtra("Role");
@@ -89,9 +89,8 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 
 		setPriority();
 		generatePicker();
-		presenter.check_blank(et_priority,et_roleName,et_roleContent);
+		presenter.check_blank(et_priority, et_roleName, et_roleContent);
 		putData();
-
 
 
 	}
@@ -100,7 +99,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		done_role_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (checkRolePrimary(et_priority.getText().toString())) {
+				if (checkRolePrimary(et_priority.getText().toString()) && checkText()) {
 					Role role = new Role();
 					role.setId(id);
 					//아직 필요 없는 코드
@@ -110,17 +109,32 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 					role.setRolePrimary(Integer.parseInt("" + et_priority.getText().charAt(0)));
 					role.setUser_id(user_id);
 					Intent intent = new Intent(getApplicationContext(), RoleActivity.class);
-					if(isAdd) {
+					if (isAdd) {
 						presenter.addRole(Integer.parseInt("" + et_priority.getText().charAt(0))
 								, et_roleName.getText().toString()
 								, et_roleContent.getText().toString(), user_id);
 						isAdd = false;
+					} else {
+						presenter.editRole(Integer.parseInt("" + et_priority.getText().charAt(0))
+								, et_roleName.getText().toString()
+								, et_roleContent.getText().toString(), role_id);
 					}
 					intent.putExtra("Role", role);
 					startActivity(intent);
 				}
 			}
 		});
+	}
+
+	private boolean checkText() {
+		String content = et_roleContent.getText().toString();
+		String roleName = et_roleName.getText().toString();
+		if (!content.isEmpty() && !roleName.isEmpty()) {
+			return true;
+		} else {
+			Toast.makeText(this, "텍스트를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 	}
 
 	private boolean checkRolePrimary(String primary) {
@@ -219,6 +233,11 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 
 	@Override
 	public void addRole() {
+
+	}
+
+	@Override
+	public void refreshRoleContent() {
 
 	}
 }

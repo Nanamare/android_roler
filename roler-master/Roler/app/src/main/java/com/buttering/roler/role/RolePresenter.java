@@ -1,7 +1,6 @@
 package com.buttering.roler.role;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -9,19 +8,13 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.RoleService;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxCheckedTextView;
-import com.jakewharton.rxbinding.widget.RxCompoundButton;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 import static com.buttering.roler.R.id.activity_edit_role_btn;
 
@@ -42,6 +35,13 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 		this.activity = activity;
 		this.roleService = new RoleService();
 		this.view = view;
+
+	}
+
+
+	public RolePresenter(Activity activity) {
+		this.activity = activity;
+		this.roleService = new RoleService();
 
 	}
 
@@ -118,6 +118,8 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 			if (isClick && isTitle && isSubTitle) {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.colorPrimary);
 
+			} else {
+				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.soft_grey);
 			}
 		});
 
@@ -129,6 +131,9 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.colorPrimary);
 
 			}
+			else {
+				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.soft_grey);
+			}
 		});
 
 		Observable<CharSequence> roleSubTitle = RxTextView.textChanges(activity_edit_roleSubTitle);
@@ -138,10 +143,63 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.colorPrimary);
 
 			}
+			else {
+				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.soft_grey);
+			}
 
 		});
 
 
+	}
+
+	@Override
+	public void deleteRole(int role_id) {
+		addSubscription(
+				roleService
+						.deleteRole(role_id)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe(new Subscriber<Void>() {
+							@Override
+							public void onCompleted() {
+								view.refreshRoleContent();
+							}
+
+							@Override
+							public void onError(Throwable e) {
+
+							}
+
+							@Override
+							public void onNext(Void aVoid) {
+
+							}
+						})
+		);
+	}
+
+	@Override
+	public void editRole(int rolePrimary,String roleName,String roleContent,int user_id) {
+		addSubscription(
+				roleService
+						.editRole(rolePrimary, roleName, roleContent, user_id)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe(new Subscriber<Void>() {
+							@Override
+							public void onCompleted() {
+								view.refreshRoleContent();
+							}
+
+							@Override
+							public void onError(Throwable e) {
+
+							}
+
+							@Override
+							public void onNext(Void aVoid) {
+
+							}
+						})
+		);
 	}
 
 }

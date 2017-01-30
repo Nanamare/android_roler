@@ -13,4 +13,5 @@ public interface IRoleView {
 	void showLoadingBar();
 	void hideLoadingBar();
 	void addRole();
+	void refreshRoleContent();
 }

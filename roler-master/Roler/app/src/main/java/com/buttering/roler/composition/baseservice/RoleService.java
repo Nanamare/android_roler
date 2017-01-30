@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
@@ -137,6 +139,83 @@ public class RoleService extends BaseService {
 
 	}
 
+	public  Observable<Void> deleteRole(int role_id){
+		return Observable.create(subscriber -> {
+			getAPI().deleteRole(role_id)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+							subscriber.onCompleted();
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									subscriber.onNext(null);
+
+								} else {
+									subscriber.onError(new Throwable());
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+
+						}
+					});
+
+		});
+	}
+
+	public Observable<Void> editRole(int rolePrimary, String roleName, String roleContent, int role_id) {
+		return Observable.create(subscriber -> {
+			getAPI().editRole(rolePrimary, roleName, roleContent, role_id)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+							unsubscribe();
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									subscriber.onNext(null);
+
+								} else {
+									subscriber.onError(new Throwable());
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+
+						}
+
+					});
+
+		});
+
+	}
+
 	public interface RoleApi {
 
 		@GET("/role/read")
@@ -148,6 +227,17 @@ public class RoleService extends BaseService {
 				, @Field("roleName") String roleName
 				, @Field("roleContent") String roleContent
 				, @Field("user_id") int user_id);
+
+
+		@DELETE("/role/delete")
+		Observable<ResponseBody> deleteRole(@Query("id") int role_id);
+
+		@FormUrlEncoded
+		@PUT("/role/update")
+		Observable<ResponseBody> editRole(@Field("rolePrimary") int rolePrimary
+				, @Field("roleName") String roleName
+				, @Field("roleContent") String roleContent
+				, @Field("role_id") int role_id);
 
 	}
 }

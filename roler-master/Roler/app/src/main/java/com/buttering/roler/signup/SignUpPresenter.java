@@ -71,7 +71,7 @@ public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 				if(isId&&isPwd){
 					//view.함수로 해야함함
 					activity.findViewById(R.id.activity_signup_btn).setEnabled(true);
-					activity.findViewById(R.id.activity_signup_btn).setBackgroundColor(Color.RED);
+					activity.findViewById(R.id.activity_signup_btn).setBackgroundResource(R.color.colorPrimary);
 				} else {
 					activity.findViewById(R.id.activity_signup_btn).setEnabled(false);
 					activity.findViewById(R.id.activity_signup_btn).setBackgroundColor(Color.parseColor("#508b999b"));
@@ -101,7 +101,7 @@ public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 					}
 					activity.findViewById(R.id.activity_signup_tv_show).setVisibility(View.VISIBLE);
 					activity.findViewById(R.id.activity_signup_btn).setEnabled(true);
-					activity.findViewById(R.id.activity_signup_btn).setBackgroundColor(Color.RED);
+					activity.findViewById(R.id.activity_signup_btn).setBackgroundResource(R.color.colorPrimary);
 				} else {
 					activity.findViewById(R.id.activity_signup_tv_show).setVisibility(View.GONE);
 					activity.findViewById(R.id.activity_signup_btn).setEnabled(false);

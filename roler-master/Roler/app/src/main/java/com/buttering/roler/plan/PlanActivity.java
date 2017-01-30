@@ -284,7 +284,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		allTodoList.add(todolist);
 
 
-
 		return allTodoList;
 
 	}
@@ -429,7 +428,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 //		allRoleList.get(vp_rolePlanPage.getScrollPosition())
 //				.setProgress(score);
 //		adapter.notifyDataSetChanged();
-		adapter = new PlanActivityAdapter(this, allRoleList,score);
+		adapter = new PlanActivityAdapter(this, allRoleList, score);
 		vp_rolePlanPage.setAdapter(adapter);
 	}
 

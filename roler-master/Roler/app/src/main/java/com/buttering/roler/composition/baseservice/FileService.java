@@ -132,7 +132,7 @@ public class FileService extends BaseService {
 				@Query("fileType") String fileType,
 				@Part MultipartBody.Part file);
 
-		@GET("/sign/{email}")
+		@GET("/sign/upload/{email}")
 		Observable<ResponseBody> loadProfileImg(@Path("email")String email);
 
 

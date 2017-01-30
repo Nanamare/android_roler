@@ -28,12 +28,16 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
+import com.buttering.roler.VO.Role;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
@@ -354,7 +358,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		endTime.set(Calendar.HOUR_OF_DAY, 5);
 		endTime.set(Calendar.MINUTE, 0);
 		event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-		event.setColor(getResources().getColor(R.color.c1));
+		event.setColor(getResources().getColor(R.color.colorPrimary));
 		events.add(event);
 
 		startTime = Calendar.getInstance();
@@ -407,5 +411,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		return events;
 
 	}
+
 
 }

@@ -52,13 +52,13 @@
                     android:text="임시임시임시제목"
                     android:textSize="13sp"/>
 
-                <Button
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_action_settings"/>
+                <!--<Button-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:background="@drawable/ic_action_settings"/>-->
 
             </RelativeLayout>
 
@@ -132,12 +132,12 @@
 
                     <com.github.lzyzsd.circleprogress.CircleProgress
                         android:id="@+id/cp_rolePercent"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         custom:circle_finished_color="#f5a4c8"
-                        custom:circle_progress="35"
+                        custom:circle_progress="0"
                         custom:circle_text_color="@color/com_facebook_blue"
                         custom:circle_unfinished_color="#ffffff"/>
                 </FrameLayout>

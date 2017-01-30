@@ -67,7 +67,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     custom:circle_unfinished_color="#ffffff"
-                    custom:circle_text_color="#f5a4c8"
+                    custom:circle_text_color="@color/primary"
                     custom:circle_finished_color="#f5a4c8"
                     android:layout_width="50dp"
                     android:layout_height="50dp"

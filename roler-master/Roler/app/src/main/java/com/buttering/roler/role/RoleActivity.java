@@ -85,9 +85,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 				AlertDialog.Builder alert = new AlertDialog.Builder(RoleActivity.this);
 				alert.setMessage("역할을 삭제 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
-							allRoleList.remove(vp_roleDetail.getScrollPosition());
-							adapter = new RoleActivityAdapter(RoleActivity.this, allRoleList);
-							vp_roleDetail.setAdapter(adapter);
+							if (allRoleList.size() != 1) {
+								presenter.deleteRole(((Role)adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
+//								allRoleList.remove(vp_roleDetail.getScrollPosition());
+							} else {
+								Toast.makeText(RoleActivity.this, "더 이상 삭제할수 없습니다.", Toast.LENGTH_SHORT).show();
+							}
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
 
@@ -140,7 +143,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		Glide.with(this)
 				.load(MyInfoDAO.getInstance().getPicUrl())
 				.into(iv_picture);
-//        .load parameter init : MyInfoDAO.getInstance().getPicUrl()
 	}
 
 	private void editRole() {
@@ -149,7 +151,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
-				intentSubActivity.putExtra("Role", (Role) adapter.getItem(position));
+				intentSubActivity.putExtra("Role", (Role) adapter.getItem(vp_roleDetail.getScrollPosition()));
 				startActivity(intentSubActivity);
 			}
 		});
@@ -268,6 +270,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void refreshRoleContent() {
+		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+
 	}
 
 
