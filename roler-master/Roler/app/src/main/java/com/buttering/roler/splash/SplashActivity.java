@@ -10,6 +10,7 @@ import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.util.NetUtil;
+import com.buttering.roler.util.SharePrefUtil;
 
 /**
  * Created by nanamare on 2016-07-30.
@@ -26,8 +27,7 @@ public class SplashActivity extends Activity {
 		if(NetUtil.isNetworkAvailable(getApplicationContext())) {
 			Intent intent = new Intent(this, LogInActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//			boolean isLoggedIn = SharePrefUtil.getBooleanSharedPreference("isLoggedIn");
-			boolean isLoggedIn = false;
+			boolean isLoggedIn = SharePrefUtil.getBooleanSharedPreference("isLoggedIn");
 			if (isLoggedIn) {
 
 				new Handler().postDelayed(() -> {

@@ -24,6 +24,7 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.signup.SignUpActivity;
+import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,6 +52,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private static final int REQUEST_WRITE_STORAGE = 112;
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private static final int GET_ACCOUNT = 111;
+	private static final int single_top_activity = 999;
 
 	private static final String TAG = "Login_Activity";
 	private static String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
@@ -137,6 +139,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	}
 
+
 	private void initFbService() {
 		if (checkPlayServices()) {
 
@@ -191,6 +194,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 								public void onCompleted() {
 									hideLoadingBar();
 									Toast.makeText(LogInActivity.this, "로그인 완료 환영합니다", Toast.LENGTH_SHORT).show();
+									SharePrefUtil.putSharedPreference("isLoggedIn", true);
 									Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 									startActivity(intent);
 									finish();
@@ -403,6 +407,16 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case single_top_activity: {
+
+			}
+		}
 	}
 
 }

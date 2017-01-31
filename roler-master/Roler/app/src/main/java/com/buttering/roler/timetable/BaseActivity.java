@@ -28,13 +28,16 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
+import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -45,29 +48,36 @@ import rx.Subscriber;
  * Created by Raquib-ul-Alam Kanak on 1/3/2014.
  * Website: http://alamkanak.github.io
  */
-public class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, ITimeView {
+
 	private static final int TYPE_DAY_VIEW = 1;
 	private static final int TYPE_THREE_DAY_VIEW = 2;
 	private static final int TYPE_WEEK_VIEW = 3;
+
 	private int mWeekViewType;
 	private int startTimeOfDay;
 	private int startMinOfDay;
 	private int endTimeOfDay;
 	private int endMinOfDay;
+
 	private String contents;
+
 	private boolean isCheck;
 
 	private List<WeekViewEvent> events;
 
+	private WeekView mWeekView;
 
-	WeekView mWeekView;
-	FloatingActionButton floatingActionButton;
+	private FloatingActionButton floatingActionButton;
 
+	private ITimePresenter presenter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
+
+		presenter = new TimePresenter(this);
 
 		setToolbar();
 
@@ -287,7 +297,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	protected String getEventTitle(Calendar time) {
 		return String.format("%02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-		//return "Chaeeun Fighting!";
+
 	}
 
 	@Override
@@ -314,13 +324,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-		//이슈 부분
+
 		events = new ArrayList<>();
 
 		if (isCheck == true) {
+
+			Random random = new Random();
 			Calendar startCalendar = Calendar.getInstance();
 			int nowMonth = startCalendar.get(Calendar.MONTH);
 			int nowYear = startCalendar.get(Calendar.YEAR);
+			int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
+			int nowSecond = startCalendar.get(Calendar.SECOND);
 			startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
 			startCalendar.set(Calendar.MINUTE, startMinOfDay);
 			startCalendar.set(Calendar.MONTH, nowMonth);
@@ -331,86 +345,32 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			endCalendar.set(Calendar.HOUR, endTimeOfDay);
 			endCalendar.set(Calendar.MONTH, nowMonth);
 			WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
-			event.setColor(getResources().getColor(R.color.c1));
+			event.setColor(bgColor[random.nextInt(6)]);
 			events.add(event);
 			isCheck = false;
 
+			Calendar calendar = Calendar.getInstance();
+			//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			calendar.set(nowYear,nowMonth,nowDay,startTimeOfDay,startMinOfDay,nowSecond);
+			String startTime = sdf.format(calendar.getTime());
+
+			Calendar calendar2 = Calendar.getInstance();
+			calendar.set(nowYear,nowMonth,nowDay,endTimeOfDay,endMinOfDay,nowSecond);
+			String endTime = sdf.format(calendar2.getTime());
+
+			Calendar cal = Calendar.getInstance();
+			DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
+			String date = dateType.format(cal.getTime());
+			presenter.addSchdule(getEventTitle(startCalendar) + contents,startTime,endTime,date
+					,Integer.valueOf(MyInfoDAO.getInstance().getUserId()),0);
 		}
 
-		Calendar startTime = Calendar.getInstance();
-		startTime.set(Calendar.HOUR_OF_DAY, 3);
-		startTime.set(Calendar.MINUTE, 0);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		Calendar endTime = (Calendar) startTime.clone();
-		endTime.add(Calendar.HOUR, 1);
-		endTime.set(Calendar.MONTH, newMonth - 1);
-		WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime) + "어머니 생신 선물 사기 \n 카페 쿠폰 쓰기", startTime, endTime);
-		event.setColor(getResources().getColor(R.color.c1));
-		events.add(event);
-
-		startTime = Calendar.getInstance();
-		startTime.set(Calendar.HOUR_OF_DAY, 4);
-		startTime.set(Calendar.MINUTE, 20);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		endTime = (Calendar) startTime.clone();
-		endTime.set(Calendar.HOUR_OF_DAY, 5);
-		endTime.set(Calendar.MINUTE, 0);
-		event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-		event.setColor(getResources().getColor(R.color.colorPrimary));
-		events.add(event);
-
-		startTime = Calendar.getInstance();
-		startTime.set(Calendar.HOUR_OF_DAY, 5);
-		startTime.set(Calendar.MINUTE, 30);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		endTime = (Calendar) startTime.clone();
-		endTime.add(Calendar.HOUR_OF_DAY, 2);
-		endTime.set(Calendar.MONTH, newMonth - 1);
-		event = new WeekViewEvent(2, getEventTitle(startTime) + "택배 붙이기", startTime, endTime);
-		event.setColor(getResources().getColor(R.color.c1));
-		events.add(event);
-
-		startTime = Calendar.getInstance();
-		startTime.set(Calendar.DAY_OF_MONTH, 15);
-		startTime.set(Calendar.HOUR_OF_DAY, 3);
-		startTime.set(Calendar.MINUTE, 0);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		endTime = (Calendar) startTime.clone();
-		endTime.add(Calendar.HOUR_OF_DAY, 3);
-		event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
-		event.setColor(getResources().getColor(R.color.c1));
-		events.add(event);
-
-		startTime = Calendar.getInstance();
-		startTime.set(Calendar.DAY_OF_MONTH, 1);
-		startTime.set(Calendar.HOUR_OF_DAY, 3);
-		startTime.set(Calendar.MINUTE, 0);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		endTime = (Calendar) startTime.clone();
-		endTime.add(Calendar.HOUR_OF_DAY, 3);
-		event = new WeekViewEvent(5, getEventTitle(startTime) + "핸드폰 바꾸기", startTime, endTime);
-		event.setColor(getResources().getColor(R.color.colorPrimary));
-		events.add(event);
-
-		startTime = Calendar.getInstance();
-		startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH));
-		startTime.set(Calendar.HOUR_OF_DAY, 15);
-		startTime.set(Calendar.MINUTE, 0);
-		startTime.set(Calendar.MONTH, newMonth - 1);
-		startTime.set(Calendar.YEAR, newYear);
-		endTime = (Calendar) startTime.clone();
-		endTime.add(Calendar.HOUR_OF_DAY, 3);
-		event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
-		event.setColor(getResources().getColor(R.color.colorPrimary));
-		events.add(event);
 		return events;
 
 	}
 
+	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
+			R.color.suggestion_highlight_text, R.color.primary};
 
 }

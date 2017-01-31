@@ -1,0 +1,77 @@
+package com.buttering.roler.timetable;
+
+import com.buttering.roler.VO.Schedule;
+import com.buttering.roler.composition.basepresenter.BasePresenter;
+import com.buttering.roler.composition.baseservice.ScheduleService;
+
+import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+
+/**
+ * Created by kinamare on 2017-02-01.
+ */
+
+public class TimePresenter extends BasePresenter implements ITimePresenter {
+
+	private ScheduleService scheduleService;
+	private ITimeView view;
+
+	public TimePresenter(ITimeView view) {
+		this.scheduleService = new ScheduleService();
+		this.view = view;
+	}
+
+
+	@Override
+	public void getSchduleList(int user_id, String date) {
+		addSubscription(scheduleService
+		.getScheduleList(user_id, date)
+		.observeOn(AndroidSchedulers.mainThread())
+		.subscribe(new Subscriber<List<Schedule>>() {
+			@Override
+			public void onCompleted() {
+
+			}
+
+			@Override
+			public void onError(Throwable e) {
+
+			}
+
+			@Override
+			public void onNext(List<Schedule> schedules) {
+
+			}
+		}));
+	}
+
+	@Override
+	public void addSchdule(String content, String startTime, String endTime,
+	                       String date, int user_id, int role_id) {
+		addSubscription(scheduleService
+		.addSchedule(content, startTime, endTime, date, user_id, role_id)
+		.observeOn(AndroidSchedulers.mainThread())
+		.subscribe(new Subscriber<Void>() {
+			@Override
+			public void onCompleted() {
+				unsubscribe();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				e.printStackTrace();
+				onError(e);
+			}
+
+			@Override
+			public void onNext(Void aVoid) {
+				onCompleted();
+			}
+		}));
+
+	}
+
+
+}

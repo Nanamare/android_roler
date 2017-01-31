@@ -16,6 +16,7 @@ import com.buttering.roler.BuildConfig;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.login.LogInActivity;
+import com.buttering.roler.util.SharePrefUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,8 @@ public class SettingActivity extends AppCompatActivity {
 
 	@BindView(R.id.activity_setting_version_tv)
 	TextView tv_version;
+
+	private static int single_top_activity = 999;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,11 @@ public class SettingActivity extends AppCompatActivity {
 	private void logout() {
 		ll_logout.setOnClickListener(view -> {
 			MyInfoDAO.getInstance().deleteAccountInfo();
+			SharePrefUtil.putSharedPreference("isLoggedIn",false);
 			Intent loginIntent = new Intent(this, LogInActivity.class);
-			startActivity(loginIntent);
+			loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//			startActivity(loginIntent);
+			startActivityForResult(loginIntent,single_top_activity);
 			finish();
 		});
 
