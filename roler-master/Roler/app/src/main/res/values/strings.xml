@@ -8,7 +8,7 @@
     <string name="join_invalid_pwd">The password format is not correct</string>
     <string name="join_empty_pwd">Please enter a password</string>
     <string name="join_too_short_pwd">Password must be longer than 8 characters</string>
-
+    <string name="banner_ad_unit_id">ca-app-pub-6734975683573162/7719479339</string>
 
     //myinfokey
     <string name="key_alias">Roler_KEY</string>

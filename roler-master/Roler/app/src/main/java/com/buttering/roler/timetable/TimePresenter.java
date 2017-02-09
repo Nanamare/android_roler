@@ -1,5 +1,6 @@
 package com.buttering.roler.timetable;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.ScheduleService;
@@ -27,50 +28,73 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 	@Override
 	public void getSchduleList(int user_id, String date) {
 		addSubscription(scheduleService
-		.getScheduleList(user_id, date)
-		.observeOn(AndroidSchedulers.mainThread())
-		.subscribe(new Subscriber<List<Schedule>>() {
-			@Override
-			public void onCompleted() {
+				.getScheduleList(user_id, date)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<List<Schedule>>() {
+					@Override
+					public void onCompleted() {
 
-			}
+					}
 
-			@Override
-			public void onError(Throwable e) {
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
 
-			}
-
-			@Override
-			public void onNext(List<Schedule> schedules) {
-
-			}
-		}));
+					@Override
+					public void onNext(List<Schedule> schedules) {
+						view.setScheduleList(schedules);
+					}
+				}));
 	}
 
 	@Override
 	public void addSchdule(String content, String startTime, String endTime,
 	                       String date, int user_id, int role_id) {
 		addSubscription(scheduleService
-		.addSchedule(content, startTime, endTime, date, user_id, role_id)
-		.observeOn(AndroidSchedulers.mainThread())
-		.subscribe(new Subscriber<Void>() {
-			@Override
-			public void onCompleted() {
-				unsubscribe();
-			}
+				.addSchedule(content, startTime, endTime, date, user_id, role_id)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+						unsubscribe();
+					}
 
-			@Override
-			public void onError(Throwable e) {
-				e.printStackTrace();
-				onError(e);
-			}
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+						onError(e);
+					}
 
-			@Override
-			public void onNext(Void aVoid) {
-				onCompleted();
-			}
-		}));
+					@Override
+					public void onNext(Void aVoid) {
+						onCompleted();
+					}
+				}));
 
+	}
+
+	@Override
+	public void deleteSchdule(int schudule_id) {
+		addSubscription(scheduleService
+				.deleteSchdule(schudule_id)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+
+					}
+				}));
 	}
 
 

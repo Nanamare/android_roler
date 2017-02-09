@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "684654611041",
+    "firebase_url": "https://roler-242fc.firebaseio.com",
+    "project_id": "roler-242fc",
+    "storage_bucket": "roler-242fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684654611041:android:7e7f2be08ac41123",
+        "android_client_info": {
+          "package_name": "com.buttering.roler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684654611041-bu2js5rch5ket1gn6njdpceh4ucokbo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRd0YqTIQDfiHlod-0b5AdCQwrULnBsR4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

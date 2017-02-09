@@ -55,7 +55,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-						view.addRole();
+//						view.addRole();
 
 					}
 
@@ -130,8 +130,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 			if (isClick && isTitle && isSubTitle) {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.colorPrimary);
 
-			}
-			else {
+			} else {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.soft_grey);
 			}
 		});
@@ -142,8 +141,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 			if (isClick && isTitle && isSubTitle) {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.colorPrimary);
 
-			}
-			else {
+			} else {
 				activity.findViewById(activity_edit_role_btn).setBackgroundResource(R.color.soft_grey);
 			}
 
@@ -178,7 +176,7 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 	}
 
 	@Override
-	public void editRole(int rolePrimary,String roleName,String roleContent,int user_id) {
+	public void editRole(int rolePrimary, String roleName, String roleContent, int user_id) {
 		addSubscription(
 				roleService
 						.editRole(rolePrimary, roleName, roleContent, user_id)

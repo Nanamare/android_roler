@@ -76,7 +76,6 @@ public class UserService extends BaseService {
 									MyInfoDAO.getInstance().setUserId(userId);
 									MyInfoDAO.getInstance().setName(name);
 									MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
-									//의문의 코드
 									subscriber.onNext(user);
 
 								} else {

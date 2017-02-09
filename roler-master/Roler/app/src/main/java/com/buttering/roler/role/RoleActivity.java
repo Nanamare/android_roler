@@ -33,11 +33,15 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 /**
  * Created by WonYoung on 16. 7. 30..
  */
 public class RoleActivity extends AppCompatActivity implements IRoleView {
 
+	final int REQ_CODE_SELECT_IMAGE = 100;
 
 	@BindView(R.id.iv_picture)
 	CircleImageView iv_picture;
@@ -54,11 +58,8 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	@BindView(R.id.activity_role_email)
 	TextView activity_role_email;
 
-	List<Role> allRoleList = null;
-	RoleActivityAdapter adapter = null;
-
-
-	final int REQ_CODE_SELECT_IMAGE = 100;
+	public List<Role> allRoleList = null;
+	public RoleActivityAdapter adapter = null;
 
 	private ACProgressFlower dialog;
 	private IRolePresenter presenter;
@@ -69,7 +70,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		setContentView(R.layout.activity_role);
 		ButterKnife.bind(this);
 
+		AdView mAdView = (AdView) findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
+
 		presenter = new RolePresenter(this, this);
+
 
 		//mock data
 		allRoleList = receiveRoles();
@@ -86,7 +92,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 				alert.setMessage("역할을 삭제 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
 							if (allRoleList.size() != 1) {
-								presenter.deleteRole(((Role)adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
+								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
 //								allRoleList.remove(vp_roleDetail.getScrollPosition());
 							} else {
 								Toast.makeText(RoleActivity.this, "더 이상 삭제할수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -108,6 +114,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 
 		editRole();
+
 
 		setProfileItem();
 
@@ -226,8 +233,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			allRoleList = roleList;
 			adapter = new RoleActivityAdapter(this, allRoleList);
 			vp_roleDetail.setAdapter(adapter);
-//            adapter.setCommentList(roleList);
-//            adapter.notifyDataSetChanged();
 		}
 	}
 
@@ -257,17 +262,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 					if (allRoleList.get(i).getRole_id() == role.getRole_id()) {
 						allRoleList.remove(i);
 						allRoleList.add(i, role);
-						adapter = new RoleActivityAdapter(this, allRoleList);
-						vp_roleDetail.setAdapter(adapter);
-					} else {
-						//새로추가
-						if (i == allRoleList.size() - 1) {
-							allRoleList.add(role);
-							adapter = new RoleActivityAdapter(this, allRoleList);
-							vp_roleDetail.setAdapter(adapter);
-						}
+					} else if (i == (allRoleList.size() - 1)) {
+						allRoleList.add(role);
 					}
 				}
+				adapter = new RoleActivityAdapter(this, allRoleList);
+				vp_roleDetail.setAdapter(adapter);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 xmlns:coverflow="http://schemas.android.com/apk/res-auto"
@@ -57,11 +58,12 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_marginTop="15dp"
         android:id="@+id/rl_recyclerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_profileLayout"
-        android:layout_marginTop="150dp">
+        android:layout_marginBottom="150dp">
 
         <TextView
             android:textSize="18sp"
@@ -73,13 +75,19 @@
             android:layout_centerHorizontal="true"/>
 
         <Button
-            android:layout_above="@+id/vp_roleDetail"
             android:id="@+id/bt_editRoleInfo"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/ic_menu"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/tv_editRoleInfo"/>
+
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/bt_editRoleInfo">
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_roleDetail"
@@ -94,13 +102,8 @@
             coverflow:scalingThreshold="0.2">
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
-        <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/vp_roleDetail"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/tv_editRoleInfo"-->
-        <!--android:layout_marginTop="10dp">-->
-        <!--</android.support.v4.view.ViewPager>-->
+        </FrameLayout>
+
 
     </RelativeLayout>
 
@@ -110,5 +113,17 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_picture"
         android:layout_toStartOf="@+id/rl_profileLayout"/>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
+
 
 </RelativeLayout>

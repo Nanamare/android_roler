@@ -5,7 +5,6 @@ package com.buttering.roler.timetable;
  */
 
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -29,18 +28,18 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.Role;
+import com.buttering.roler.VO.Schedule;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
@@ -64,7 +63,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	private boolean isCheck;
 
-	private List<WeekViewEvent> events;
+	private List<WeekViewEvent> events = new ArrayList<>();
+
+	List<WeekViewEvent> weekViewEvent = new ArrayList<>();
 
 	private WeekView mWeekView;
 
@@ -190,9 +191,15 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		// Set long press listener for empty view
 		mWeekView.setEmptyViewLongPressListener(this);
 
+
 		// Set up a date time interpreter to interpret how the date and time will be formatted in
 		// the week view. This is optional.
 		setupDateTimeInterpreter(false);
+
+		Calendar calendar = Calendar.getInstance();
+		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateType.format(calendar.getTime());
+		presenter.getSchduleList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), date);
 
 	}
 
@@ -310,7 +317,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "삭제" + event.getName(), Toast.LENGTH_SHORT).show();
+		presenter.deleteSchdule((int) event.getId());
+		mWeekView.notifyDatasetChanged();
 	}
 
 	@Override
@@ -325,9 +334,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
-		events = new ArrayList<>();
 
-		if (isCheck == true) {
+		if (isCheck) {
 
 			Random random = new Random();
 			Calendar startCalendar = Calendar.getInstance();
@@ -352,18 +360,18 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			Calendar calendar = Calendar.getInstance();
 			//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-			calendar.set(nowYear,nowMonth,nowDay,startTimeOfDay,startMinOfDay,nowSecond);
+			calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
 			String startTime = sdf.format(calendar.getTime());
 
 			Calendar calendar2 = Calendar.getInstance();
-			calendar.set(nowYear,nowMonth,nowDay,endTimeOfDay,endMinOfDay,nowSecond);
+			calendar.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
 			String endTime = sdf.format(calendar2.getTime());
 
 			Calendar cal = Calendar.getInstance();
 			DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
 			String date = dateType.format(cal.getTime());
-			presenter.addSchdule(getEventTitle(startCalendar) + contents,startTime,endTime,date
-					,Integer.valueOf(MyInfoDAO.getInstance().getUserId()),0);
+			presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date
+					, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), 0);
 		}
 
 		return events;
@@ -373,4 +381,49 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
 			R.color.suggestion_highlight_text, R.color.primary};
 
+	@Override
+	public void setScheduleList(List<Schedule> schedules) {
+
+		int cashingSize = schedules.size();
+		WeekViewEvent[] viewEvent = new WeekViewEvent[cashingSize];
+		for (int i = 0; i < cashingSize; i++) {
+			Random random = new Random();
+			viewEvent[i] = new WeekViewEvent();
+			viewEvent[i].setId(schedules.get(i).getId());
+			viewEvent[i].setName(schedules.get(i).getContent());
+			viewEvent[i].setColor(bgColor[random.nextInt(6)]);
+			Calendar getStartTime = Calendar.getInstance();
+			SimpleDateFormat start = new SimpleDateFormat("HH:mm:ss");
+			try {
+				int nowMonth = getStartTime.get(Calendar.MONTH);
+				int nowYear = getStartTime.get(Calendar.YEAR);
+				int nowDay = getStartTime.get(Calendar.DAY_OF_MONTH);
+				getStartTime.set(nowYear,nowMonth,nowDay);
+				getStartTime.setTime(start.parse(schedules.get(i).getStartTime()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			Calendar getEndTime = Calendar.getInstance();
+			SimpleDateFormat end = new SimpleDateFormat("HH:mm:ss");
+			try {
+				int nowMonth = getEndTime.get(Calendar.MONTH);
+				int nowYear = getEndTime.get(Calendar.YEAR);
+				int nowDay = getEndTime.get(Calendar.DAY_OF_MONTH);
+				getEndTime.set(nowYear,nowMonth,nowDay);
+				getEndTime.setTime(end.parse(schedules.get(i).getStartTime()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			viewEvent[i].setStartTime(getStartTime);
+			viewEvent[i].setEndTime(getEndTime);
+			weekViewEvent.add(viewEvent[i]);
+
+		}
+
+		events.addAll(weekViewEvent);
+		mWeekView.notifyDatasetChanged();
+
+	}
 }

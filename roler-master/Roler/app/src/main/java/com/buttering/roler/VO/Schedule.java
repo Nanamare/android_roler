@@ -1,5 +1,10 @@
 package com.buttering.roler.VO;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by ichaeeun on 2016. 7. 30..
  */
@@ -57,5 +62,11 @@ public class Schedule {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+
+    public static Type getListType() {
+        return new TypeToken<List<Schedule>>() {
+        }.getType();
     }
 }

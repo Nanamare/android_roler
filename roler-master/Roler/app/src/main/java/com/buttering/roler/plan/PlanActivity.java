@@ -25,7 +25,6 @@ import com.buttering.roler.VO.Todo;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
-import com.buttering.roler.util.SharePrefUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -106,7 +105,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		rv_todolist.setLayoutManager(linearLayoutManager);
 
 		//make a adapter
-		listRecall();
+		setListView();
 
 
 	}
@@ -182,13 +181,20 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			alert.setPositiveButton("확인", (dialog, whichButton) -> {
 				String value = input.getText().toString();
 				if (!value.isEmpty()) {
+//					check "역할별로 할일을 적어 보세요!"
+//					for (int i = 0; i < allTodoList.size(); i++) {
+//						for (int j = 0; j < allTodoList.get(i).size(); j++) {
+//							if (allTodoList.get(j).get(0).getContent().equals("역할별로 할일을 적어 보세요!")) {
+//								allTodoList.get(j).remove(0);
+//							}
+//						}
+//					}
 					value.toString();
 					Todo todo = new Todo();
 					todo.setContent(value);
 					allTodoList.get(currentPosition).add(todo);
 					todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 					rv_todolist.setAdapter(todoAdapter);
-//					todoAdapter.notifyDataSetChanged();
 					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Calendar calendar = Calendar.getInstance();
 					String date = sdf.format(calendar.getTime());
@@ -231,7 +237,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
 	}
 
-	private void listRecall() {
+	private void setListView() {
 
 		//get a mock data
 		allTodoList = receiveTodoItems();
@@ -252,36 +258,9 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		allTodoList.add(todolist);
 
 		//꼭 고쳐야하는 코드
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
-		allTodoList.add(todolist);
+		for (int loop = 0; loop < 999; loop++) {
+			allTodoList.add(todolist);
+		}
 
 
 		return allTodoList;
@@ -383,8 +362,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			allRoleList = roleList;
 			adapter = new PlanActivityAdapter(this, allRoleList);
 			vp_rolePlanPage.setAdapter(adapter);
-//            adapter.setRoleList(roleList);
-//            adapter.notifyDataSetChanged();
 		}
 
 	}
@@ -441,14 +418,13 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void setTodoList(List<Todo> todoList) {
+
 		if (todoAdapter != null) {
 			todolist.clear();
 			todolist.addAll(todoList);
 			allTodoList.set(currentPosition, todoList);
 			todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
 			rv_todolist.setAdapter(todoAdapter);
-			//            todoAdapter.setTodoList(todoList);
-			//            todoAdapter.notifyDataSetChanged();
 		}
 	}
 

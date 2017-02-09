@@ -80,6 +80,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 			et_roleName.setText(role.getRoleName());
 
 		}
+
 		score = new ArrayList<>();
 		score.add("1순위");
 		score.add("2순위");

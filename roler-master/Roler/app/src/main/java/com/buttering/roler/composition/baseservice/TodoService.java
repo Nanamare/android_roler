@@ -68,6 +68,12 @@ public class TodoService extends BaseService {
 
 								} else {
 									List<Todo> emptyTodo = new ArrayList<>();
+//									Todo todo = new Todo();
+//									todo.setRole_id(0);
+//									todo.setId(0);
+//									todo.setContent("역할별로 할일을 적어 보세요!");
+//									todo.setDone(false);
+//									emptyTodo.add(todo);
 									subscriber.onNext(emptyTodo);
 								}
 
@@ -144,6 +150,7 @@ public class TodoService extends BaseService {
 							int id = Integer.valueOf(result);
 
 							return id;
+
 						}
 
 					});
@@ -205,7 +212,7 @@ public class TodoService extends BaseService {
 				, @Field("user_id") int user_id
 				, @Field("isDone") boolean isDone);
 
-			@DELETE("/todo/delete")
+		@DELETE("/todo/delete")
 		Observable<ResponseBody> deleteTodo(@Query("id") int id);
 	}
 
