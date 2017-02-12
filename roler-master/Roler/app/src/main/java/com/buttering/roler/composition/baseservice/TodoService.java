@@ -1,5 +1,6 @@
 package com.buttering.roler.composition.baseservice;
 
+import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.Todo;
@@ -71,12 +72,6 @@ public class TodoService extends BaseService {
 
 								} else {
 									List<Todo> emptyTodo = new ArrayList<>();
-//									Todo todo = new Todo();
-//									todo.setRole_id(0);
-//									todo.setId(0);
-//									todo.setContent("역할별로 할일을 적어 보세요!");
-//									todo.setDone(false);
-//									emptyTodo.add(todo);
 									subscriber.onNext(emptyTodo);
 								}
 
@@ -201,19 +196,19 @@ public class TodoService extends BaseService {
 	}
 
 	public Observable<Void> setDone(int todo_id, Boolean isDone) {
-		int numbering;
+		String done;
 		if (isDone.equals(true)) {
-			numbering = 2;
+			done = "true";
 		} else {
-			numbering = 1;
+			done = "false";
 		}
 		return Observable.create(subscriber -> {
-			getAPI().setDone(todo_id,numbering)
+			getAPI().setDone(todo_id, done)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-
+							unsubscribe();
 						}
 
 						@Override
@@ -226,7 +221,7 @@ public class TodoService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									subscriber.onNext(null);
+									onCompleted();
 
 								} else {
 //									subscriber.onError(new Throwable());
@@ -262,7 +257,10 @@ public class TodoService extends BaseService {
 		Observable<ResponseBody> deleteTodo(@Query("id") int id);
 
 		@PUT("/todo/done/{todoId}")
-		Observable<ResponseBody> setDone(@Path("todoId") int todoId, @Query("isDone") int isDone);
+		Observable<ResponseBody> setDone(@Path("todoId") int todoId, @Query("isDone") String isDone);
+
+		@PUT("/role/progress")
+		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId, @Query("user_id") int user_id);
 	}
 
 }

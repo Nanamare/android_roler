@@ -366,6 +366,22 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	}
 
+
+	@Override
+	public void moveRoleContent(List<Role> roleList, int movePosition) {
+		if (adapter != null) {
+			allRoleList = roleList;
+			adapter = new PlanActivityAdapter(this, allRoleList);
+			vp_rolePlanPage.setAdapter(adapter);
+			for (int position = 0; position < adapter.getCount(); position++) {
+				if (((Role)adapter.getItem(position)).getRole_id() == movePosition){
+					vp_rolePlanPage.scrollToPosition(position);
+				}
+			}
+		}
+
+	}
+
 	@Override
 	public void setCurrentPosition() {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
@@ -399,14 +415,10 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	@Override
-	public void refreshProgress(int score) {
-//		allRoleList.get(((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id())
-//				.setProgress(score);
-//		allRoleList.get(vp_rolePlanPage.getScrollPosition())
-//				.setProgress(score);
-//		adapter.notifyDataSetChanged();
-		adapter = new PlanActivityAdapter(this, allRoleList, score);
-		vp_rolePlanPage.setAdapter(adapter);
+	public void refreshProgress() {
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+
 	}
 
 	@Override

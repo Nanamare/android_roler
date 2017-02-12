@@ -93,8 +93,37 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 					}
 				}));
 
+	}
+
+	@Override
+	public void updateRoleContent(int id, int movePosition) {
+
+		addSubscription(roleService
+				.getRoleContent(id)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<List<Role>>() {
+					@Override
+					public void onCompleted() {
+						view.setCurrentPosition();
+
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+
+					}
+
+					@Override
+					public void onNext(List<Role> role) {
+						view.moveRoleContent(role,movePosition);
+
+					}
+				}));
 
 	}
+
+
 
 //	@Override
 //	public void addTodo(String content, int todoOrder, String todoDate, int role_id, int user_id, boolean isDone) {
@@ -175,6 +204,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
+						view.refreshProgress();
 						unsubscribe();
 					}
 

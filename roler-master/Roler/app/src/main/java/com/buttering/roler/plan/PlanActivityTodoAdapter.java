@@ -33,7 +33,6 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	private IPlanView view;
 
 
-
 	public PlanActivityTodoAdapter(PlanActivity context, List<Todo> todos, int itemLayout) {
 		this.context = context;
 		this.todos = todos;
@@ -54,13 +53,14 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 		holder.tv_no.setText(String.valueOf(position));
 		holder.tv_list.setText(todos.get(position).getContent());
+		holder.cb_todo.setChecked(todos.get(position).getDone());
 
 		holder.cb_todo.setOnClickListener(v -> {
 			if (holder.cb_todo.isChecked()) {
 				holder.tv_list.setTextColor(Color.LTGRAY);
 				holder.tv_no.setTextColor(Color.LTGRAY);
 				todos.get(position).setDone(true);
-
+				presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
 			} else {
 				AlertDialog.Builder alert = new AlertDialog.Builder(context);
 				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
@@ -68,14 +68,13 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 							holder.tv_list.setTextColor(Color.BLACK);
 							holder.tv_no.setTextColor(Color.BLACK);
 							todos.get(position).setDone(false);
-							presenter.setDone(todos.get(position).getId(),todos.get(position).getDone());
+							presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
 
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
 							holder.cb_todo.setChecked(true);
 							holder.tv_list.setTextColor(Color.LTGRAY);
 							holder.tv_no.setTextColor(Color.LTGRAY);
-							presenter.setDone(todos.get(position).getId(),todos.get(position).getDone());
 						});
 
 				AlertDialog alertDialog = alert.create();
@@ -83,8 +82,6 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 			}
 
-
-//			presenter.conveyProgress(todos);
 
 		});
 

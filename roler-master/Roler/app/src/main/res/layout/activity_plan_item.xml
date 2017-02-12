@@ -25,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="1"
-                    android:textSize="15sp"/>
+                    android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/tv_comma"
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="."
-                    android:textSize="15sp"/>
+                    android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/tv_roleNamePlan"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_comma"
                     android:text="임시임시임시제목"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
 
@@ -61,17 +61,17 @@
                     android:textSize="10sp"/>
 
 
-
                 <com.github.lzyzsd.circleprogress.CircleProgress
                     android:id="@+id/cp_planPercent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     custom:circle_unfinished_color="#ffffff"
                     custom:circle_text_color="@color/primary"
-                    custom:circle_finished_color="#f5a4c8"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    custom:circle_progress="0" />
+                    custom:circle_finished_color="#f5a4c1"
+                    custom:circle_text_size="10sp"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    custom:circle_progress="0"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"/>
             </RelativeLayout>
 
         </RelativeLayout>

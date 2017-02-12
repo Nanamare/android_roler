@@ -19,4 +19,5 @@ public interface IPlanPresenter {
 			,String todoDate,int role_id,int user_id,boolean isDone);
 	void deleteTodo(int id);
 	void setDone(int todoId,boolean isDone);
+	void updateRoleContent(int id, int movePosition);
 }
