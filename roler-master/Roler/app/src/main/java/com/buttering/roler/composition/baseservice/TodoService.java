@@ -1,6 +1,7 @@
 package com.buttering.roler.composition.baseservice;
 
 import com.buttering.roler.VO.Role;
+import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.Todo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -21,6 +22,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
@@ -197,6 +200,49 @@ public class TodoService extends BaseService {
 
 	}
 
+	public Observable<Void> setDone(int todo_id, Boolean isDone) {
+		int numbering;
+		if (isDone.equals(true)) {
+			numbering = 2;
+		} else {
+			numbering = 1;
+		}
+		return Observable.create(subscriber -> {
+			getAPI().setDone(todo_id,numbering)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									subscriber.onNext(null);
+
+								} else {
+//									subscriber.onError(new Throwable());
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+						}
+					});
+
+		});
+
+	}
+
 
 	public interface TodoApi {
 
@@ -214,6 +260,9 @@ public class TodoService extends BaseService {
 
 		@DELETE("/todo/delete")
 		Observable<ResponseBody> deleteTodo(@Query("id") int id);
+
+		@PUT("/todo/done/{todoId}")
+		Observable<ResponseBody> setDone(@Path("todoId") int todoId, @Query("isDone") int isDone);
 	}
 
 }

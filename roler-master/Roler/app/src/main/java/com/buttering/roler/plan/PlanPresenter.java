@@ -1,29 +1,18 @@
 package com.buttering.roler.plan;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
 
-import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
 import com.buttering.roler.composition.basepresenter.BasePresenter;
 import com.buttering.roler.composition.baseservice.RoleService;
 import com.buttering.roler.composition.baseservice.TodoService;
-import com.buttering.roler.util.SharePrefUtil;
-import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
-import rx.Observable;
-
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by kinamare on 2016-12-31.
@@ -154,27 +143,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				}));
 	}
 
-	@Override
-	public void conveyProgress(List<Todo> todos) {
-
-		float trueCount = 0;
-		float falseCount = 0;
-		for (int i = 0; i < todos.size(); i++) {
-			if (todos.get(i).getDone()) {
-				trueCount++;
-			} else {
-				falseCount++;
-			}
-		}
-
-		float percent = trueCount / (trueCount + falseCount) * 100;
-		int parserPercent = (int) percent;
-
-		//전달 하는 함수 만들기
-		view.refreshProgress(parserPercent);
-
-
-	}
 
 	@Override
 	public void deleteTodo(int id) {
@@ -197,6 +165,30 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 						onCompleted();
 					}
 				}));
+	}
+
+	@Override
+	public void setDone(int todoId, boolean isDone) {
+		addSubscription(todoService
+				.setDone(todoId, isDone)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+						unsubscribe();
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						onCompleted();
+					}
+				}));
+
 	}
 
 

@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/role_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="288dp">
 
             <RelativeLayout
                 android:id="@+id/rl_roleItemTop"
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="3dp"
                     android:layout_toRightOf="@id/tv_rolePrimary"
                     android:text="."
                     android:textSize="15sp"/>

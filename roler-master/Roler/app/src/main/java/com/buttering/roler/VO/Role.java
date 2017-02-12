@@ -17,6 +17,7 @@ public class Role implements Serializable {
 	private String roleContent;
 	private int user_id;
 	private int role_id;
+	private int progress;
 
 	public int getProgress() {
 		return progress;
@@ -26,7 +27,6 @@ public class Role implements Serializable {
 		this.progress = progress;
 	}
 
-	private int progress;
 
 	public int getRole_id() {
 		return role_id;

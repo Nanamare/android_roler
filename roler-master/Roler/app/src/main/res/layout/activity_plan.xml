@@ -13,10 +13,10 @@
 
 
     <RelativeLayout
-        android:layout_below="@id/custom_toolBar"
         android:id="@+id/rl_planTop"
         android:layout_width="match_parent"
-        android:layout_height="530dp">
+        android:layout_height="530dp"
+        android:layout_below="@id/custom_toolBar">
 
         <TextView
             android:id="@+id/tv_yearMonth"
@@ -33,37 +33,38 @@
             android:layout_centerHorizontal="true"
             android:text="Sunday"
             android:textSize="15sp"/>
+
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:gravity="center"
             android:id="@+id/ll_swipe_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/activity_plan_arrow_left_iv"
-            android:layout_marginRight="80dp"
-            android:layout_gravity="center_vertical|left"
-            android:background="@drawable/icon_arrow_left"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_day"
-            android:layout_centerHorizontal="true"
-            android:text="31"
-            android:textSize="35sp"/>
+            android:layout_marginTop="20dp"
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/activity_plan_arrow_right_iv"
-            android:layout_marginLeft="80dp"
-            android:layout_gravity="center_vertical|right"
-            android:background="@drawable/icon_arrow_right"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
+            <ImageView
+                android:id="@+id/activity_plan_arrow_left_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/icon_arrow_left"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day"
+                android:layout_centerHorizontal="true"
+                android:text="31"
+                android:textSize="35sp"/>
+
+            <ImageView
+                android:id="@+id/activity_plan_arrow_right_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginLeft="80dp"
+                android:background="@drawable/icon_arrow_right"/>
         </LinearLayout>
 
         <TextView
@@ -78,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll_swipe_arrow"
-            coverflow:coverHeight="210dp"
+            coverflow:coverHeight="200dp"
             coverflow:coverWidth="180dp"
             coverflow:maxScaleFactor="2.0"
             coverflow:reflectionGap="1px"

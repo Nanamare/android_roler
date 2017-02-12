@@ -68,13 +68,14 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 							holder.tv_list.setTextColor(Color.BLACK);
 							holder.tv_no.setTextColor(Color.BLACK);
 							todos.get(position).setDone(false);
+							presenter.setDone(todos.get(position).getId(),todos.get(position).getDone());
 
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
 							holder.cb_todo.setChecked(true);
 							holder.tv_list.setTextColor(Color.LTGRAY);
 							holder.tv_no.setTextColor(Color.LTGRAY);
-
+							presenter.setDone(todos.get(position).getId(),todos.get(position).getDone());
 						});
 
 				AlertDialog alertDialog = alert.create();
@@ -83,7 +84,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			}
 
 
-			presenter.conveyProgress(todos);
+//			presenter.conveyProgress(todos);
 
 		});
 

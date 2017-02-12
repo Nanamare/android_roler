@@ -17,6 +17,6 @@ public interface IPlanPresenter {
 	void getRoleContent(int id);
 	void addTodo(String content,int todoOrder
 			,String todoDate,int role_id,int user_id,boolean isDone);
-	void conveyProgress(List<Todo> todos);
 	void deleteTodo(int id);
+	void setDone(int todoId,boolean isDone);
 }
