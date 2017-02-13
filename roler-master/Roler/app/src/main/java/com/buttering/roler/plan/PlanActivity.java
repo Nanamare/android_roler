@@ -376,6 +376,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			for (int position = 0; position < adapter.getCount(); position++) {
 				if (((Role)adapter.getItem(position)).getRole_id() == movePosition){
 					vp_rolePlanPage.scrollToPosition(position);
+					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), movePosition);
 				}
 			}
 		}
@@ -422,14 +423,14 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@Override
 	public void refreshProgress() {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+//		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
 		//progress를 업데이트 하기 위한 작업
-//		planPresenter.updateProgress(currentPosition,Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.updateProgress(currentPosition,Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 	}
 
 	@Override
 	public void refreshProgressLast() {
-		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+//		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
 	}
 
