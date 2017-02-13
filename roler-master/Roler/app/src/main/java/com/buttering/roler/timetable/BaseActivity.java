@@ -60,11 +60,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	private int endMinOfDay;
 
 	private String contents;
+	private String date;
 
 	private boolean isCheck;
 
-	private List<WeekViewEvent> events = new ArrayList<>();
 
+	private List<WeekViewEvent> event = new ArrayList<>();
+	private List<WeekViewEvent> events;
 	List<WeekViewEvent> weekViewEvent = new ArrayList<>();
 
 	private WeekView mWeekView;
@@ -82,6 +84,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 		setToolbar();
 
+		//today
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
+		date = dateType.format(cal.getTime());
 
 		floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 		floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -196,9 +202,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		// the week view. This is optional.
 		setupDateTimeInterpreter(false);
 
-		Calendar calendar = Calendar.getInstance();
-		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
-		String date = dateType.format(calendar.getTime());
 		presenter.getSchduleList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), date);
 
 	}
@@ -212,6 +215,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		textView.setTextColor(Color.BLACK);
 		textView.setText("오늘의 일정 관리");
 		setSupportActionBar(toolbar);
+
+		imageView.setOnClickListener(v -> {
+			finish();
+		});
 
 
 	}
@@ -334,6 +341,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
+		events = new ArrayList<>();
+
+		events.addAll(event);
 
 		if (isCheck) {
 
@@ -367,9 +377,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			calendar.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
 			String endTime = sdf.format(calendar2.getTime());
 
-			Calendar cal = Calendar.getInstance();
-			DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
-			String date = dateType.format(cal.getTime());
+
 			presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date
 					, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), 0);
 		}
@@ -383,47 +391,44 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public void setScheduleList(List<Schedule> schedules) {
-
+		List<WeekViewEvent> viewEvents = new ArrayList<>();
 		int cashingSize = schedules.size();
-		WeekViewEvent[] viewEvent = new WeekViewEvent[cashingSize];
+
+		for(int loop = 0; loop<cashingSize; loop++){
+			WeekViewEvent weekViewEvent = new WeekViewEvent();
+			viewEvents.add(weekViewEvent);
+		}
 		for (int i = 0; i < cashingSize; i++) {
 			Random random = new Random();
-			viewEvent[i] = new WeekViewEvent();
-			viewEvent[i].setId(schedules.get(i).getId());
-			viewEvent[i].setName(schedules.get(i).getContent());
-			viewEvent[i].setColor(bgColor[random.nextInt(6)]);
+			viewEvents.get(i).setId(schedules.get(i).getId());
+			viewEvents.get(i).setName(schedules.get(i).getContent());
+			viewEvents.get(i).setColor(bgColor[random.nextInt(6)]);
+
 			Calendar getStartTime = Calendar.getInstance();
-			SimpleDateFormat start = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				int nowMonth = getStartTime.get(Calendar.MONTH);
-				int nowYear = getStartTime.get(Calendar.YEAR);
-				int nowDay = getStartTime.get(Calendar.DAY_OF_MONTH);
-				getStartTime.set(nowYear,nowMonth,nowDay);
-				getStartTime.setTime(start.parse(schedules.get(i).getStartTime()));
+				getStartTime.setTime(start.parse(date+' '+schedules.get(i).getStartTime()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
 			Calendar getEndTime = Calendar.getInstance();
-			SimpleDateFormat end = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				int nowMonth = getEndTime.get(Calendar.MONTH);
-				int nowYear = getEndTime.get(Calendar.YEAR);
-				int nowDay = getEndTime.get(Calendar.DAY_OF_MONTH);
-				getEndTime.set(nowYear,nowMonth,nowDay);
-				getEndTime.setTime(end.parse(schedules.get(i).getStartTime()));
+				getEndTime.setTime(end.parse(date+' '+schedules.get(i).getEndTime()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
-			viewEvent[i].setStartTime(getStartTime);
-			viewEvent[i].setEndTime(getEndTime);
-			weekViewEvent.add(viewEvent[i]);
+			viewEvents.get(i).setStartTime(getStartTime);
+			viewEvents.get(i).setEndTime(getEndTime);
 
 		}
 
-		events.addAll(weekViewEvent);
-		mWeekView.notifyDatasetChanged();
+		event.addAll(viewEvents);
+//		mWeekView.notifyDatasetChanged();
+		mWeekView.getMonthChangeListener().onMonthChange(2017,02);
+
 
 	}
 }

@@ -138,6 +138,9 @@ public class MyInfoDAO {
 	public void deleteAccountInfo() {
 		preferences.removeValue("email");
 		preferences.removeValue("pwd");
+		preferences.removeValue("picture_url");
+		preferences.removeValue("userId");
+		preferences.removeValue("name");
 		preferences.clear();
 	}
 

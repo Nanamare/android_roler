@@ -40,6 +40,16 @@ public class SplashActivity extends Activity {
 		splash_subTitle.setVisibility(View.INVISIBLE);
 
 		if (NetUtil.isNetworkAvailable(getApplicationContext())) {
+
+			new Handler().postDelayed(() -> {
+				splash_title.setVisibility(View.VISIBLE);
+			}, 1000);
+
+			new Handler().postDelayed(() -> {
+				splash_subTitle.setVisibility(View.VISIBLE);
+			}, 2000);
+
+
 			Intent intent = new Intent(this, LogInActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			boolean isLoggedIn = SharePrefUtil.getBooleanSharedPreference("isLoggedIn");
@@ -50,18 +60,11 @@ public class SplashActivity extends Activity {
 					loggedInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					startActivity(loggedInIntent);
 					finish();
-				}, 1000);
+				}, 2000);
 
 
 			} else {
 
-				new Handler().postDelayed(() -> {
-					splash_title.setVisibility(View.VISIBLE);
-				}, 1000);
-
-				new Handler().postDelayed(() -> {
-					splash_subTitle.setVisibility(View.VISIBLE);
-				}, 2000);
 				new Handler().postDelayed(() -> {
 
 					startActivity(intent);

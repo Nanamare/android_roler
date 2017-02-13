@@ -196,8 +196,9 @@ public class UserService extends BaseService {
 							String name = ja.get("name").getAsString();
 							String email = ja.get("email").getAsString();
 							String id = ja.get("id").getAsString();
+							String picUrl = ja.get("imageUrl").getAsString();
 
-							MyInfoDAO.getInstance().loginAccountInfo(id, email, name, "NULL");
+							MyInfoDAO.getInstance().loginAccountInfo(id, email, name, picUrl);
 							return result;
 						}
 
@@ -220,7 +221,6 @@ public class UserService extends BaseService {
 
 		@PUT("/sign/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
-
 
 
 		@FormUrlEncoded

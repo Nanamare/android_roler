@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
 
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#f0ffff</item>
+        <item name="colorPrimary">#ceb8e3f2</item>
         <item name="colorPrimaryDark">#6495ed</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColorPrimary">@color/mdtp_transparent_black</item>

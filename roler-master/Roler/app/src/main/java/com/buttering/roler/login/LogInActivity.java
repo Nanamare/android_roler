@@ -204,6 +204,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 								public void onError(Throwable e) {
 									hideLoadingBar();
 									Toast.makeText(LogInActivity.this, "Invalid id or password", Toast.LENGTH_SHORT).show();
+									e.printStackTrace();
 								}
 
 								@Override

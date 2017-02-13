@@ -224,7 +224,7 @@ public class TodoService extends BaseService {
 									subscriber.onNext(null);
 
 								} else {
-//									subscriber.onError(new Throwable());
+									subscriber.onError(new Throwable("false"));
 								}
 
 							} catch (IOException e) {

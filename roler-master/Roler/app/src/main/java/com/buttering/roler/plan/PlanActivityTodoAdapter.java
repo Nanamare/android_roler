@@ -52,8 +52,16 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 		presenter = new PlanPresenter(context);
 
 		holder.tv_no.setText(String.valueOf(position));
-		holder.tv_list.setText(todos.get(position).getContent());
 		holder.cb_todo.setChecked(todos.get(position).getDone());
+		holder.tv_list.setText(todos.get(position).getContent());
+		if(todos.get(position).getDone()){
+			holder.tv_list.setTextColor(Color.LTGRAY);
+			holder.tv_no.setTextColor(Color.LTGRAY);
+		} else {
+			holder.tv_list.setTextColor(Color.DKGRAY);
+			holder.tv_no.setTextColor(Color.DKGRAY);
+		}
+
 
 		holder.cb_todo.setOnClickListener(v -> {
 			if (holder.cb_todo.isChecked()) {
@@ -65,8 +73,8 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 				AlertDialog.Builder alert = new AlertDialog.Builder(context);
 				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
-							holder.tv_list.setTextColor(Color.BLACK);
-							holder.tv_no.setTextColor(Color.BLACK);
+							holder.tv_list.setTextColor(Color.DKGRAY);
+							holder.tv_no.setTextColor(Color.DKGRAY);
 							todos.get(position).setDone(false);
 							presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
 

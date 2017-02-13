@@ -75,7 +75,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-						view.setCurrentPosition();
 
 					}
 
@@ -88,6 +87,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 					@Override
 					public void onNext(List<Role> role) {
 						view.setRoleContent(role);
+						view.setCurrentPosition();
 						onCompleted();
 
 					}
@@ -141,7 +141,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 			@Override
 			public void onNext(Void aVoid) {
-				view.getTodoList();
+//				view.getTodoList();
 				onCompleted();
 
 			}
@@ -230,7 +230,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 					@Override
 					public void onCompleted() {
 						view.refreshProgress();
-						unsubscribe();
 
 					}
 

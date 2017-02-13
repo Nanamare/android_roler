@@ -47,6 +47,12 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 	}
 
+	public SignUpProfilePresenter() {
+		this.userService = new UserService();
+		this.fileService = new FileService();
+
+	}
+
 
 	@Override
 	public Observable<User> signUp(String email, String pwd, String name) {
