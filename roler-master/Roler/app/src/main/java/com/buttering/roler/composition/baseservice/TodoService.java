@@ -208,12 +208,12 @@ public class TodoService extends BaseService {
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-							unsubscribe();
+
 						}
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -221,7 +221,7 @@ public class TodoService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									onCompleted();
+									subscriber.onNext(null);
 
 								} else {
 //									subscriber.onError(new Throwable());
@@ -259,8 +259,6 @@ public class TodoService extends BaseService {
 		@PUT("/todo/done/{todoId}")
 		Observable<ResponseBody> setDone(@Path("todoId") int todoId, @Query("isDone") String isDone);
 
-		@PUT("/role/progress")
-		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId, @Query("user_id") int user_id);
 	}
 
 }

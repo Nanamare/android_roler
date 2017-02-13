@@ -383,6 +383,11 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	@Override
+	public void getTodoList() {
+		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+	}
+
+	@Override
 	public void setCurrentPosition() {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
@@ -418,8 +423,16 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	public void refreshProgress() {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
-
+		//progress를 업데이트 하기 위한 작업
+//		planPresenter.updateProgress(currentPosition,Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 	}
+
+	@Override
+	public void refreshProgressLast() {
+		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+	}
+
 
 	@Override
 	public void hideLoadingBar() {

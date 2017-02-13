@@ -20,4 +20,5 @@ public interface IPlanPresenter {
 	void deleteTodo(int id);
 	void setDone(int todoId,boolean isDone);
 	void updateRoleContent(int id, int movePosition);
+	void updateProgress(int role_id, int user_id);
 }

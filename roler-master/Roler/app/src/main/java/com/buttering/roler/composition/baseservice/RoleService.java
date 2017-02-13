@@ -216,6 +216,45 @@ public class RoleService extends BaseService {
 
 	}
 
+	public Observable<Void> updateProgress(int role_id, int user_id){
+
+		return Observable.create(subscriber -> {
+			getAPI().updateProgress(role_id, user_id)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+							subscriber.onNext(null);
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+							e.printStackTrace();
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									onCompleted();
+
+								} else {
+
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+						}
+					});
+		});
+	}
+
 	public interface RoleApi {
 
 		@GET("/role/read")
@@ -238,6 +277,9 @@ public class RoleService extends BaseService {
 				, @Field("roleName") String roleName
 				, @Field("roleContent") String roleContent
 				, @Field("role_id") int role_id);
+
+		@PUT("/role/progress")
+		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId, @Query("user_id") int user_id);
 
 	}
 }

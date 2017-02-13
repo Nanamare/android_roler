@@ -123,6 +123,31 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 	}
 
+	@Override
+	public void updateProgress(int role_id, int user_id) {
+		addSubscription(roleService
+		.updateProgress(role_id, user_id)
+		.observeOn(AndroidSchedulers.mainThread())
+		.subscribe(new Subscriber<Void>() {
+			@Override
+			public void onCompleted() {
+				view.refreshProgressLast();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				e.printStackTrace();
+			}
+
+			@Override
+			public void onNext(Void aVoid) {
+				view.getTodoList();
+				onCompleted();
+
+			}
+		}));
+
+	}
 
 
 //	@Override
@@ -206,6 +231,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 					public void onCompleted() {
 						view.refreshProgress();
 						unsubscribe();
+
 					}
 
 					@Override

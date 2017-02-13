@@ -19,4 +19,6 @@ public interface IPlanView {
 	void setTodoListId(int id);
 	void refreshProgress();
 	void moveRoleContent(List<Role> roleList,int movePosition);
+	void getTodoList();
+	void refreshProgressLast();
 }
