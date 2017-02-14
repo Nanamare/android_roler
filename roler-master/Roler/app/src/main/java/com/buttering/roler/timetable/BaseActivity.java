@@ -341,48 +341,57 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
+		Calendar dates = Calendar.getInstance();
+		int month = dates.get(Calendar.MONTH);
+
 		events = new ArrayList<>();
 
-		events.addAll(event);
-
-		if (isCheck) {
-
-			Random random = new Random();
-			Calendar startCalendar = Calendar.getInstance();
-			int nowMonth = startCalendar.get(Calendar.MONTH);
-			int nowYear = startCalendar.get(Calendar.YEAR);
-			int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
-			int nowSecond = startCalendar.get(Calendar.SECOND);
-			startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
-			startCalendar.set(Calendar.MINUTE, startMinOfDay);
-			startCalendar.set(Calendar.MONTH, nowMonth);
-			startCalendar.set(Calendar.YEAR, nowYear);
-
-			Calendar endCalendar = (Calendar) startCalendar.clone();
-			endCalendar.set(Calendar.MINUTE, endMinOfDay);
-			endCalendar.set(Calendar.HOUR, endTimeOfDay);
-			endCalendar.set(Calendar.MONTH, nowMonth);
-			WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
-			event.setColor(bgColor[random.nextInt(6)]);
-			events.add(event);
-			isCheck = false;
-
-			Calendar calendar = Calendar.getInstance();
-			//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-			calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
-			String startTime = sdf.format(calendar.getTime());
-
-			Calendar calendar2 = Calendar.getInstance();
-			calendar.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
-			String endTime = sdf.format(calendar2.getTime());
+		if (newMonth == month) {
 
 
-			presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date
-					, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), 0);
+			if (isCheck) {
+
+				Random random = new Random();
+				Calendar startCalendar = Calendar.getInstance();
+				int nowMonth = startCalendar.get(Calendar.MONTH);
+				int nowYear = startCalendar.get(Calendar.YEAR);
+				int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
+				int nowSecond = startCalendar.get(Calendar.SECOND);
+				startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
+				startCalendar.set(Calendar.MINUTE, startMinOfDay);
+				startCalendar.set(Calendar.MONTH, nowMonth);
+				startCalendar.set(Calendar.YEAR, nowYear);
+
+				Calendar endCalendar = (Calendar) startCalendar.clone();
+				endCalendar.set(Calendar.MINUTE, endMinOfDay);
+				endCalendar.set(Calendar.HOUR, endTimeOfDay);
+				endCalendar.set(Calendar.MONTH, nowMonth);
+				WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
+				event.setColor(bgColor[random.nextInt(6)]);
+				events.add(event);
+				isCheck = false;
+
+				Calendar calendar = Calendar.getInstance();
+				//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
+				String startTime = sdf.format(calendar.getTime());
+
+				Calendar calendar2 = Calendar.getInstance();
+				calendar.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
+				String endTime = sdf.format(calendar2.getTime());
+
+
+				presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date
+						, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), 0);
+			}
+
+			events.addAll(event);
+
+			return events;
+		} else {
+			return events;
 		}
-
-		return events;
 
 	}
 
@@ -394,7 +403,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		List<WeekViewEvent> viewEvents = new ArrayList<>();
 		int cashingSize = schedules.size();
 
-		for(int loop = 0; loop<cashingSize; loop++){
+		for (int loop = 0; loop < cashingSize; loop++) {
 			WeekViewEvent weekViewEvent = new WeekViewEvent();
 			viewEvents.add(weekViewEvent);
 		}
@@ -407,7 +416,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			Calendar getStartTime = Calendar.getInstance();
 			SimpleDateFormat start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				getStartTime.setTime(start.parse(date+' '+schedules.get(i).getStartTime()));
+				getStartTime.setTime(start.parse(date + ' ' + schedules.get(i).getStartTime()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -415,7 +424,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			Calendar getEndTime = Calendar.getInstance();
 			SimpleDateFormat end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				getEndTime.setTime(end.parse(date+' '+schedules.get(i).getEndTime()));
+				getEndTime.setTime(end.parse(date + ' ' + schedules.get(i).getEndTime()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -426,8 +435,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		}
 
 		event.addAll(viewEvents);
-//		mWeekView.notifyDatasetChanged();
-		mWeekView.getMonthChangeListener().onMonthChange(2017,02);
+		mWeekView.notifyDatasetChanged();
 
 
 	}
