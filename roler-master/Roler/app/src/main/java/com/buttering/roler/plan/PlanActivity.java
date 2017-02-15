@@ -27,9 +27,12 @@ import com.buttering.roler.VO.Todo;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -104,6 +107,8 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		setContentView(R.layout.activity_plan);
 		ButterKnife.bind(this);
 
+		FirebaseApp.initializeApp(this);
+
 
 		setToolbar();
 		setUserName();
@@ -133,25 +138,12 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		//make a adapter
 		setListView();
 
-		//FCM
-//		if (checkPlayServices()) {
-//
-//			new AsyncTask() {
-//
-//				@Override
-//				protected Object doInBackground(Object[] objects) {
-//					try {
-//						FirebaseInstanceId.getInstance().deleteInstanceId();
-//						FirebaseInstanceId.getInstance().getToken();
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//
-//					return null;
-//				}
-//			}.execute(null, null, null);
-//		}
-
+//		FCM
+		if (checkPlayServices()) {
+			FirebaseMessaging.getInstance().subscribeToTopic("news");
+			String token = FirebaseInstanceId.getInstance().getToken();
+			SharePrefUtil.putSharedPreference("fcmToken", token);
+		}
 
 	}
 
@@ -419,7 +411,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			adapter = new PlanActivityAdapter(this, allRoleList);
 			vp_rolePlanPage.setAdapter(adapter);
 			for (int position = 0; position < adapter.getCount(); position++) {
-				if (((Role)adapter.getItem(position)).getRole_id() == movePosition){
+				if (((Role) adapter.getItem(position)).getRole_id() == movePosition) {
 					vp_rolePlanPage.scrollToPosition(position);
 					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), movePosition);
 				}
@@ -470,7 +462,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 //		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
 		//progress를 업데이트 하기 위한 작업
-		planPresenter.updateProgress(currentPosition,Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.updateProgress(currentPosition, Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 	}
 
 	@Override

@@ -138,7 +138,7 @@
                         android:layout_alignParentEnd="true"
                         custom:circle_finished_color="#f5a4c8"
                         custom:circle_progress="0"
-                        custom:circle_text_color="@color/com_facebook_blue"
+                        custom:circle_text_color="@color/wallet_holo_blue_light"
                         custom:circle_unfinished_color="#ffffff"/>
                 </FrameLayout>
             </RelativeLayout>

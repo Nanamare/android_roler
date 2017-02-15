@@ -70,13 +70,7 @@
                 android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
         <activity android:name=".ModifyActivity"/>
-        <activity
-            android:name=".timetable.DayActivity"
-            android:label="Timetable">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.plan.PlanActivity"/>
-        </activity>
+
         <activity
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>

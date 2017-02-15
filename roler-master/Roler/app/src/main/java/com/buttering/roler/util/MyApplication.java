@@ -4,11 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.buttering.roler.R;
-import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.leakcanary.LeakCanary;
+import com.google.firebase.FirebaseApp;
 
 /**
  * Created by kinamare on 2016-12-17.
@@ -55,9 +53,8 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 //		LeakCanary.install(this);
-
-
-		FacebookSdk.sdkInitialize(this);
+//		FirebaseApp.initializeApp(this);
+//		FacebookSdk.sdkInitialize(this);
 		sInstance = this;
 
 

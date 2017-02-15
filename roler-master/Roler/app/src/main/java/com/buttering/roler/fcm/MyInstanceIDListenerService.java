@@ -18,6 +18,7 @@ package com.buttering.roler.fcm;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 
@@ -32,7 +33,6 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService {
 
 	@Override
 	public void onTokenRefresh() {
-
 		String token = FirebaseInstanceId.getInstance().getToken();
 		sendRegistrationToServer(token);
 
