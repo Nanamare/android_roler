@@ -25,14 +25,14 @@
             android:hint="역할 중심 일정 관리 앱"/>
 
         <TextView
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginTop="40dp"
             android:id="@+id/subTitle"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Roler"/>
+            android:hint="'롤러'"/>
 
     </FrameLayout>
 

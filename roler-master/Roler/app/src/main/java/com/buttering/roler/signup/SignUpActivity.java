@@ -123,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 		policyTv[0] = new TextView(this);
 		policyTv[0].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		policyTv[0].setText("By tapping to continue, you are indication that ");
+		policyTv[0].setText("By tapping to NEXT , you are indication that ");
 		policyTv[0].setTextSize(13);
 		policyTv[1] = new TextView(this);
 		policyTv[1].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

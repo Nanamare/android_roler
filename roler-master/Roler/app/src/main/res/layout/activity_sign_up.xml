@@ -39,7 +39,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="12dp"
                     android:background="@android:color/transparent"
-                    android:hint="ID (example@liveo.me)"
+                    android:hint="ID (roler@roler.me)"
                     android:inputType="textNoSuggestions"
                     android:lines="1"
                     android:textColor="#333333"

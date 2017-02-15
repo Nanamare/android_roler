@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ScheduleDialog extends TimePickerDialog {
 
-	private final static int TIME_PICKER_INTERVAL = 5;
+	private final static int TIME_PICKER_INTERVAL = 1;
 	private TimePicker mTimePicker;
 	private final OnTimeSetListener mTimeSetListener;
 

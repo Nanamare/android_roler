@@ -41,6 +41,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
  * week view.
@@ -63,6 +66,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	private String date;
 
 	private boolean isCheck;
+
+	private ACProgressFlower dialog;
 
 
 	private List<WeekViewEvent> event = new ArrayList<>();
@@ -437,6 +442,21 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		event.addAll(viewEvents);
 		mWeekView.notifyDatasetChanged();
 
-
 	}
+
+	@Override
+	public void showLoadingBar() {
+		dialog = new ACProgressFlower.Builder(this)
+				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
+				.themeColor(Color.WHITE)
+				.fadeColor(Color.DKGRAY).build();
+		dialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (dialog != null)
+			dialog.dismiss();
+	}
+
 }

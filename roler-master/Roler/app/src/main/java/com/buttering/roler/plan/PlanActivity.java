@@ -3,6 +3,7 @@ package com.buttering.roler.plan;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +27,11 @@ import com.buttering.roler.VO.Todo;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +45,9 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 public class PlanActivity extends AppCompatActivity implements IPlanView {
+
+	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
 
 	@BindView(R.id.activity_plan_name_tv)
 	TextView name;
@@ -71,6 +80,23 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	private List<Todo> todolist;
 
 	private LinearLayoutManager linearLayoutManager;
+
+
+	private boolean checkPlayServices() {
+		GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+		int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+		if (resultCode != ConnectionResult.SUCCESS) {
+			if (apiAvailability.isUserResolvableError(resultCode)) {
+				apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+						.show();
+			} else {
+				Log.i("df", "This device is not supported.");
+			}
+			return false;
+		}
+		return true;
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +132,25 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 		//make a adapter
 		setListView();
+
+		//FCM
+//		if (checkPlayServices()) {
+//
+//			new AsyncTask() {
+//
+//				@Override
+//				protected Object doInBackground(Object[] objects) {
+//					try {
+//						FirebaseInstanceId.getInstance().deleteInstanceId();
+//						FirebaseInstanceId.getInstance().getToken();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					return null;
+//				}
+//			}.execute(null, null, null);
+//		}
 
 
 	}

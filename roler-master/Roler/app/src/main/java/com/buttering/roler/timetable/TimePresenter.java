@@ -27,23 +27,29 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 	@Override
 	public void getSchduleList(int user_id, String date) {
+		view.showLoadingBar();
+
 		addSubscription(scheduleService
 				.getScheduleList(user_id, date)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Schedule>>() {
 					@Override
 					public void onCompleted() {
+						view.hideLoadingBar();
 
 					}
 
 					@Override
 					public void onError(Throwable e) {
 						e.printStackTrace();
+						view.hideLoadingBar();
+
 					}
 
 					@Override
 					public void onNext(List<Schedule> schedules) {
 						view.setScheduleList(schedules);
+						onCompleted();
 					}
 				}));
 	}

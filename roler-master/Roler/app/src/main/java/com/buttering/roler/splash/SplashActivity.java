@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
 
 			new Handler().postDelayed(() -> {
 				splash_subTitle.setVisibility(View.VISIBLE);
-			}, 2000);
+			}, 1500);
 
 
 			Intent intent = new Intent(this, LogInActivity.class);
@@ -60,7 +60,7 @@ public class SplashActivity extends Activity {
 					loggedInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					startActivity(loggedInIntent);
 					finish();
-				}, 2000);
+				}, 1500);
 
 
 			} else {
@@ -69,7 +69,7 @@ public class SplashActivity extends Activity {
 
 					startActivity(intent);
 					finish();
-				}, 2000);
+				}, 1500);
 			}
 
 

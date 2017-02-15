@@ -122,6 +122,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 					}
 					intent.putExtra("Role", role);
 					startActivity(intent);
+					finish();
 				}
 			}
 		});
