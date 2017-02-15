@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.serialization;
+package com.buttering.roler.net.serialization;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

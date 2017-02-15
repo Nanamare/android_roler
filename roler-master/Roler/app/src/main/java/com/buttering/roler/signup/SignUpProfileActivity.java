@@ -241,6 +241,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 //			}
 
 			if (isValid(firstName, lastName)) {
+				showLoadingBar();
 				presenter
 						.signUp(email, passwd, fullName)
 						.flatMap(user -> {

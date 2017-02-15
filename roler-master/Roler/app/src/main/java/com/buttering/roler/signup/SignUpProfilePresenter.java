@@ -1,34 +1,19 @@
 package com.buttering.roler.signup;
 
-import android.app.Activity;
-
-import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.Todo;
 import com.buttering.roler.VO.User;
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.FileService;
-import com.buttering.roler.composition.baseservice.UserService;
-import com.buttering.roler.composition.serialization.RolerResponse;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.FileService;
+import com.buttering.roler.net.baseservice.UserService;
+import com.buttering.roler.net.serialization.RolerResponse;
 import com.buttering.roler.util.FileUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by kinamare on 2016-12-17.
@@ -44,7 +29,6 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 		this.view = view;
 		this.userService = new UserService();
 		this.fileService = new FileService();
-
 	}
 
 	public SignUpProfilePresenter() {
@@ -56,7 +40,6 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 	@Override
 	public Observable<User> signUp(String email, String pwd, String name) {
-		view.showLoadingBar();
 
 		User user = generateUser(email, pwd, name);
 

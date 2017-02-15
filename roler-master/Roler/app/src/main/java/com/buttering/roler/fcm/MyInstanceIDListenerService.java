@@ -32,12 +32,14 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService {
 
 	@Override
 	public void onTokenRefresh() {
+
 		String token = FirebaseInstanceId.getInstance().getToken();
 		sendRegistrationToServer(token);
 
 	}
 
 	private void sendRegistrationToServer(String token) {
+
 		OkHttpClient client = new OkHttpClient();
 		RequestBody body = new FormBody.Builder()
 				.add("Token",token)

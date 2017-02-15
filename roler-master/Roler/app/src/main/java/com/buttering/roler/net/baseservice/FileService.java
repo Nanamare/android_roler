@@ -1,35 +1,22 @@
-package com.buttering.roler.composition.baseservice;
+package com.buttering.roler.net.baseservice;
 
 import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.Schedule;
-import com.buttering.roler.VO.User;
-import com.buttering.roler.composition.serialization.RolerResponse;
-import com.buttering.roler.util.FileUtil;
-import com.google.gson.Gson;
+import com.buttering.roler.net.serialization.RolerResponse;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
 import java.io.IOException;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**

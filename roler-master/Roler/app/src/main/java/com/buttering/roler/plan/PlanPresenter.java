@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.RoleService;
-import com.buttering.roler.composition.baseservice.TodoService;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.RoleService;
+import com.buttering.roler.net.baseservice.TodoService;
 
 import java.util.ArrayList;
 import java.util.List;

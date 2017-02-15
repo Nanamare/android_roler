@@ -1,25 +1,14 @@
-package com.buttering.roler.composition.baseservice;
+package com.buttering.roler.net.baseservice;
 
-import android.content.Context;
-import android.text.TextUtils;
-
-import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.composition.baseservice.cookies.AddCookiesInterceptor;
-import com.buttering.roler.composition.baseservice.cookies.ReceivedCookiesInterceptor;
-import com.buttering.roler.composition.serialization.RolerResponse;
-import com.buttering.roler.composition.serialization.RolerResponseDeserializer;
+import com.buttering.roler.net.serialization.RolerResponse;
+import com.buttering.roler.net.serialization.RolerResponseDeserializer;
 import com.buttering.roler.util.MyApplication;
 import com.buttering.roler.util.NetUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

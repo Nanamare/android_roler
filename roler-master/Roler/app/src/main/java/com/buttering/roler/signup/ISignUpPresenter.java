@@ -2,7 +2,7 @@ package com.buttering.roler.signup;
 
 import android.widget.EditText;
 
-import com.buttering.roler.composition.basepresenter.IBasePresenter;
+import com.buttering.roler.net.basepresenter.IBasePresenter;
 
 import rx.Observable;
 

@@ -1,8 +1,6 @@
 package com.buttering.roler.util;
 
-import android.util.Log;
-
-import com.buttering.roler.composition.baseservice.UserService;
+import com.buttering.roler.net.baseservice.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

@@ -6,8 +6,8 @@ import android.widget.EditText;
 
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.RoleService;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.RoleService;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;

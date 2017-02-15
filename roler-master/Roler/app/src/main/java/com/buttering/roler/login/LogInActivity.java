@@ -23,17 +23,25 @@ import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.User;
+import com.buttering.roler.signup.ISignUpProfilePresenter;
 import com.buttering.roler.signup.SignUpActivity;
+import com.buttering.roler.signup.SignUpProfilePresenter;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-	import com.nhn.android.naverlogin.OAuthLogin;
-	import com.nhn.android.naverlogin.OAuthLoginHandler;
-	import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,19 +56,22 @@ import rx.Subscriber;
  */
 public class LogInActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ILoginView {
 
-	public final static String EXTRA_MESSAGE = "com.buttering.roler";
-	private static final int REQUEST_WRITE_STORAGE = 112;
+	public static final String EXTRA_MESSAGE = "com.buttering.roler";
+	private static final String TAG = "Login_Activity";
+	private static final String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
+	private static final String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
+	private static final String OAUTH_CLIENT_NAME = "Roler";
+
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private static final int GET_ACCOUNT = 111;
 	private static final int single_top_activity = 999;
 
-	private static final String TAG = "Login_Activity";
-	private static String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
-	private static String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
-	private static String OAUTH_CLIENT_NAME = "Roler";
 	private OAuthLogin mOAuthLoginModule;
+	private GoogleApiClient mGoogleApiClient;
 	private ILoginPresenter loginPresenter;
 	private ACProgressFlower dialog;
+
+	public ISignUpProfilePresenter presenter;
 
 	@BindView(R.id.activity_login_google_btn)
 	ImageButton login_google_btn;
@@ -77,7 +88,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	@BindView(R.id.pw_et)
 	TextView pw_et;
 
-	private GoogleApiClient mGoogleApiClient;
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -128,6 +138,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_login);
 
 		ButterKnife.bind(this);
@@ -135,33 +146,10 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		loginPresenter = new LoginPresenter(this);
 
 		initLoginSetting();
-		initFbService();
+
+		presenter = new SignUpProfilePresenter();
 
 	}
-
-
-	private void initFbService() {
-		if (checkPlayServices()) {
-
-			new AsyncTask() {
-
-				@Override
-				protected Object doInBackground(Object[] objects) {
-					//파이어 베이스 이름을 지우고 토큰을 다시 받는다
-//					try {
-//						FirebaseInstanceId.getInstance().deleteInstanceId();
-//						FirebaseInstanceId.getInstance().getToken();
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-
-					return null;
-				}
-			}.execute(null, null, null);
-
-		}
-	}
-
 
 	private void initLoginSetting() {
 
@@ -279,6 +267,129 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				long expiresAt = mOAuthLoginModule.getExpiresAt(getApplicationContext());
 				String tokenType = mOAuthLoginModule.getTokenType(getApplicationContext());
 				Toast.makeText(getApplicationContext(), accessToken + refreshToken + expiresAt + tokenType, Toast.LENGTH_SHORT).show();
+
+				new Thread() {
+					@Override
+					public void run() {
+						String token = accessToken;// 네이버 로그인 접근 토큰;
+						String header = "Bearer " + token; // Bearer 다음에 공백 추가
+						try {
+							String apiURL = "https://openapi.naver.com/v1/nid/me";
+							URL url = new URL(apiURL);
+							HttpURLConnection con = (HttpURLConnection) url.openConnection();
+							con.setRequestMethod("GET");
+							con.setRequestProperty("Authorization", header);
+							int responseCode = con.getResponseCode();
+							BufferedReader br;
+							if (responseCode == 200) { // 정상 호출
+								br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+							} else {  // 에러 발생
+								br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+							}
+							String inputLine;
+							StringBuffer response = new StringBuffer();
+							while ((inputLine = br.readLine()) != null) {
+								response.append(inputLine);
+							}
+							br.close();
+							System.out.println(response.toString());
+							String res = response.toString();
+							JsonObject ja = new JsonParser().parse(res).getAsJsonObject();
+							String name = ja.getAsJsonObject("response").getAsJsonPrimitive("nickname").getAsString();
+							String email = ja.getAsJsonObject("response").getAsJsonPrimitive("email").getAsString();
+							String pwd = ja.getAsJsonObject("response").getAsJsonPrimitive("id").getAsString();
+
+
+							if (!SharePrefUtil.getBooleanSharedPreference("isNaverSignUp")) {
+
+								//구글 유저 가입
+								presenter.signUp(email, pwd, name)
+										.subscribe(new Subscriber<User>() {
+											@Override
+											public void onCompleted() {
+												SharePrefUtil.putSharedPreference("isNaverSignUp", true);
+
+
+												//가입 완료후 로그인
+												loginPresenter.signIn(email, pwd)
+														.subscribe(new Subscriber<String>() {
+															@Override
+															public void onCompleted() {
+																SharePrefUtil.putSharedPreference("isNaverLogin", true);
+																Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+																intent.putExtra(EXTRA_MESSAGE, name);
+																startActivity(intent);
+																finish();
+																unsubscribe();
+
+															}
+
+															@Override
+															public void onError(Throwable e) {
+
+															}
+
+															@Override
+															public void onNext(String s) {
+
+															}
+														});
+
+											}
+
+											@Override
+											public void onError(Throwable e) {
+												e.printStackTrace();
+											}
+
+											@Override
+											public void onNext(User user) {
+												user.setName(name);
+												user.setPicture_url("");
+												user.setId(pwd);
+												user.setEmail(email);
+												MyInfoDAO.getInstance().saveUserInfo(user);
+												onCompleted();
+
+											}
+										});
+
+							} else {
+								//가입을 했었다면 바로 로그인
+								loginPresenter.signIn(email, pwd)
+										.subscribe(new Subscriber<String>() {
+											@Override
+											public void onCompleted() {
+												SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+												Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+												intent.putExtra(EXTRA_MESSAGE, name);
+												startActivity(intent);
+												finish();
+												unsubscribe();
+
+											}
+
+											@Override
+											public void onError(Throwable e) {
+
+											}
+
+											@Override
+											public void onNext(String s) {
+
+											}
+										});
+
+							}
+
+
+						} catch (Exception e) {
+							System.out.println(e);
+						}
+					}
+
+				}.start(); //스레드 실행
+
 				Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
 				startActivity(intent);
 				finish();
@@ -307,7 +418,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 						.build();
 
 				mGoogleApiClient.connect();
-				showLoadingBar();
 				break;
 		}
 
@@ -326,45 +436,114 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 			Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-//				 TODO: Consider calling
-//				    ActivityCompat#requestPermissions
-//				 here to request the missing permissions, and then overriding
-//				   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//				                                          int[] grantResults)
-//				 to handle the case where the user grants the permission. See the documentation
-//				 for ActivityCompat#requestPermissions for more details.
+		/*		 TODO: Consider calling
+				    ActivityCompat#requestPermissions
+				 here to request the missing permissions, and then overriding
+				   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+				                                          int[] grantResults)
+				 to handle the case where the user grants the permission. See the documentation
+				 for ActivityCompat#requestPermissions for more details.
 				return;
+			*/
 			}
-			String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
 			if (currentPerson.hasImage()) {
-
 				Log.d(TAG, "이미지 경로는 : " + currentPerson.getImage().getUrl());
-
-               /* Glide.with(MainActivity.this)
-                        .load(currentPerson.getImage().getUrl())
-                        .into(userphoto);*/
-
 			}
 			if (currentPerson.hasDisplayName()) {
+
 				Log.d(TAG, "google+ name  : " + currentPerson.getDisplayName());
 				Log.d(TAG, "google+ id : " + currentPerson.getId());
-				String message = currentPerson.getDisplayName();
-				Log.d("현재 사용자님은", message + "입니다");
-				//구글 유저 저장
-				User user = new User();
-				user.setName(currentPerson.getDisplayName());
-				user.setPicture_url(currentPerson.getImage().getUrl());
-				user.setId(currentPerson.getId());
-				user.setEmail(email);
-				MyInfoDAO.getInstance().saveUserInfo(user);
-				hideLoadingBar();
-				Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-				intent.putExtra(EXTRA_MESSAGE, message);
-				startActivity(intent);
-				finish();
-			}
+				Log.d(TAG, "google+ id : " + currentPerson.getAboutMe());
+				Log.d(TAG, "google+ id : " + currentPerson.getUrl());
 
+				String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+				String name = currentPerson.getDisplayName();
+				String pwd = String.valueOf(currentPerson.getId());
+
+				if (!SharePrefUtil.getBooleanSharedPreference("isGoogleSignUp")) {
+
+					//구글 유저 가입
+					presenter.signUp(email, pwd, name)
+							.subscribe(new Subscriber<User>() {
+								@Override
+								public void onCompleted() {
+									SharePrefUtil.putSharedPreference("isGoogleSignUp", true);
+
+
+									//가입 완료후 로그인
+									loginPresenter.signIn(email, pwd)
+											.subscribe(new Subscriber<String>() {
+												@Override
+												public void onCompleted() {
+													SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+													Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+													intent.putExtra(EXTRA_MESSAGE, name);
+													startActivity(intent);
+													finish();
+													unsubscribe();
+
+												}
+
+												@Override
+												public void onError(Throwable e) {
+
+												}
+
+												@Override
+												public void onNext(String s) {
+
+												}
+											});
+
+								}
+
+								@Override
+								public void onError(Throwable e) {
+									e.printStackTrace();
+								}
+
+								@Override
+								public void onNext(User user) {
+									user.setName(currentPerson.getDisplayName());
+									user.setPicture_url(currentPerson.getImage().getUrl());
+									user.setId(currentPerson.getId());
+									user.setEmail(email);
+									MyInfoDAO.getInstance().saveUserInfo(user);
+									onCompleted();
+
+								}
+							});
+
+				} else {
+					//가입을 했었다면 바로 로그인
+					loginPresenter.signIn(email, pwd)
+							.subscribe(new Subscriber<String>() {
+								@Override
+								public void onCompleted() {
+									SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+									Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+									intent.putExtra(EXTRA_MESSAGE, name);
+									startActivity(intent);
+									finish();
+									unsubscribe();
+
+								}
+
+								@Override
+								public void onError(Throwable e) {
+
+								}
+
+								@Override
+								public void onNext(String s) {
+
+								}
+							});
+
+				}
+
+			}
 		}
 	}
 

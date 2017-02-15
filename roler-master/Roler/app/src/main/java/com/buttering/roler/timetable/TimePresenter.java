@@ -1,9 +1,8 @@
 package com.buttering.roler.timetable;
 
-import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.VO.Schedule;
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.ScheduleService;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.ScheduleService;
 
 import java.util.List;
 

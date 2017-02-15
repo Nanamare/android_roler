@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.baseservice.cookies;
+package com.buttering.roler.net.baseservice.cookies;
 
 import android.content.Context;
 import android.util.Log;

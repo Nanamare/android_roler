@@ -8,15 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.buttering.roler.R;
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.UserService;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.UserService;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by kinamare on 2016-12-18.

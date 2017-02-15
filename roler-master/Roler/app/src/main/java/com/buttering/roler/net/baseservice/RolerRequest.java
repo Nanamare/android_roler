@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.baseservice;
+package com.buttering.roler.net.baseservice;
 
 import com.buttering.roler.VO.MyInfoDAO;
 

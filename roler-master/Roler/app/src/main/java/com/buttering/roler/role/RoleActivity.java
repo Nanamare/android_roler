@@ -149,9 +149,8 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 						.setPositiveButton("확인", (dialog, which) -> {
 							if (allRoleList.size() != 1) {
 								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
-//								allRoleList.remove(vp_roleDetail.getScrollPosition());
 							} else {
-								Toast.makeText(RoleActivity.this, "더 이상 삭제할수 없습니다.", Toast.LENGTH_SHORT).show();
+								Toast.makeText(RoleActivity.this, "더 이상 삭제할수 없습니다."+"\n"+"수정해서 사용하세요", Toast.LENGTH_SHORT).show();
 							}
 						})
 						.setNegativeButton("취소", (dialog, which) -> {

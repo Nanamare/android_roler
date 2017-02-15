@@ -1,10 +1,7 @@
 package com.buttering.roler.login;
 
-import android.app.Activity;
-import android.content.pm.ProviderInfo;
-
-import com.buttering.roler.composition.basepresenter.BasePresenter;
-import com.buttering.roler.composition.baseservice.UserService;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.net.baseservice.UserService;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

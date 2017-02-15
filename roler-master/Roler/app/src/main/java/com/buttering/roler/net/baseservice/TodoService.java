@@ -1,8 +1,7 @@
-package com.buttering.roler.composition.baseservice;
+package com.buttering.roler.net.baseservice;
 
-import com.buttering.roler.VO.Role;
+import com.buttering.roler.VO.Todo;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -21,30 +20,31 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by kinamare on 2017-01-13.
+ * Created by kinamare on 2017-01-15.
  */
 
-public class RoleService extends BaseService {
+public class TodoService extends BaseService {
 
-	public RoleService() {
-		super(RoleApi.class);
+	public TodoService() {
+		super(TodoApi.class);
 	}
 
 	@Override
-	public RoleApi getAPI() {
-		return (RoleApi) super.getAPI();
+	public TodoApi getAPI() {
+		return (TodoApi) super.getAPI();
 	}
 
-	public Observable<List<Role>> getRoleContent(int id) {
+	public Observable<List<Todo>> getTodoList(int userId, int roleId) {
 
 		return Observable.create(subscriber -> {
-			getAPI().getRoleContent(id)
+			getAPI().getTodoList(userId, roleId)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -55,7 +55,7 @@ public class RoleService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							subscriber.onError(e);
 						}
 
 						@Override
@@ -63,104 +63,70 @@ public class RoleService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									List<Role> roleList = parseParams(result);
-									subscriber.onNext(roleList);
+									List<Todo> todoList = parseParams(result);
+									subscriber.onNext(todoList);
 
 								} else {
-									subscriber.onError(new Throwable());
+									List<Todo> emptyTodo = new ArrayList<>();
+									subscriber.onNext(emptyTodo);
 								}
 
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 
-
 						}
 
-						private List<Role> parseParams(String json) {
-							ArrayList<Role> roleList = new ArrayList<>();
+						private List<Todo> parseParams(String json) {
+							ArrayList<Todo> todo = new ArrayList<>();
 
 							try {
 								JSONObject object = new JSONObject(json);
 								JSONArray jsonArray = new JSONArray(object.getString("params"));
-								String roleJson = jsonArray.toString();
-								roleList.addAll(new Gson().fromJson(roleJson, Role.getListType()));
-
+								String todoJson = jsonArray.toString();
+								todo.addAll(new Gson().fromJson(todoJson, Todo.getListType()));
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
 
 
-							return roleList;
+							return todo;
 						}
 
 					});
 
-		});
-	}
-
-
-	public Observable<Void> addRole(int rolePrimary, String roleName, String roleContent, int user_id) {
-		return Observable.create(subscriber -> {
-			getAPI().addRole(rolePrimary, roleName, roleContent, user_id)
-					.subscribeOn(Schedulers.io())
-					.subscribe(new Subscriber<ResponseBody>() {
-						@Override
-						public void onCompleted() {
-							unsubscribe();
-						}
-
-						@Override
-						public void onError(Throwable e) {
-
-						}
-
-						@Override
-						public void onNext(ResponseBody responseBody) {
-							try {
-								String result = responseBody.string();
-								if (getStatusResult(result) == "true") {
-									subscriber.onNext(null);
-
-								} else {
-									subscriber.onError(new Throwable());
-								}
-
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-
-
-						}
-
-					});
 
 		});
 
 	}
 
-	public  Observable<Void> deleteRole(int role_id){
+	;
+
+	public Observable<Integer> addTodoList(String content, int todoOrder
+			, String todoDate, int role_id, int user_id, boolean isDone) {
+
 		return Observable.create(subscriber -> {
-			getAPI().deleteRole(role_id)
+			getAPI().addTodoList(content, todoOrder, todoDate, role_id, user_id, isDone)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
 							subscriber.onCompleted();
+							subscriber.unsubscribe();
 						}
 
 						@Override
 						public void onError(Throwable e) {
-
+							subscriber.onError(e);
 						}
 
 						@Override
 						public void onNext(ResponseBody responseBody) {
-
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									subscriber.onNext(null);
+									int id = parseParams(result);
+									subscriber.onNext(id);
 
 								} else {
 									subscriber.onError(new Throwable());
@@ -169,27 +135,38 @@ public class RoleService extends BaseService {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
+						}
 
+						private int parseParams(String json) {
+
+							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+							String result = ja.get("id").getAsString();
+							int id = Integer.valueOf(result);
+
+							return id;
 
 						}
-					});
 
+					});
 		});
 	}
 
-	public Observable<Void> editRole(int rolePrimary, String roleName, String roleContent, int role_id) {
+
+	public Observable<Void> deleteTodo(int id) {
+
 		return Observable.create(subscriber -> {
-			getAPI().editRole(rolePrimary, roleName, roleContent, role_id)
+			getAPI().deleteTodo(id)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
 							unsubscribe();
+
 						}
 
 						@Override
 						public void onError(Throwable e) {
-
+							onError(e);
 						}
 
 						@Override
@@ -207,43 +184,43 @@ public class RoleService extends BaseService {
 								e.printStackTrace();
 							}
 
-
 						}
-
 					});
 
 		});
 
 	}
 
-	public Observable<Void> updateProgress(int role_id, int user_id){
-
+	public Observable<Void> setDone(int todo_id, Boolean isDone) {
+		String done;
+		if (isDone.equals(true)) {
+			done = "true";
+		} else {
+			done = "false";
+		}
 		return Observable.create(subscriber -> {
-			getAPI().updateProgress(role_id, user_id)
+			getAPI().setDone(todo_id, done)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-							subscriber.onNext(null);
 
 						}
 
 						@Override
 						public void onError(Throwable e) {
 							e.printStackTrace();
-
 						}
 
 						@Override
 						public void onNext(ResponseBody responseBody) {
-
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									onCompleted();
+									subscriber.onNext(null);
 
 								} else {
-
+									subscriber.onError(new Throwable("false"));
 								}
 
 							} catch (IOException e) {
@@ -252,34 +229,32 @@ public class RoleService extends BaseService {
 
 						}
 					});
+
 		});
-	}
-
-	public interface RoleApi {
-
-		@GET("/role/read")
-		Observable<ResponseBody> getRoleContent(@Query("user_id") int id);
-
-		@FormUrlEncoded
-		@POST("/role/create")
-		Observable<ResponseBody> addRole(@Field("rolePrimary") int rolePrimary
-				, @Field("roleName") String roleName
-				, @Field("roleContent") String roleContent
-				, @Field("user_id") int user_id);
-
-
-		@DELETE("/role/delete")
-		Observable<ResponseBody> deleteRole(@Query("id") int role_id);
-
-		@FormUrlEncoded
-		@PUT("/role/update")
-		Observable<ResponseBody> editRole(@Field("rolePrimary") int rolePrimary
-				, @Field("roleName") String roleName
-				, @Field("roleContent") String roleContent
-				, @Field("role_id") int role_id);
-
-		@PUT("/role/progress")
-		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId, @Query("user_id") int user_id);
 
 	}
+
+
+	public interface TodoApi {
+
+		@GET("/todo/read")
+		Observable<ResponseBody> getTodoList(@Query("user_id") int userId, @Query("role_id") int roleId);
+
+		@FormUrlEncoded
+		@POST("/todo/create")
+		Observable<ResponseBody> addTodoList(@Field("content") String content
+				, @Field("todoOrder") int todoOrder
+				, @Field("todoDate") String todoDate
+				, @Field("role_id") int role_id
+				, @Field("user_id") int user_id
+				, @Field("isDone") boolean isDone);
+
+		@DELETE("/todo/delete")
+		Observable<ResponseBody> deleteTodo(@Query("id") int id);
+
+		@PUT("/todo/done/{todoId}")
+		Observable<ResponseBody> setDone(@Path("todoId") int todoId, @Query("isDone") String isDone);
+
+	}
+
 }

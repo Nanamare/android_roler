@@ -74,7 +74,7 @@ public class SplashActivity extends Activity {
 
 
 		} else {
-			Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해보세요", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요", Toast.LENGTH_LONG).show();
 			super.onPause();
 		}
 

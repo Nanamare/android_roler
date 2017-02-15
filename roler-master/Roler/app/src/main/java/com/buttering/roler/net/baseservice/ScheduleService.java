@@ -1,7 +1,5 @@
-package com.buttering.roler.composition.baseservice;
+package com.buttering.roler.net.baseservice;
 
-import com.alamkanak.weekview.WeekViewEvent;
-import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Schedule;
 import com.google.gson.Gson;
 
@@ -54,6 +52,7 @@ public class ScheduleService extends BaseService {
 						@Override
 						public void onError(Throwable e) {
 							e.printStackTrace();
+							onCompleted();
 						}
 
 						@Override

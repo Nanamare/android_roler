@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.serialization;
+package com.buttering.roler.net.serialization;
 
 /**
  * Created by kinamare on 2016-12-17.

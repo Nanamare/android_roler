@@ -85,6 +85,8 @@ public class SettingActivity extends AppCompatActivity {
 		ll_logout.setOnClickListener(view -> {
 			MyInfoDAO.getInstance().deleteAccountInfo();
 			SharePrefUtil.putSharedPreference("isLoggedIn",false);
+			SharePrefUtil.putSharedPreference("isGoogleLogin", false);
+			SharePrefUtil.putSharedPreference("isNaverLogin", false);
 			Intent loginIntent = new Intent(this, LogInActivity.class);
 			loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //			startActivity(loginIntent);

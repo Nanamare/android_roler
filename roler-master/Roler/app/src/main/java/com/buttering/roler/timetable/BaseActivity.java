@@ -321,9 +321,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public void onEventClick(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "해결 완료", Toast.LENGTH_SHORT).show();
-		event.setColor(getResources().getColor(R.color.body_background_green));
-		long id = event.getId();
+		Toast.makeText(this, "길게 클릭하면 삭제 됩니다", Toast.LENGTH_SHORT).show();
+//		event.setColor(getResources().getColor(R.color.body_background_green));
 
 	}
 

@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.basepresenter;
+package com.buttering.roler.net.basepresenter;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;

@@ -1,4 +1,4 @@
-package com.buttering.roler.composition.basepresenter;
+package com.buttering.roler.net.basepresenter;
 
 /**
  * Created by kinamare on 2016-12-17.
