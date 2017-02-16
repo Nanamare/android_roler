@@ -118,5 +118,8 @@ dependencies {
     //eventBus
     compile 'com.squareup:otto:1.3.7'
 
+    //badge
+    compile 'me.leolin:ShortcutBadger:1.1.13@aar'
+
     apply plugin: 'com.google.gms.google-services'
 }

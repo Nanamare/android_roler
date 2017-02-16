@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
 
@@ -21,7 +21,7 @@
     </style>
 
     <style name="NoAppBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor">#6495ed</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#6495ed</item>
         <item name="colorPrimary">#f0ffff</item>
         <item name="colorPrimaryDark">#6495ed</item>
         <item name="android:windowContentOverlay">@null</item>

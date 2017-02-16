@@ -21,6 +21,11 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 	}
 
+	public LoginPresenter(){
+		this.userService = new UserService();
+
+	}
+
 
 	@Override
 	public Observable<String> signIn(String email, String pwd) {
@@ -28,6 +33,14 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 		return userService
 				.signIn(email,pwd)
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+	@Override
+	public Observable<Void> registerToken(String token, String email) {
+
+		return userService
+				.registerToken(token, email)
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 }

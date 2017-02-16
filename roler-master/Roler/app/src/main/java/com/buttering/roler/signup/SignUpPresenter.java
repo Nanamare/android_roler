@@ -38,6 +38,12 @@ public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 
 	}
 
+
+	public SignUpPresenter(){
+		this.userService = new UserService();
+
+	}
+
 	@Override
 	public void registerUser(String email, String pwd) {
 

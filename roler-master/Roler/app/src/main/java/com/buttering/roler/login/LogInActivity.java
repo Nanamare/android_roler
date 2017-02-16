@@ -23,8 +23,10 @@ import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.User;
+import com.buttering.roler.signup.ISignUpPresenter;
 import com.buttering.roler.signup.ISignUpProfilePresenter;
 import com.buttering.roler.signup.SignUpActivity;
+import com.buttering.roler.signup.SignUpPresenter;
 import com.buttering.roler.signup.SignUpProfilePresenter;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,6 +71,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private OAuthLogin mOAuthLoginModule;
 	private GoogleApiClient mGoogleApiClient;
 	private ILoginPresenter loginPresenter;
+	private ISignUpPresenter signUpPresenter;
 	private ACProgressFlower dialog;
 
 	public ISignUpProfilePresenter presenter;
@@ -144,6 +147,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		ButterKnife.bind(this);
 
 		loginPresenter = new LoginPresenter(this);
+		signUpPresenter = new SignUpPresenter();
 
 		initLoginSetting();
 
@@ -299,89 +303,102 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 							String email = ja.getAsJsonObject("response").getAsJsonPrimitive("email").getAsString();
 							String pwd = ja.getAsJsonObject("response").getAsJsonPrimitive("id").getAsString();
 
+							signUpPresenter.checkDuplicateEmail(email)
+									.subscribe(new Subscriber<String>() {
+										@Override
+										public void onCompleted() {
 
-							if (!SharePrefUtil.getBooleanSharedPreference("isNaverSignUp")) {
+											//네이버 유저 가입
+											presenter.signUp(email, pwd, name)
+													.subscribe(new Subscriber<User>() {
+														@Override
+														public void onCompleted() {
 
-								//구글 유저 가입
-								presenter.signUp(email, pwd, name)
-										.subscribe(new Subscriber<User>() {
-											@Override
-											public void onCompleted() {
-												SharePrefUtil.putSharedPreference("isNaverSignUp", true);
+															//가입 완료후 로그인
+															loginPresenter.signIn(email, pwd)
+																	.subscribe(new Subscriber<String>() {
+																		@Override
+																		public void onCompleted() {
+																			hideLoadingBar();
+																			SharePrefUtil.putSharedPreference("isNaverLogin", true);
+																			Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+																			intent.putExtra(EXTRA_MESSAGE, name);
+																			startActivity(intent);
+																			finish();
+																			unsubscribe();
+
+																		}
+
+																		@Override
+																		public void onError(Throwable e) {
+																			hideLoadingBar();
+																		}
+
+																		@Override
+																		public void onNext(String s) {
+
+																		}
+																	});
 
 
-												//가입 완료후 로그인
-												loginPresenter.signIn(email, pwd)
-														.subscribe(new Subscriber<String>() {
-															@Override
-															public void onCompleted() {
-																SharePrefUtil.putSharedPreference("isNaverLogin", true);
-																Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-																intent.putExtra(EXTRA_MESSAGE, name);
-																startActivity(intent);
-																finish();
-																unsubscribe();
+														}
 
-															}
+														@Override
+														public void onError(Throwable e) {
+															e.printStackTrace();
+														}
 
-															@Override
-															public void onError(Throwable e) {
+														@Override
+														public void onNext(User user) {
+															user.setName(name);
+															user.setPicture_url("");
+															user.setId(pwd);
+															user.setEmail(email);
+															MyInfoDAO.getInstance().saveUserInfo(user);
+															onCompleted();
 
-															}
+														}
+													});
 
-															@Override
-															public void onNext(String s) {
+										}
 
-															}
-														});
+										@Override
+										public void onError(Throwable e) {
 
-											}
+											e.printStackTrace();
+											//가입 완료후 로그인
+											loginPresenter.signIn(email, pwd)
+													.subscribe(new Subscriber<String>() {
+														@Override
+														public void onCompleted() {
+															hideLoadingBar();
+															SharePrefUtil.putSharedPreference("isNaverLogin", true);
+															Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+															intent.putExtra(EXTRA_MESSAGE, name);
+															startActivity(intent);
+															finish();
+															unsubscribe();
 
-											@Override
-											public void onError(Throwable e) {
-												e.printStackTrace();
-											}
+														}
 
-											@Override
-											public void onNext(User user) {
-												user.setName(name);
-												user.setPicture_url("");
-												user.setId(pwd);
-												user.setEmail(email);
-												MyInfoDAO.getInstance().saveUserInfo(user);
-												onCompleted();
+														@Override
+														public void onError(Throwable e) {
 
-											}
-										});
+														}
 
-							} else {
-								//가입을 했었다면 바로 로그인
-								loginPresenter.signIn(email, pwd)
-										.subscribe(new Subscriber<String>() {
-											@Override
-											public void onCompleted() {
-												SharePrefUtil.putSharedPreference("isGoogleLogin", true);
-												Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-												intent.putExtra(EXTRA_MESSAGE, name);
-												startActivity(intent);
-												finish();
-												unsubscribe();
+														@Override
+														public void onNext(String s) {
 
-											}
+														}
+													});
 
-											@Override
-											public void onError(Throwable e) {
+										}
 
-											}
+										@Override
+										public void onNext(String s) {
 
-											@Override
-											public void onNext(String s) {
-
-											}
-										});
-
-							}
-
+										}
+									});
 
 						} catch (Exception e) {
 							System.out.println(e);
@@ -390,9 +407,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 				}.start(); //스레드 실행
 
-				Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-				startActivity(intent);
-				finish();
 
 			} else {
 				String errorCode = mOAuthLoginModule.getLastErrorCode(getApplicationContext()).getCode();
@@ -461,87 +475,105 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				String name = currentPerson.getDisplayName();
 				String pwd = String.valueOf(currentPerson.getId());
 
-				if (!SharePrefUtil.getBooleanSharedPreference("isGoogleSignUp")) {
+				signUpPresenter.checkDuplicateEmail(email)
+						.subscribe(new Subscriber<String>() {
+							@Override
+							public void onCompleted() {
 
-					//구글 유저 가입
-					presenter.signUp(email, pwd, name)
-							.subscribe(new Subscriber<User>() {
-								@Override
-								public void onCompleted() {
-									SharePrefUtil.putSharedPreference("isGoogleSignUp", true);
+								//네이버 유저 가입
+								presenter.signUp(email, pwd, name)
+										.subscribe(new Subscriber<User>() {
+											@Override
+											public void onCompleted() {
+
+												//가입 완료후 로그인
+												loginPresenter.signIn(email, pwd)
+														.subscribe(new Subscriber<String>() {
+															@Override
+															public void onCompleted() {
+																hideLoadingBar();
+																SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+																Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+																intent.putExtra(EXTRA_MESSAGE, name);
+																startActivity(intent);
+																finish();
+																unsubscribe();
+
+															}
+
+															@Override
+															public void onError(Throwable e) {
+
+															}
+
+															@Override
+															public void onNext(String s) {
+
+															}
+														});
 
 
-									//가입 완료후 로그인
-									loginPresenter.signIn(email, pwd)
-											.subscribe(new Subscriber<String>() {
-												@Override
-												public void onCompleted() {
-													SharePrefUtil.putSharedPreference("isGoogleLogin", true);
-													Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-													intent.putExtra(EXTRA_MESSAGE, name);
-													startActivity(intent);
-													finish();
-													unsubscribe();
+											}
 
-												}
+											@Override
+											public void onError(Throwable e) {
+												e.printStackTrace();
+											}
 
-												@Override
-												public void onError(Throwable e) {
+											@Override
+											public void onNext(User user) {
+												user.setName(name);
+												user.setPicture_url("");
+												user.setId(pwd);
+												user.setEmail(email);
+												MyInfoDAO.getInstance().saveUserInfo(user);
+												onCompleted();
 
-												}
+											}
+										});
 
-												@Override
-												public void onNext(String s) {
+							}
 
-												}
-											});
+							@Override
+							public void onError(Throwable e) {
 
-								}
+								hideLoadingBar();
+								e.printStackTrace();
+								//가입 완료후 로그인
+								loginPresenter.signIn(email, pwd)
+										.subscribe(new Subscriber<String>() {
+											@Override
+											public void onCompleted() {
+												SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+												Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+												intent.putExtra(EXTRA_MESSAGE, name);
+												startActivity(intent);
+												finish();
+												unsubscribe();
 
-								@Override
-								public void onError(Throwable e) {
-									e.printStackTrace();
-								}
+											}
 
-								@Override
-								public void onNext(User user) {
-									user.setName(currentPerson.getDisplayName());
-									user.setPicture_url(currentPerson.getImage().getUrl());
-									user.setId(currentPerson.getId());
-									user.setEmail(email);
-									MyInfoDAO.getInstance().saveUserInfo(user);
-									onCompleted();
+											@Override
+											public void onError(Throwable e) {
+												e.printStackTrace();
+												hideLoadingBar();
 
-								}
-							});
+											}
 
-				} else {
-					//가입을 했었다면 바로 로그인
-					loginPresenter.signIn(email, pwd)
-							.subscribe(new Subscriber<String>() {
-								@Override
-								public void onCompleted() {
-									SharePrefUtil.putSharedPreference("isGoogleLogin", true);
-									Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-									intent.putExtra(EXTRA_MESSAGE, name);
-									startActivity(intent);
-									finish();
-									unsubscribe();
+											@Override
+											public void onNext(String s) {
 
-								}
+											}
+										});
 
-								@Override
-								public void onError(Throwable e) {
+							}
 
-								}
+							@Override
+							public void onNext(String s) {
 
-								@Override
-								public void onNext(String s) {
+							}
+						});
 
-								}
-							});
-
-				}
 
 			}
 		}

@@ -17,6 +17,7 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.util.SharePrefUtil;
+import com.nhn.android.naverlogin.OAuthLogin;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +47,8 @@ public class SettingActivity extends AppCompatActivity {
 	TextView tv_version;
 
 	private static int single_top_activity = 999;
+
+	private OAuthLogin mOAuthLoginModule;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,10 @@ public class SettingActivity extends AppCompatActivity {
 			SharePrefUtil.putSharedPreference("isLoggedIn",false);
 			SharePrefUtil.putSharedPreference("isGoogleLogin", false);
 			SharePrefUtil.putSharedPreference("isNaverLogin", false);
+			mOAuthLoginModule = OAuthLogin.getInstance();
+			mOAuthLoginModule.logout(this);
+//			SharePrefUtil.putSharedPreference("isNaverSignUp", false);
+//			SharePrefUtil.putSharedPreference("isGoogleSignUp", false);
 			Intent loginIntent = new Intent(this, LogInActivity.class);
 			loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //			startActivity(loginIntent);

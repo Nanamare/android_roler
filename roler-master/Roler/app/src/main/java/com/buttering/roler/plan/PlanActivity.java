@@ -1,10 +1,14 @@
 package com.buttering.roler.plan;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -24,9 +28,12 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
+import com.buttering.roler.login.ILoginPresenter;
+import com.buttering.roler.login.LoginPresenter;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.buttering.roler.util.MyApplication;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -46,6 +53,8 @@ import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
+import me.leolin.shortcutbadger.ShortcutBadger;
+import rx.Subscriber;
 
 public class PlanActivity extends AppCompatActivity implements IPlanView {
 
@@ -81,6 +90,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	private List<Role> roles = new ArrayList<>();
 	private Todo todo = null;
 	private List<Todo> todolist;
+	private ILoginPresenter tokenPresenter;
 
 	private LinearLayoutManager linearLayoutManager;
 
@@ -106,8 +116,8 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plan);
 		ButterKnife.bind(this);
-
-		FirebaseApp.initializeApp(this);
+//
+//		FirebaseApp.initializeApp(this);
 
 
 		setToolbar();
@@ -118,6 +128,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		allRoleList = receiveRoles();
 
 		planPresenter = new PlanPresenter(this, getApplicationContext());
+		tokenPresenter = new LoginPresenter();
 
 		adapter = new PlanActivityAdapter(this, allRoleList);
 		vp_rolePlanPage.setAdapter(adapter);
@@ -139,11 +150,36 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		setListView();
 
 //		FCM
+		SharePrefUtil.putSharedPreference("isFcmToken", false);
 		if (checkPlayServices()) {
-			FirebaseMessaging.getInstance().subscribeToTopic("news");
-			String token = FirebaseInstanceId.getInstance().getToken();
-			SharePrefUtil.putSharedPreference("fcmToken", token);
+			if (!SharePrefUtil.getBooleanSharedPreference("isFcmToken")) {
+				FirebaseMessaging.getInstance().subscribeToTopic("news");
+				String token = FirebaseInstanceId.getInstance().getToken();
+				tokenPresenter.registerToken(token, MyInfoDAO.getInstance().getEmail())
+						.subscribe(new Subscriber<Void>() {
+							@Override
+							public void onCompleted() {
+								SharePrefUtil.putSharedPreference("fcmToken", token);
+								SharePrefUtil.putSharedPreference("isFcmToken", true);
+								unsubscribe();
+
+							}
+
+							@Override
+							public void onError(Throwable e) {
+
+							}
+
+							@Override
+							public void onNext(Void aVoid) {
+								onCompleted();
+
+							}
+						});
+			}
 		}
+
+		ShortcutBadger.removeCount(MyApplication.getInstance().getContext()); //for 1.1.4+
 
 	}
 
@@ -308,6 +344,10 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		LocalBroadcastManager.getInstance(this).registerReceiver(
+				badgeReceiver,
+				new IntentFilter("badgeCount")
+		);
 	}
 
 	public List<Role> receiveRoles() {
@@ -490,6 +530,27 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			rv_todolist.setAdapter(todoAdapter);
 		}
 	}
+
+	private BroadcastReceiver badgeReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// Get the received random number
+			int badgeCount = intent.getIntExtra("badgeCount", 0);
+			updateBadge(badgeCount);
+		}
+	};
+
+
+	private void updateBadge(int count) {
+		ShortcutBadger.applyCount(this, count); //for 1.1.4+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(badgeReceiver);
+	}
+
 
 
 }

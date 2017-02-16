@@ -1,6 +1,7 @@
 package com.buttering.roler.net.baseservice;
 
 import com.buttering.roler.VO.MyInfoDAO;
+import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.net.serialization.RolerResponse;
 import com.google.gson.Gson;
@@ -206,6 +207,45 @@ public class UserService extends BaseService {
 
 	}
 
+	public Observable<Void> registerToken(String token, String email) {
+		return Observable.create(subscriber -> {
+			getAPI().registerToken(token, email)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+							e.printStackTrace();
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									subscriber.onNext(null);
+
+								} else {
+
+									subscriber.onError(new Throwable());
+
+								}
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+						}
+					});
+
+		});
+	}
+
 
 	public interface UserAPI {
 
@@ -223,5 +263,10 @@ public class UserService extends BaseService {
 		@FormUrlEncoded
 		@POST("/sign/up")
 		Observable<ResponseBody> signUp(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
+		@FormUrlEncoded
+		@PUT("/fcm/register")
+		Observable<ResponseBody> registerToken(@Field("token") String token, @Field("email") String email);
+
 	}
 }

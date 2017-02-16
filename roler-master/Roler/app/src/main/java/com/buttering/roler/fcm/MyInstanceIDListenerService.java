@@ -31,31 +31,31 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService {
 
 	private static final String TAG = "MyFirebaseIDService";
 
-	@Override
-	public void onTokenRefresh() {
-		String token = FirebaseInstanceId.getInstance().getToken();
-		sendRegistrationToServer(token);
-
-	}
-
-	private void sendRegistrationToServer(String token) {
-
-		OkHttpClient client = new OkHttpClient();
-		RequestBody body = new FormBody.Builder()
-				.add("Token",token)
-				.build();
-
-		Request request = new Request.Builder()
-				.url("http://52.78.65.255:3000/fcm/register")
-				.post(body)
-				.build();
-
-		try {
-			client.newCall(request).execute();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	@Override
+//	public void onTokenRefresh() {
+//		String token = FirebaseInstanceId.getInstance().getToken();
+//		sendRegistrationToServer(token);
+//
+//	}
+//
+//	private void sendRegistrationToServer(String token) {
+//
+//		OkHttpClient client = new OkHttpClient();
+//		RequestBody body = new FormBody.Builder()
+//				.add("Token",token)
+//				.build();
+//
+//		Request request = new Request.Builder()
+//				.url("")
+//				.post(body)
+//				.build();
+//
+//		try {
+//			client.newCall(request).execute();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 
 }
