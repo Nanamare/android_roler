@@ -13,27 +13,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.signature.StringSignature;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
+import com.buttering.roler.signup.ISignUpProfilePresenter;
+import com.buttering.roler.signup.SignUpProfilePresenter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -50,11 +52,6 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import rx.Subscriber;
-
-import com.buttering.roler.signup.ISignUpProfilePresenter;
-import com.buttering.roler.signup.SignUpProfilePresenter;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 /**
  * Created by WonYoung on 16. 7. 30..
@@ -120,10 +117,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	}
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_role);
 		ButterKnife.bind(this);
+
+		setToolbar();
 
 		AdView mAdView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder().build();
@@ -175,9 +174,25 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 		setProfileImage();
 
-		getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
 
 		editImage();
+
+	}
+
+	private void setToolbar() {
+		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
+		TextView textView = (TextView) findViewById(R.id.toolbar_title);
+		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
+		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+		textView.setTextColor(Color.BLACK);
+		textView.setText("MY Page");
+		setSupportActionBar(toolbar);
+
+		imageView.setOnClickListener(v -> {
+			finish();
+		});
+
+
 
 	}
 
@@ -282,6 +297,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
 				intentSubActivity.putExtra("Role", (Role) adapter.getItem(vp_roleDetail.getScrollPosition()));
 				startActivity(intentSubActivity);
+				finish();
 			}
 		});
 	}
@@ -289,6 +305,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 
 	}
 
@@ -296,6 +313,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	public void Onclick() {
 		Intent intent = new Intent(RoleActivity.this, EditRoleActivity.class);
 		startActivity(intent);
+		finish();
 	}
 
 	public List<Role> receiveRoles() {

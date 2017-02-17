@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="1"
-                    android:textSize="15sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_comma"
@@ -41,7 +41,7 @@
                     android:layout_marginRight="3dp"
                     android:layout_toRightOf="@id/tv_rolePrimary"
                     android:text="."
-                    android:textSize="15sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_roleName"
@@ -50,7 +50,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_comma"
                     android:text="임시임시임시제목"
-                    android:textSize="13sp"/>
+                    android:textSize="11sp"/>
 
                 <!--<Button-->
                     <!--android:layout_width="20dp"-->
@@ -78,7 +78,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:text="단기목표"
-                    android:textSize="13sp"/>
+                    android:textSize="11sp"/>
 
 
                 <TextView
@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/activity_role_title"
-                        android:layout_marginTop="23dp"
+                        android:layout_marginTop="10dp"
                         android:text="임시임시임시 내용내용 내욘ㄴ언아렁니ㅏ렁나ㅣ"
                         android:textSize="10sp"/>
 

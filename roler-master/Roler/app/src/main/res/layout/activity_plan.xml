@@ -81,7 +81,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ll_swipe_arrow"
             coverflow:coverHeight="200dp"
-            coverflow:coverWidth="180dp"
+            coverflow:coverWidth="150dp"
             coverflow:maxScaleFactor="2.0"
             coverflow:reflectionGap="1px"
             coverflow:rotationThreshold="1.0"

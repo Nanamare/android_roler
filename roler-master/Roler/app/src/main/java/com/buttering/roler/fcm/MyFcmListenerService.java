@@ -57,7 +57,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 
 		String[] datas = (String[]) data.values().toArray(new String[]{});
 		String title = remoteMessage.getNotification().getTitle();
-		int badgeCount = 2;
+		int badgeCount = 1;
 		String pushMessage = datas[1];
 
 		JsonParser parser = new JsonParser();
@@ -67,51 +67,12 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 			list.add(jsonArray.get(loop).getAsJsonObject().get("content").toString());
 		}
 
-
-//		try {
-//			JSONArray ja = new JSONArray(pushMessage);
-//			for (int loop = 0; loop < jsonArray.size(); loop++) {
-//				JSONObject object = ja.getJSONObject(loop);
-//				longText += object.getString("content");
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
 		sendBadgeUpdateIntent(badgeCount);
 		sendNotification(title, list);
 
 	}
 
 	private void sendNotification(String title, List<String> list) {
-
-
-//		Intent intent = new Intent(this, PlanActivity.class);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-//		Uri defaultUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//		Notification.Builder notificationBuilder = new Notification.Builder(this);
-//
-//		notificationBuilder
-//				.setSmallIcon(R.drawable.icon_roler)
-//				.setContentTitle(title)
-//				.setContentText("오늘의 일정")
-//				.setSound(defaultUri)
-//				.setContentIntent(pendingIntent);
-//
-//		Notification.InboxStyle style = new Notification.InboxStyle(notificationBuilder);
-//		for (int i = 0; i < list.size(); i++) {
-//			style.addLine(list.get(i));
-//		}
-//		style.setSummaryText("더보기");
-//
-//		notificationBuilder.setStyle(style);
-//
-//
-//		NotificationManager notificationManager =
-//				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//		notificationManager.notify(0, notificationBuilder.build());
-
 
 		NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this,0,new Intent(this,PlanActivity.class),0);
@@ -127,8 +88,12 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 		mBuilder.setAutoCancel(true);
 
 		Notification.InboxStyle style = new Notification.InboxStyle(mBuilder);
-		for (int i = 0; i < list.size(); i++) {
-			style.addLine(list.get(i));
+		if(list.size()!=0) {
+			for (int i = 0; i < list.size(); i++) {
+				style.addLine(list.get(i));
+			}
+		} else {
+			style.addLine("없네요 오늘의 스케쥴을 설정해보세요.");
 		}
 		style.setSummaryText("더보기");
 		mBuilder.setStyle(style);

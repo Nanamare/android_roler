@@ -60,18 +60,18 @@
         <activity
             android:name=".role.RoleActivity"
             android:label="My Page"
-            android:theme="@style/AppTheme">
+            android:theme="@style/NoAppBarTheme">
             <meta-data android:name="com.google.android.gms.version"
                        android:value="@integer/google_play_services_version" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.plan.PlanActivity"/>
+                android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
         <activity android:name=".role.EditRoleActivity"
                   android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.buttering.roler.role.RoleActivity"/>
+                android:value="com.buttering.roler.role.EditRoleActivity"/>
         </activity>
         <activity android:name=".ModifyActivity"/>
 

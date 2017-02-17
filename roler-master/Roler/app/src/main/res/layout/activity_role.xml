@@ -7,12 +7,18 @@
                 android:layout_height="match_parent"
                 tools:context="com.buttering.roler.plan.PlanActivity">
 
+    <include
+        android:id="@+id/custom_toolBar"
+        layout="@layout/toolbar"/>
+
+
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_below="@+id/custom_toolBar"
         android:id="@+id/iv_picture"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/abcde"/>
 
     <LinearLayout
@@ -98,8 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/tv_editRoleInfo"
-                coverflow:coverHeight="200dp"
-                coverflow:coverWidth="170dp"
+                coverflow:coverHeight="150dp"
+                coverflow:coverWidth="150dp"
                 coverflow:maxScaleFactor="2.0"
                 coverflow:reflectionGap="1px"
                 coverflow:rotationThreshold="1.0"

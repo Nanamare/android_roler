@@ -1,13 +1,5 @@
 package com.buttering.roler.plan;
 
-import android.content.Context;
-
-import com.buttering.roler.VO.Role;
-import com.buttering.roler.VO.Todo;
-
-import java.util.List;
-import rx.Observable;
-
 /**
  * Created by kinamare on 2016-12-31.
  */

@@ -17,6 +17,8 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.util.SharePrefUtil;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nhn.android.naverlogin.OAuthLogin;
 
 import butterknife.BindView;
@@ -55,6 +57,10 @@ public class SettingActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		ButterKnife.bind(this);
+
+		AdView mAdView = (AdView) findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 
 		setToolbar();
 		setAppVersion();

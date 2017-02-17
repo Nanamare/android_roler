@@ -78,7 +78,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 		viewHolder.role_title.setText("우선순위 " + String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
-		viewHolder.role_subTitle.setText("역할을 하나하나 실천해 나가세요!");
+		viewHolder.role_subTitle.setText("역할을 실천해 나가세요!");
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRole_id()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());

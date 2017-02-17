@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_setting"
     android:layout_width="match_parent"
@@ -23,10 +24,10 @@
 
 
         <LinearLayout
-            android:background="@color/hard_grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/hard_grey">
         </LinearLayout>
 
         <View
@@ -110,10 +111,10 @@
             android:background="@color/hard_grey"/>
 
         <LinearLayout
-            android:background="@color/hard_grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/hard_grey">
         </LinearLayout>
 
         <View
@@ -155,11 +156,21 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/activity_setting_noti_tv"
+                <!--<TextView-->
+                <!--android:id="@+id/activity_setting_noti_tv"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Push Notification Setting"/>-->
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Push Notification Setting"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id">
+                </com.google.android.gms.ads.AdView>
             </LinearLayout>
 
         </LinearLayout>
@@ -170,10 +181,10 @@
             android:background="@color/hard_grey"/>
 
         <LinearLayout
-            android:background="@color/hard_grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/hard_grey">
         </LinearLayout>
 
         <View
@@ -230,10 +241,10 @@
             android:background="@color/hard_grey"/>
 
         <LinearLayout
-            android:background="@color/hard_grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/hard_grey">
         </LinearLayout>
 
         <View
@@ -272,10 +283,10 @@
             android:background="@color/hard_grey"/>
 
         <LinearLayout
-            android:background="@color/hard_grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/hard_grey">
         </LinearLayout>
 
 
