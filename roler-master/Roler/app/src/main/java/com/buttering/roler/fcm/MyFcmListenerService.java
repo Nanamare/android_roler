@@ -81,7 +81,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 		mBuilder.setSmallIcon(R.drawable.icon_roler);
 		mBuilder.setTicker("오늘의 스케쥴 알림이 왔습니다");
 		mBuilder.setWhen(System.currentTimeMillis());
-		mBuilder.setContentTitle("오늘의 해야 할일");
+		mBuilder.setContentTitle(title);
 		mBuilder.setContentText("오늘의 일정");
 		mBuilder.setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE);
 		mBuilder.setContentIntent(pendingIntent);

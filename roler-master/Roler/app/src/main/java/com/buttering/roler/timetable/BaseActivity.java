@@ -382,7 +382,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				String startTime = sdf.format(calendar.getTime());
 
 				Calendar calendar2 = Calendar.getInstance();
-				calendar.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
+				calendar2.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
 				String endTime = sdf.format(calendar2.getTime());
 
 
