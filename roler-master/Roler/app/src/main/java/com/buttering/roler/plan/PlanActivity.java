@@ -345,6 +345,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				badgeReceiver,
 				new IntentFilter("badgeCount")
 		);
+		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
 	}
 
 	public List<Role> receiveRoles() {

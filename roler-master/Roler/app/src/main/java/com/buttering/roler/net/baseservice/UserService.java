@@ -169,7 +169,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-							subscriber.onError(e);
+							subscriber.onError(new Throwable("서버에 문제가 있습니다."));
 						}
 
 						@Override
@@ -180,7 +180,7 @@ public class UserService extends BaseService {
 									subscriber.onCompleted();
 
 								} else {
-									subscriber.onError(new Throwable());
+									subscriber.onError(new Throwable("이메일 또는 비밀번호를 확인해주세요"));
 								}
 							} catch (IOException e) {
 								e.printStackTrace();

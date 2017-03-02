@@ -270,7 +270,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				String refreshToken = mOAuthLoginModule.getRefreshToken(getApplicationContext());
 				long expiresAt = mOAuthLoginModule.getExpiresAt(getApplicationContext());
 				String tokenType = mOAuthLoginModule.getTokenType(getApplicationContext());
-				Toast.makeText(getApplicationContext(), accessToken + refreshToken + expiresAt + tokenType, Toast.LENGTH_SHORT).show();
+				Toast.makeText(LogInActivity.this, "네이버 로그인 접속 중", Toast.LENGTH_SHORT).show();
 
 				new Thread() {
 					@Override
