@@ -42,6 +42,7 @@ public class MyInfoDAO {
 		preferences.put("userId",id);
 	}
 
+
 	public void setPwd(String pwd) {
 		preferences.put("pwd", pwd);
 	}
@@ -86,10 +87,10 @@ public class MyInfoDAO {
 	}
 
 
-	public void loginAccountInfo(String userId, String email, String name, String picURL) {
+	public void loginAccountInfo(String userId, String email, String name, String picUrl) {
 		setEmail(email);
 		setName(name);
-		setPicUrl(picURL);
+		setPicUrl(picUrl);
 		setUserId(userId);
 	}
 

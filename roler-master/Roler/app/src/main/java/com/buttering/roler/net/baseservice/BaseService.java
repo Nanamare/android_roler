@@ -1,5 +1,6 @@
 package com.buttering.roler.net.baseservice;
 
+import com.buttering.roler.net.baseservice.basetoken.DefaultHeaderInterceptor;
 import com.buttering.roler.net.serialization.RolerResponse;
 import com.buttering.roler.net.serialization.RolerResponseDeserializer;
 import com.buttering.roler.util.MyApplication;
@@ -13,6 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okio.Timeout;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -57,19 +59,13 @@ public class BaseService<T> {
 		Gson myGson = gsonBuilder.create();
 
 
-
-//		AddCookiesInterceptor in1 = new AddCookiesInterceptor();
-//		ReceivedCookiesInterceptor in2 = new ReceivedCookiesInterceptor();
-//
-//		OkHttpClient httpClient = new OkHttpClient.Builder()
-//				.addNetworkInterceptor(in1)
-//				.addInterceptor(in2)
-//				.build();
-
+		OkHttpClient httpClient = new OkHttpClient.Builder()
+				.addInterceptor(new DefaultHeaderInterceptor())
+				.build();
 
 
 		retrofit = new Retrofit.Builder()
-//				.client(httpClient)
+				.client(httpClient)
 				.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create(myGson))
 				.baseUrl(BASE_URL)
@@ -106,7 +102,6 @@ public class BaseService<T> {
 			return chain.proceed(req);
 		});
 	}
-
 
 
 	private enum TokenTYPE {

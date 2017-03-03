@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by WonYoung on 16. 7. 31..
+ * Created by nanamare on 16. 7. 31..
  */
 public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 

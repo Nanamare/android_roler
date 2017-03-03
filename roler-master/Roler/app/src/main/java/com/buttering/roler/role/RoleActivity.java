@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import rx.Subscriber;
 
 /**
- * Created by WonYoung on 16. 7. 30..
+ * Created by nanamare on 16. 7. 30..
  */
 public class RoleActivity extends AppCompatActivity implements IRoleView {
 
@@ -76,8 +77,10 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	FeatureCoverFlow vp_roleDetail;
 	@BindView(R.id.activity_role_email)
 	TextView activity_role_email;
+	@BindView(R.id.empty_role_ll)
+	LinearLayout empty_role_ll;
 
-	public List<Role> allRoleList = null;
+	public List<Role> allRoleList = new ArrayList<>();
 	public RoleActivityAdapter adapter = null;
 	public ISignUpProfilePresenter signUpPresenter;
 
@@ -131,13 +134,16 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		presenter = new RolePresenter(this, this);
 		signUpPresenter = new SignUpProfilePresenter();
 
-
-		//mock data
-		allRoleList = receiveRoles();
-
-		//set a adapter
-		adapter = new RoleActivityAdapter(this, allRoleList);
-		vp_roleDetail.setAdapter(adapter);
+		int roleSize = allRoleList.size();
+		if (roleSize != 0) {
+			//set a adapter
+			adapter = new RoleActivityAdapter(this, allRoleList);
+			vp_roleDetail.setAdapter(adapter);
+		} else {
+			// size가 0일때
+			vp_roleDetail.setVisibility(View.GONE);
+			empty_role_ll.setVisibility(View.VISIBLE);
+		}
 
 		vp_roleDetail.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
@@ -146,10 +152,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 				AlertDialog.Builder alert = new AlertDialog.Builder(RoleActivity.this);
 				alert.setMessage("역할을 삭제 하시겠습니까?").setCancelable(false)
 						.setPositiveButton("확인", (dialog, which) -> {
-							if (allRoleList.size() != 1) {
+							if (allRoleList.size() != 0) {
 								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
 							} else {
-								Toast.makeText(RoleActivity.this, "더 이상 삭제할수 없습니다."+"\n"+"수정해서 사용하세요", Toast.LENGTH_SHORT).show();
+								vp_roleDetail.setVisibility(View.GONE);
+								empty_role_ll.setVisibility(View.VISIBLE);
+								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
 							}
 						})
 						.setNegativeButton("취소", (dialog, which) -> {
@@ -191,7 +199,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		imageView.setOnClickListener(v -> {
 			finish();
 		});
-
 
 
 	}
@@ -276,15 +283,11 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	}
 
 	private void setProfileImage() {
-//		Glide.with(this)
-//				.load(MyInfoDAO.getInstance().getPicUrl())
-//				.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
-//				.into(iv_picture);
 
 		Glide.with(this)
 				.load(MyInfoDAO.getInstance().getPicUrl())
 				.diskCacheStrategy(DiskCacheStrategy.RESULT)
-				.override(300,300)
+				.override(300, 300)
 				.skipMemoryCache(true)
 				.into(iv_picture);
 	}
@@ -316,31 +319,17 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		finish();
 	}
 
-	public List<Role> receiveRoles() {
-
-		List<Role> roles = new ArrayList<>();
-
-		//테스트용 for문 START
-		Role role = null;
-		role = new Role();
-		role.setId(0);
-		role.setRoleContent("역할에 대한 설명을 적어 보세요!!");
-		role.setRoleName("안녕하세요!");
-		role.setRolePrimary(0);
-		role.setUser_id(1);
-		roles.add(role);
-
-
-		return roles;
-	}
-
-
 	@Override
 	public void setRoleContent(List<Role> roleList) {
-		if (adapter != null) {
+		if (roleList.size() == 0) {
+			empty_role_ll.setVisibility(View.VISIBLE);
+			vp_roleDetail.setVisibility(View.GONE);
+		} else {
+			empty_role_ll.setVisibility(View.GONE);
 			allRoleList = roleList;
 			adapter = new RoleActivityAdapter(this, allRoleList);
 			vp_roleDetail.setAdapter(adapter);
+			vp_roleDetail.setVisibility(View.VISIBLE);
 		}
 	}
 

@@ -31,12 +31,6 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Role> roles;
-	private int primary = 0;
-
-//	public RoleActivityAdapter(Context context, List<Role> roles) {
-//		this.context = context;
-//		this.roles = roles;
-//	}
 
 	public RoleActivityAdapter(Context context, List<Role> roles) {
 		this.context = context;
@@ -93,7 +87,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 	//색 추가로 더 넣어줘야 함
 	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
-			R.color.suggestion_highlight_text, R.color.primary};
+			R.color.suggestion_highlight_text, R.color.bg_msg_from};
 
 	public static class ViewHolder {
 		@BindView(R.id.tv_rolePrimary)

@@ -55,7 +55,6 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-//						view.addRole();
 
 					}
 

@@ -76,14 +76,14 @@ public class SettingActivity extends AppCompatActivity {
 		ll_terms.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.liveo.me/eula/terms_of_service.pdf"));
+				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
 				startActivity(pdfIntent);
 			}
 		});
 		ll_policy.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.liveo.me/eula/privacy_policy.pdf"));
+				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
 				startActivity(pdfIntent);
 			}
 		});

@@ -74,6 +74,24 @@
             android:layout_alignParentRight="true"
             android:textSize="15sp"/>
 
+        <FrameLayout
+            android:layout_below="@+id/ll_swipe_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/role_empty_ll"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:text="역할을 추가해보세요"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_rolePlanPage"
             android:layout_marginTop="-17dp"
@@ -87,6 +105,7 @@
             coverflow:rotationThreshold="1.0"
             coverflow:scalingThreshold="0.2">
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+        </FrameLayout>
     </RelativeLayout>
 
     <RelativeLayout

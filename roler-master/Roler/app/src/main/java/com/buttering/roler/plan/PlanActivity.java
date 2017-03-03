@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,11 +54,15 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import rx.Subscriber;
 
+/**
+ * Created by nanamare on 16. 7. 31..
+ */
 public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-
+	@BindView(R.id.role_empty_ll)
+	LinearLayout role_empty_ll;
 	@BindView(R.id.activity_plan_name_tv)
 	TextView name;
 	@BindView(R.id.vp_rolePlanPage)
@@ -77,7 +82,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@BindView(R.id.activity_plan_arrow_right_iv)
 	ImageView right_arrow_iv;
 
-	private List<Role> allRoleList;
+	private List<Role> allRoleList = new ArrayList<>();
 	private List<List<Todo>> allTodoList = new ArrayList<>();
 	private PlanActivityAdapter adapter;
 	private PlanActivityTodoAdapter todoAdapter;
@@ -86,7 +91,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	private ACProgressFlower dialog;
 	private List<Role> roles = new ArrayList<>();
 	private Todo todo = null;
-	private List<Todo> todolist;
+	private List<Todo> todolist = new ArrayList<>();
 	private ILoginPresenter tokenPresenter;
 
 	private LinearLayoutManager linearLayoutManager;
@@ -113,38 +118,27 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plan);
 		ButterKnife.bind(this);
-//
-//		FirebaseApp.initializeApp(this);
-
 
 		setToolbar();
 		setUserName();
 		setDate();
 
-		//get mock data
-		allRoleList = receiveRoles();
-
-		planPresenter = new PlanPresenter(this, getApplicationContext());
+		planPresenter = new PlanPresenter(this, this);
 		tokenPresenter = new LoginPresenter();
 
-		adapter = new PlanActivityAdapter(this, allRoleList);
-		vp_rolePlanPage.setAdapter(adapter);
+		int roleSize = allRoleList.size();
+		if (roleSize == 0) {
+			role_empty_ll.setVisibility(View.VISIBLE);
+			vp_rolePlanPage.setVisibility(View.GONE);
+		}
+		allTodoList = receiveTodoItems();
 		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
-		//get a current role id
-		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 
 		addTodoList();
 
 		swipeRole();
 		scrollPostion();
 
-		//initSet LayoutManager
-		linearLayoutManager = new LinearLayoutManager(this);
-		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-		rv_todolist.setLayoutManager(linearLayoutManager);
-
-		//make a adapter
-		setListView();
 
 //		FCM
 		SharePrefUtil.putSharedPreference("isFcmToken", false);
@@ -238,19 +232,21 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	private void addTodoList() {
+
 		rl_planBelowBottom.setOnClickListener(v -> {
-			AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
+			if (allRoleList.size() != 0) {
+				AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
 
-			alert.setTitle("To Do List 추가하기");
-			alert.setMessage("내용을 입력해주세요");
+				alert.setTitle("To Do List 추가하기");
+				alert.setMessage("내용을 입력해주세요");
 
-			// Set an EditText view to get user input
-			final EditText input = new EditText(PlanActivity.this);
-			alert.setView(input);
+				// Set an EditText view to get user input
+				final EditText input = new EditText(PlanActivity.this);
+				alert.setView(input);
 
-			alert.setPositiveButton("확인", (dialog, whichButton) -> {
-				String value = input.getText().toString();
-				if (!value.isEmpty()) {
+				alert.setPositiveButton("확인", (dialog, whichButton) -> {
+					String value = input.getText().toString();
+					if (!value.isEmpty()) {
 //					check "역할별로 할일을 적어 보세요!"
 //					for (int i = 0; i < allTodoList.size(); i++) {
 //						for (int j = 0; j < allTodoList.get(i).size(); j++) {
@@ -259,35 +255,38 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 //							}
 //						}
 //					}
-					value.toString();
-					Todo todo = new Todo();
-					todo.setContent(value);
-					allTodoList.get(currentPosition).add(todo);
-					todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-					rv_todolist.setAdapter(todoAdapter);
-					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					Calendar calendar = Calendar.getInstance();
-					String date = sdf.format(calendar.getTime());
-					int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-					planPresenter.addTodo(value
-							, 1, date, role_id
-							, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), false);
+						value.toString();
+						Todo todo = new Todo();
+						todo.setContent(value);
+						allTodoList.get(currentPosition).add(todo);
+						todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+						rv_todolist.setAdapter(todoAdapter);
+						DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						Calendar calendar = Calendar.getInstance();
+						String date = sdf.format(calendar.getTime());
+						int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+						planPresenter.addTodo(value
+								, 1, date, role_id
+								, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), false);
 //					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
 //					todoAdapter.notifyDataSetChanged();
-				} else {
-					Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-				}
-			});
+					} else {
+						Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+					}
+				});
 
 
-			alert.setNegativeButton("취소",
-					(dialog, whichButton) -> {
-						// Canceled.
-					});
+				alert.setNegativeButton("취소",
+						(dialog, whichButton) -> {
+							// Canceled.
+						});
 
-			alert.show();
-
+				alert.show();
+			}  else {
+				Toast.makeText(this, "역할을 먼저 추가해보세요!", Toast.LENGTH_SHORT).show();
+			}
 		});
+
 	}
 
 	private void setDate() {
@@ -317,8 +316,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	private List<List<Todo>> receiveTodoItems() {
-		todolist = new ArrayList<>();
-
 		todo = new Todo();
 		todo.setRole_id(0);
 		todo.setId(0);
@@ -433,12 +430,16 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void setRoleContent(List<Role> roleList) {
-		if (adapter != null) {
+		if (roleList.size() == 0) {
+			role_empty_ll.setVisibility(View.VISIBLE);
+			vp_rolePlanPage.setVisibility(View.GONE);
+		} else {
+			role_empty_ll.setVisibility(View.GONE);
 			allRoleList = roleList;
 			adapter = new PlanActivityAdapter(this, allRoleList);
 			vp_rolePlanPage.setAdapter(adapter);
+			vp_rolePlanPage.setVisibility(View.VISIBLE);
 		}
-
 	}
 
 
@@ -465,8 +466,10 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void setCurrentPosition() {
-		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-		planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+		if (allRoleList.size() != 0) {
+			currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+			planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+		}
 	}
 
 	@Override
@@ -519,14 +522,14 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void setTodoList(List<Todo> todoList) {
-
-		if (todoAdapter != null) {
-			todolist.clear();
-			todolist.addAll(todoList);
-			allTodoList.set(currentPosition, todoList);
-			todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-			rv_todolist.setAdapter(todoAdapter);
-		}
+		linearLayoutManager = new LinearLayoutManager(this);
+		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		rv_todolist.setLayoutManager(linearLayoutManager);
+		todolist.clear();
+		todolist.addAll(todoList);
+		allTodoList.set(currentPosition, todoList);
+		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+		rv_todolist.setAdapter(todoAdapter);
 	}
 
 	private BroadcastReceiver badgeReceiver = new BroadcastReceiver() {
@@ -548,7 +551,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		super.onDestroy();
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(badgeReceiver);
 	}
-
 
 
 }

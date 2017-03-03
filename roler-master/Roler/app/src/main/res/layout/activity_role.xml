@@ -99,6 +99,18 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/bt_editRoleInfo">
 
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/empty_role_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="역할을 추가해보세요"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
             <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
                 android:id="@+id/vp_roleDetail"
                 android:layout_width="match_parent"

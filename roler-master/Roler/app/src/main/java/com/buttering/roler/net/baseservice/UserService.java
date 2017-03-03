@@ -4,6 +4,7 @@ import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.net.serialization.RolerResponse;
+import com.buttering.roler.util.SharePrefUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -195,6 +196,8 @@ public class UserService extends BaseService {
 							String email = ja.get("email").getAsString();
 							String id = ja.get("id").getAsString();
 							String picUrl = ja.get("imageUrl").getAsString();
+							String accessToken = ja.get("access_token").getAsString();
+							SharePrefUtil.putSharedPreference("accessToken",accessToken);
 
 							MyInfoDAO.getInstance().loginAccountInfo(id, email, name, picUrl);
 							return result;

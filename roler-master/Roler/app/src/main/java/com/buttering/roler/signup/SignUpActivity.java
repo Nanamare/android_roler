@@ -142,13 +142,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 		//Privacy Policy 여기 나중에 수정이 필요하다.
 		policyTv[1].setOnClickListener(view -> {
-			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.liveo.me/eula/privacy_policy.pdf"));
+			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
 			startActivity(pdfIntent);
 
 		});
 		//Terms of Service
 		policyTv[3].setOnClickListener(view -> {
-			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.liveo.me/eula/terms_of_service.pdf"));
+			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
 			startActivity(pdfIntent);
 		});
 	}

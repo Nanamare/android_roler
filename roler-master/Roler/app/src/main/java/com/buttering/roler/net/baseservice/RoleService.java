@@ -64,7 +64,8 @@ public class RoleService extends BaseService {
 									subscriber.onNext(roleList);
 
 								} else {
-									subscriber.onError(new Throwable());
+									List<Role> emptyRoleList = new ArrayList<>();
+									subscriber.onNext(emptyRoleList);
 								}
 
 							} catch (IOException e) {
