@@ -303,7 +303,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	private void setUserName() {
-		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 안녕하세요!");
+		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 ");
 	}
 
 	private void setListView() {
