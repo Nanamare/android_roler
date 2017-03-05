@@ -173,7 +173,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 
 		//load RoleContent
-		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		presenter.getRoleContent();
 
 		editRole();
 
@@ -308,7 +308,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		presenter.getRoleContent();
 
 	}
 
@@ -371,7 +371,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	@Override
 	public void refreshRoleContent() {
-		presenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		presenter.getRoleContent();
 
 	}
 

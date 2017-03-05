@@ -132,7 +132,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			vp_rolePlanPage.setVisibility(View.GONE);
 		}
 		allTodoList = receiveTodoItems();
-		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.getRoleContent();
 
 		addTodoList();
 
@@ -339,7 +339,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				badgeReceiver,
 				new IntentFilter("badgeCount")
 		);
-		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.getRoleContent();
 	}
 
 	public List<Role> receiveRoles() {
@@ -375,7 +375,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		} else if (id == R.id.action_refresh) {
 
 			Toast.makeText(this, "refreshing...", Toast.LENGTH_SHORT).show();
-			planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+			planPresenter.getRoleContent();
 
 		}
 
@@ -458,7 +458,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	@Override
 	public void getTodoList() {
-		planPresenter.getRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.getRoleContent();
 	}
 
 	@Override
@@ -506,7 +506,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@Override
 	public void refreshProgressLast() {
 //		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+		planPresenter.updateRoleContent(currentPosition);
 	}
 
 

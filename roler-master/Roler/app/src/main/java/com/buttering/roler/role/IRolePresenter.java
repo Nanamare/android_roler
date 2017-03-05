@@ -15,7 +15,7 @@ import rx.Observable;
 
 
 public interface IRolePresenter {
-	void getRoleContent(int id);
+	void getRoleContent();
 	void addRole(int rolePrimary,String roleName,String roleContent,int user_id);
 	void check_blank(Button activity_edit_primaryBtn, EditText activity_edit_roleTile
 			,EditText activity_edit_roleSubTitle);

@@ -67,10 +67,10 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 	}
 
 	@Override
-	public void getRoleContent(int id) {
+	public void getRoleContent() {
 
 		addSubscription(roleService
-				.getRoleContent(id)
+				.getRoleContent()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
@@ -96,10 +96,10 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 	}
 
 	@Override
-	public void updateRoleContent(int id, int movePosition) {
+	public void updateRoleContent(int movePosition) {
 
 		addSubscription(roleService
-				.getRoleContent(id)
+				.getRoleContent()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override

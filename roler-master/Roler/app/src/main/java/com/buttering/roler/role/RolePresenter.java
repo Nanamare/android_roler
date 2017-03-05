@@ -47,10 +47,10 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 
 
 	@Override
-	public void getRoleContent(int id) {
+	public void getRoleContent() {
 
 		addSubscription(roleService
-				.getRoleContent(id)
+				.getRoleContent()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override

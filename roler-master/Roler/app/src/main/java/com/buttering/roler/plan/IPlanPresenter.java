@@ -6,11 +6,11 @@ package com.buttering.roler.plan;
 
 public interface IPlanPresenter {
 	void loadToList(int roleId);
-	void getRoleContent(int id);
+	void getRoleContent();
 	void addTodo(String content,int todoOrder
 			,String todoDate,int role_id,boolean isDone);
 	void deleteTodo(int id);
 	void setDone(int todoId,boolean isDone);
-	void updateRoleContent(int id, int movePosition);
+	void updateRoleContent(int movePosition);
 	void updateProgress(int role_id);
 }

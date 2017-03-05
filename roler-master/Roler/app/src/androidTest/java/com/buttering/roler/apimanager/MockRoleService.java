@@ -1,6 +1,7 @@
-package com.buttering.roler.net.baseservice;
+package com.buttering.roler.apimanager;
 
 import com.buttering.roler.VO.Role;
+import com.buttering.roler.net.baseservice.BaseService;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -27,9 +28,9 @@ import rx.schedulers.Schedulers;
  * Created by kinamare on 2017-01-13.
  */
 
-public class RoleService extends BaseService {
+public class MockRoleService extends BaseService {
 
-	public RoleService() {
+	public MockRoleService() {
 		super(RoleApi.class);
 	}
 
@@ -42,7 +43,7 @@ public class RoleService extends BaseService {
 
 		return Observable.create(subscriber -> {
 			getAPI().getRoleContent()
-					.subscribeOn(Schedulers.io())
+					.subscribeOn(Schedulers.immediate())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
@@ -101,7 +102,7 @@ public class RoleService extends BaseService {
 	public Observable<Void> addRole(int rolePrimary, String roleName, String roleContent, int user_id) {
 		return Observable.create(subscriber -> {
 			getAPI().addRole(rolePrimary, roleName, roleContent)
-					.subscribeOn(Schedulers.io())
+					.subscribeOn(Schedulers.immediate())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
@@ -140,7 +141,7 @@ public class RoleService extends BaseService {
 	public  Observable<Void> deleteRole(int role_id){
 		return Observable.create(subscriber -> {
 			getAPI().deleteRole(role_id)
-					.subscribeOn(Schedulers.io())
+					.subscribeOn(Schedulers.immediate())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
@@ -178,7 +179,7 @@ public class RoleService extends BaseService {
 	public Observable<Void> editRole(int rolePrimary, String roleName, String roleContent, int role_id) {
 		return Observable.create(subscriber -> {
 			getAPI().editRole(rolePrimary, roleName, roleContent, role_id)
-					.subscribeOn(Schedulers.io())
+					.subscribeOn(Schedulers.immediate())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
@@ -218,7 +219,7 @@ public class RoleService extends BaseService {
 
 		return Observable.create(subscriber -> {
 			getAPI().updateProgress(role_id)
-					.subscribeOn(Schedulers.io())
+					.subscribeOn(Schedulers.immediate())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
