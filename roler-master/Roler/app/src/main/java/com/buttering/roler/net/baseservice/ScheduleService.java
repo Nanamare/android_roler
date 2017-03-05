@@ -38,10 +38,10 @@ public class ScheduleService extends BaseService {
 		return (ScheduleAPI) super.getAPI();
 	}
 
-	public Observable<List<Schedule>> getScheduleList(int user_id, String date) {
+	public Observable<List<Schedule>> getScheduleList(String date) {
 
 		return Observable.create(subscriber -> {
-			getAPI().getScheduleList(user_id, date)
+			getAPI().getScheduleList(date)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -95,10 +95,9 @@ public class ScheduleService extends BaseService {
 		});
 	}
 
-	public Observable<Void> addSchedule(String content, String startTime, String endTime, String date
-			, int user_id, int role_id) {
+	public Observable<Void> addSchedule(String content, String startTime, String endTime, String date) {
 		return Observable.create(subscriber -> {
-			getAPI().addSchedule(content, startTime, endTime, date, user_id)
+			getAPI().addSchedule(content, startTime, endTime, date)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -172,15 +171,14 @@ public class ScheduleService extends BaseService {
 	public interface ScheduleAPI {
 
 		@GET("/schedule/read")
-		Observable<ResponseBody> getScheduleList(@Query("user_id") int id
-				, @Query("date") String date);
+		Observable<ResponseBody> getScheduleList(@Query("date") String date);
 
 
 		@FormUrlEncoded
 		@POST("/schedule/create")
 		Observable<ResponseBody> addSchedule(@Field("content") String content
 				, @Field("startTime") String startTime, @Field("endTime") String endTime
-				, @Field("date") String date, @Field("user_id") int user_id);
+				, @Field("date") String date);
 
 		@DELETE("/schedule/delete")
 		Observable<ResponseBody> deleteSchdule(@Query("id") int schedule_id);

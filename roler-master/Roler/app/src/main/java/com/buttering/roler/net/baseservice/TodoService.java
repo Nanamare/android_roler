@@ -41,10 +41,10 @@ public class TodoService extends BaseService {
 		return (TodoApi) super.getAPI();
 	}
 
-	public Observable<List<Todo>> getTodoList(int userId, int roleId) {
+	public Observable<List<Todo>> getTodoList(int roleId) {
 
 		return Observable.create(subscriber -> {
-			getAPI().getTodoList(userId, roleId)
+			getAPI().getTodoList(roleId)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -103,10 +103,10 @@ public class TodoService extends BaseService {
 	;
 
 	public Observable<Integer> addTodoList(String content, int todoOrder
-			, String todoDate, int role_id, int user_id, boolean isDone) {
+			, String todoDate, int role_id, boolean isDone) {
 
 		return Observable.create(subscriber -> {
-			getAPI().addTodoList(content, todoOrder, todoDate, role_id, user_id, isDone)
+			getAPI().addTodoList(content, todoOrder, todoDate, role_id, isDone)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -238,7 +238,7 @@ public class TodoService extends BaseService {
 	public interface TodoApi {
 
 		@GET("/todo/read")
-		Observable<ResponseBody> getTodoList(@Query("user_id") int userId, @Query("role_id") int roleId);
+		Observable<ResponseBody> getTodoList(@Query("role_id") int roleId);
 
 		@FormUrlEncoded
 		@POST("/todo/create")
@@ -246,7 +246,6 @@ public class TodoService extends BaseService {
 				, @Field("todoOrder") int todoOrder
 				, @Field("todoDate") String todoDate
 				, @Field("role_id") int role_id
-				, @Field("user_id") int user_id
 				, @Field("isDone") boolean isDone);
 
 		@DELETE("/todo/delete")

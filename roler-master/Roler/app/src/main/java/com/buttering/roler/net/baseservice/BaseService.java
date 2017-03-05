@@ -47,8 +47,6 @@ public class BaseService<T> {
 	};
 	Retrofit retrofit;
 	T service;
-	OkHttpClient.Builder httpClient;
-	int counter = 0;
 
 	public BaseService(final Class<T> clazz) {
 
@@ -85,32 +83,6 @@ public class BaseService<T> {
 			System.out.print(e);
 		}
 		return "false";
-	}
-
-
-	private void setTokenInterceptor(String authToken) {
-		httpClient.addInterceptor(chain -> {
-
-			Request original = chain.request();
-
-			Request.Builder reqBuilder = original.newBuilder()
-					.header("Authorization", TokenTYPE.BEARER.type + " " + authToken)
-					.method(original.method(), original.body());
-
-			Request req = reqBuilder.build();
-
-			return chain.proceed(req);
-		});
-	}
-
-
-	private enum TokenTYPE {
-		BEARER("Bearer");
-		private String type;
-
-		TokenTYPE(String type) {
-			this.type = type;
-		}
 	}
 
 	public T getAPI() {

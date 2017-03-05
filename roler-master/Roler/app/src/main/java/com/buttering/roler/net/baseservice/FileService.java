@@ -44,7 +44,7 @@ public class FileService extends BaseService {
 				subscriber.onCompleted();
 			} else {
 				getAPI()
-						.uploadProfileImg(file,MyInfoDAO.getInstance().getEmail())
+						.uploadProfileImg(file)
 						.subscribeOn(Schedulers.io())
 						.retry((integer, throwable) -> {
 							if(integer < 3) {
@@ -75,18 +75,6 @@ public class FileService extends BaseService {
 									e.printStackTrace();
 								}
 							}
-
-//							private String parseUrl(String json) {
-//								try {
-//									JSONObject object = new JSONObject(json);
-//									JSONArray jsonArray = new JSONArray(object.getString("params"));
-//									String todoJson = jsonArray.toString();
-//									return todoJson;
-//								} catch (JSONException e) {
-//									e.printStackTrace();
-//									return "false";
-//								}
-//							}
 
 							private String parseResult(String json) {
 								JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
@@ -124,11 +112,9 @@ public class FileService extends BaseService {
 
 
 		@Multipart
-		@POST("sign/upload/{email}")
+		@POST("sign/upload")
 		Observable<ResponseBody> uploadProfileImg(
-				@Part MultipartBody.Part file,
-				@Path("email") String email);
-
+				@Part MultipartBody.Part file);
 	}
 
 }

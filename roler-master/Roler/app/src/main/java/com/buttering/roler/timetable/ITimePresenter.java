@@ -5,9 +5,8 @@ package com.buttering.roler.timetable;
  */
 
 public interface ITimePresenter {
-	void getSchduleList(int user_id, String date);
-	void addSchdule(String content, String startTime,String endTime,String date
-			,int user_id, int role_id);
+	void getSchduleList(String date);
+	void addSchdule(String content, String startTime,String endTime,String date);
 	void deleteSchdule(int schudule_id);
 
 }

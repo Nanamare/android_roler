@@ -41,7 +41,7 @@ public class RoleService extends BaseService {
 	public Observable<List<Role>> getRoleContent(int id) {
 
 		return Observable.create(subscriber -> {
-			getAPI().getRoleContent(id)
+			getAPI().getRoleContent()
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -52,7 +52,7 @@ public class RoleService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -100,7 +100,7 @@ public class RoleService extends BaseService {
 
 	public Observable<Void> addRole(int rolePrimary, String roleName, String roleContent, int user_id) {
 		return Observable.create(subscriber -> {
-			getAPI().addRole(rolePrimary, roleName, roleContent, user_id)
+			getAPI().addRole(rolePrimary, roleName, roleContent)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -214,10 +214,10 @@ public class RoleService extends BaseService {
 
 	}
 
-	public Observable<Void> updateProgress(int role_id, int user_id){
+	public Observable<Void> updateProgress(int role_id){
 
 		return Observable.create(subscriber -> {
-			getAPI().updateProgress(role_id, user_id)
+			getAPI().updateProgress(role_id)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -256,14 +256,13 @@ public class RoleService extends BaseService {
 	public interface RoleApi {
 
 		@GET("/role/read")
-		Observable<ResponseBody> getRoleContent(@Query("user_id") int id);
+		Observable<ResponseBody> getRoleContent();
 
 		@FormUrlEncoded
 		@POST("/role/create")
 		Observable<ResponseBody> addRole(@Field("rolePrimary") int rolePrimary
 				, @Field("roleName") String roleName
-				, @Field("roleContent") String roleContent
-				, @Field("user_id") int user_id);
+				, @Field("roleContent") String roleContent);
 
 
 		@DELETE("/role/delete")
@@ -277,7 +276,7 @@ public class RoleService extends BaseService {
 				, @Field("role_id") int role_id);
 
 		@PUT("/role/progress")
-		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId, @Query("user_id") int user_id);
+		Observable<ResponseBody> updateProgress(@Query("role_id") int todoId);
 
 	}
 }

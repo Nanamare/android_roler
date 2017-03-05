@@ -23,7 +23,7 @@ public class DefaultHeaderInterceptor implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder();
 
         if (TextUtils.isEmpty(token) == false) {
-                requestBuilder.header("authorization", "JWT " + token);
+                requestBuilder.header("access_token", token);
         }
 
         Request request = requestBuilder.build();

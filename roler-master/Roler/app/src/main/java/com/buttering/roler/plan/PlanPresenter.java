@@ -42,10 +42,10 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 
 	@Override
-	public void loadToList(int userId, int roleId) {
+	public void loadToList(int roleId) {
 
 		addSubscription(todoService
-				.getTodoList(userId, roleId)
+				.getTodoList(roleId)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Todo>>() {
 					@Override
@@ -124,9 +124,9 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 	}
 
 	@Override
-	public void updateProgress(int role_id, int user_id) {
+	public void updateProgress(int role_id) {
 		addSubscription(roleService
-		.updateProgress(role_id, user_id)
+		.updateProgress(role_id)
 		.observeOn(AndroidSchedulers.mainThread())
 		.subscribe(new Subscriber<Void>() {
 			@Override
@@ -175,10 +175,10 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 //	}
 
 	@Override
-	public void addTodo(String content, int todoOrder, String todoDate, int role_id, int user_id, boolean isDone) {
+	public void addTodo(String content, int todoOrder, String todoDate, int role_id, boolean isDone) {
 
 		addSubscription(todoService
-				.addTodoList(content, todoOrder, todoDate, role_id, user_id, isDone)
+				.addTodoList(content, todoOrder, todoDate, role_id, isDone)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<Integer>() {
 					@Override

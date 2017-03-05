@@ -207,7 +207,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		// the week view. This is optional.
 		setupDateTimeInterpreter(false);
 
-		presenter.getSchduleList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), date);
+		presenter.getSchduleList(date);
 
 	}
 
@@ -386,8 +386,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				String endTime = sdf.format(calendar2.getTime());
 
 
-				presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date
-						, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), 0);
+				presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date);
 			}
 
 			events.addAll(event);

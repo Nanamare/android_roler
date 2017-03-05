@@ -181,7 +181,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			public void onScrolledToPosition(int position) {
 				//TODO CoverFlow stopped to position
 				int role_id = ((Role) adapter.getItem(position)).getRole_id();
-				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+				planPresenter.loadToList(role_id);
 			}
 
 			@Override
@@ -207,7 +207,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				}
 
 				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
-				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+				planPresenter.loadToList(role_id);
 			}
 		});
 
@@ -226,7 +226,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				}
 
 				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
-				planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
+				planPresenter.loadToList(role_id);
 			}
 		});
 	}
@@ -266,10 +266,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 						String date = sdf.format(calendar.getTime());
 						int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 						planPresenter.addTodo(value
-								, 1, date, role_id
-								, Integer.valueOf(MyInfoDAO.getInstance().getUserId()), false);
-//					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), role_id);
-//					todoAdapter.notifyDataSetChanged();
+								, 1, date, role_id, false);
 					} else {
 						Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
 					}
@@ -452,7 +449,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			for (int position = 0; position < adapter.getCount(); position++) {
 				if (((Role) adapter.getItem(position)).getRole_id() == movePosition) {
 					vp_rolePlanPage.scrollToPosition(position);
-					planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), movePosition);
+					planPresenter.loadToList(movePosition);
 				}
 			}
 		}
@@ -468,7 +465,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	public void setCurrentPosition() {
 		if (allRoleList.size() != 0) {
 			currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-			planPresenter.loadToList(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
+			planPresenter.loadToList(currentPosition);
 		}
 	}
 
@@ -503,7 +500,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 //		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
 		//progress를 업데이트 하기 위한 작업
-		planPresenter.updateProgress(currentPosition, Integer.valueOf(MyInfoDAO.getInstance().getUserId()));
+		planPresenter.updateProgress(currentPosition);
 	}
 
 	@Override

@@ -25,11 +25,11 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 
 	@Override
-	public void getSchduleList(int user_id, String date) {
+	public void getSchduleList(String date) {
 		view.showLoadingBar();
 
 		addSubscription(scheduleService
-				.getScheduleList(user_id, date)
+				.getScheduleList(date)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<List<Schedule>>() {
 					@Override
@@ -55,9 +55,9 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 	@Override
 	public void addSchdule(String content, String startTime, String endTime,
-	                       String date, int user_id, int role_id) {
+	                       String date) {
 		addSubscription(scheduleService
-				.addSchedule(content, startTime, endTime, date, user_id, role_id)
+				.addSchedule(content, startTime, endTime, date)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<Void>() {
 					@Override
