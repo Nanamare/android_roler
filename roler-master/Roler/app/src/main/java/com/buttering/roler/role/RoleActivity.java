@@ -231,7 +231,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		iv_picture.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				checkThePemission();
 				final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(RoleActivity.this);

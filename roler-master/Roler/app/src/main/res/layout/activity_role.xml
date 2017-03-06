@@ -19,7 +19,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:src="@drawable/abcde"/>
+        android:src="@drawable/ic_menu"/>
 
     <LinearLayout
         android:id="@+id/rl_profileLayout"

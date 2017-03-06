@@ -83,7 +83,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:cardview-v7:23.2.0'
 
-    compile 'com.github.ParkSangGwon:TedPermission:v1.0.8'
     compile 'com.google.apis:google-api-services-youtube:v3-rev120-1.19.0'
     compile 'com.google.http-client:google-http-client-android:1.22.0'
     compile 'com.google.api-client:google-api-client-android:1.22.0'

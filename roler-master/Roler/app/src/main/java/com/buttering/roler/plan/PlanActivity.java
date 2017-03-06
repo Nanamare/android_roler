@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,8 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	ImageView left_arrow_iv;
 	@BindView(R.id.activity_plan_arrow_right_iv)
 	ImageView right_arrow_iv;
+	@BindView(R.id.rl_planBottom)
+	RelativeLayout rl_planBottom;
 
 	private List<Role> allRoleList = new ArrayList<>();
 	private List<List<Todo>> allTodoList = new ArrayList<>();
@@ -233,7 +236,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	private void addTodoList() {
 
-		rl_planBelowBottom.setOnClickListener(v -> {
+		rl_planBottom.setOnClickListener(v -> {
 			if (allRoleList.size() != 0) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
 
@@ -247,15 +250,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				alert.setPositiveButton("확인", (dialog, whichButton) -> {
 					String value = input.getText().toString();
 					if (!value.isEmpty()) {
-//					check "역할별로 할일을 적어 보세요!"
-//					for (int i = 0; i < allTodoList.size(); i++) {
-//						for (int j = 0; j < allTodoList.get(i).size(); j++) {
-//							if (allTodoList.get(j).get(0).getContent().equals("역할별로 할일을 적어 보세요!")) {
-//								allTodoList.get(j).remove(0);
-//							}
-//						}
-//					}
-						value.toString();
 						Todo todo = new Todo();
 						todo.setContent(value);
 						allTodoList.get(currentPosition).add(todo);
@@ -271,8 +265,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 						Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
 					}
 				});
-
-
 				alert.setNegativeButton("취소",
 						(dialog, whichButton) -> {
 							// Canceled.
@@ -287,7 +279,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	private void setDate() {
-//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Calendar calendar = Calendar.getInstance();
 		DateFormat sdf = new SimpleDateFormat("yyyy - MM");
 		String date = sdf.format(calendar.getTime());
@@ -301,15 +292,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	private void setUserName() {
 		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 ");
-	}
-
-	private void setListView() {
-
-		//get a mock data
-		allTodoList = receiveTodoItems();
-		todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-		rv_todolist.setAdapter(todoAdapter);
-
 	}
 
 	private List<List<Todo>> receiveTodoItems() {
@@ -326,11 +308,8 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			allTodoList.add(todolist);
 		}
 
-
 		return allTodoList;
-
 	}
-
 
 	@Override
 	protected void onResume() {
@@ -340,20 +319,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				new IntentFilter("badgeCount")
 		);
 		planPresenter.getRoleContent();
-	}
-
-	public List<Role> receiveRoles() {
-		Role role = null;
-		role = new Role();
-		role.setId(0);
-		role.setRoleContent("역할에 대한 목표,설명을 적어 주세요");
-		role.setRoleName("역할을 정해보세요!");
-		role.setRolePrimary(1);
-		role.setUser_id(1);
-		role.setRole_id(0);
-		roles.add(role);
-
-		return roles;
 	}
 
 	@Override
@@ -400,7 +365,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		imageView2.setOnClickListener(v -> {
 			startActivity(new Intent(PlanActivity.this, BaseActivity.class));
 		});
-
 
 	}
 
@@ -453,7 +417,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -483,11 +446,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		if (todoAdapter != null) {
 			todoAdapter.setTodo(todo);
 			todoAdapter.notifyDataSetChanged();
-//            allTodoList.set(currentPosition, todoList);
-//            todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-//            rv_todolist.setAdapter(todoAdapter);
 		}
-
 	}
 
 	@Override
@@ -498,24 +457,19 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@Override
 	public void refreshProgress() {
 		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-//		planPresenter.updateRoleContent(Integer.valueOf(MyInfoDAO.getInstance().getUserId()), currentPosition);
-		//progress를 업데이트 하기 위한 작업
 		planPresenter.updateProgress(currentPosition);
 	}
 
 	@Override
 	public void refreshProgressLast() {
-//		currentPosition = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
 		planPresenter.updateRoleContent(currentPosition);
 	}
-
 
 	@Override
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
 	}
-
 
 	@Override
 	public void setTodoList(List<Todo> todoList) {

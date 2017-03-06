@@ -122,10 +122,8 @@
             android:id="@+id/rl_planBelowBottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
             coverflow:cardCornerRadius="3dp"
-            coverflow:cardMaxElevation="4dp"
-            >
+            coverflow:cardMaxElevation="4dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
