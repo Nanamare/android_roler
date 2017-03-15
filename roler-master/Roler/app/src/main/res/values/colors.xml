@@ -83,4 +83,19 @@
     <color name="holo_green_darkest">#388E3C</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_87">#DEFFFFFF</color>
+
+    <color name="black_7">#12000000</color>
+    <color name="black_12">#1F000000</color>
+    <color name="black_38">#61000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_87">#DE000000</color>
+
+    <color name="gray_8080">#FF808080</color>
+    <color name="gray_9E9E9">#FFE9E9E9</color>
+
+
 </resources>

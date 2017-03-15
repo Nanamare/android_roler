@@ -7,18 +7,9 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
-    <ImageView
-        android:background="@drawable/img_logo_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_btn"
-        android:layout_marginTop="110dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
 
     <EditText
-        android:singleLine="true"
+        android:maxLines="1"
         android:textSize="18sp"
         android:inputType="textEmailAddress"
         android:hint="E-mail"
@@ -29,7 +20,7 @@
         android:layout_alignStart="@+id/pw_et" />
 
     <EditText
-        android:singleLine="true"
+        android:maxLines="1"
         android:textSize="18sp"
         android:inputType="textPassword"
         android:hint="Password"
@@ -76,6 +67,15 @@
         android:layout_height="40dp"
         android:layout_above="@+id/buttonOAuthLoginImg"
         android:layout_alignStart="@+id/login_btn" />
+
+    <ImageView
+        android:background="@drawable/img_logo_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_btn"
+        android:layout_above="@+id/email_et"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
 
 
 </RelativeLayout>

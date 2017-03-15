@@ -16,7 +16,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -36,11 +35,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".plan.PlanActivity"
@@ -61,20 +55,21 @@
             android:name=".role.RoleActivity"
             android:label="My Page"
             android:theme="@style/NoAppBarTheme">
-            <meta-data android:name="com.google.android.gms.version"
-                       android:value="@integer/google_play_services_version" />
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
-        <activity android:name=".role.EditRoleActivity"
-                  android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".role.EditRoleActivity"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.EditRoleActivity"/>
         </activity>
         <activity android:name=".ModifyActivity"/>
-
         <activity
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
@@ -84,25 +79,30 @@
         <activity android:name=".signup.SignUpActivity"/>
         <activity android:name=".setting.SettingActivity">
         </activity>
-
         <activity android:name=".timetable.BaseActivity"/>
-
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-                  android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent"/>
 
         <service android:name=".fcm.MyFcmListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
         <service android:name=".fcm.MyInstanceIDListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
+        <activity android:name=".findpwd.FindPwdActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

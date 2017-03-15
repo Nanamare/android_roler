@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public interface ITimeView {
+	void updateSchedule();
 	void setScheduleList(List<Schedule> schedules);
 	void showLoadingBar();
 	void hideLoadingBar();

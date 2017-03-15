@@ -1,0 +1,6 @@
+<shape xmlns:andoird="http://schemas.android.com/apk/res/android"
+       andoird:shape="rectangle">
+    <stroke
+        andoird:width="1dp"
+        andoird:color="@color/black_70"/>
+</shape>

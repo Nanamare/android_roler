@@ -72,7 +72,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	private List<WeekViewEvent> event = new ArrayList<>();
 	private List<WeekViewEvent> events;
-	List<WeekViewEvent> weekViewEvent = new ArrayList<>();
 
 	private WeekView mWeekView;
 
@@ -112,17 +111,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 					public void onClick(View v) {
 						final Calendar c = Calendar.getInstance();
 						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
-						int minite = c.get(Calendar.MINUTE);
+						int minute = c.get(Calendar.MINUTE);
 						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
 							@Override
 							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 								startTimeOfDay = hourOfDay;
 								startMinOfDay = minute;
-								startTime.setText(hourOfDay + " : " + minute);
+								startTime.setText(" "+hourOfDay + " 시 " + minute+ " 분 ");
 							}
 						};
 
-						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minite, true);
+						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
 						dialog.setTitle("시작 시간을 골라주세요");
 						dialog.show();
 
@@ -135,17 +134,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 					public void onClick(View v) {
 						final Calendar c = Calendar.getInstance();
 						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
-						int minite = c.get(Calendar.MINUTE);
+						int minute = c.get(Calendar.MINUTE);
 						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
 							@Override
 							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 								endTimeOfDay = hourOfDay;
 								endMinOfDay = minute;
-								endTime.setText(hourOfDay + " : " + minute);
+								endTime.setText(" "+hourOfDay + " 시 " + minute+ " 분 ");
 							}
 						};
 
-						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minite, true);
+						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
 						dialog.setTitle("종료 시간을 골라주세요");
 						dialog.show();
 
@@ -322,7 +321,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	@Override
 	public void onEventClick(WeekViewEvent event, RectF eventRect) {
 		Toast.makeText(this, "길게 클릭하면 삭제 됩니다", Toast.LENGTH_SHORT).show();
-//		event.setColor(getResources().getColor(R.color.body_background_green));
+
 
 	}
 
@@ -330,7 +329,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
 		Toast.makeText(this, "삭제" + event.getName(), Toast.LENGTH_SHORT).show();
 		presenter.deleteSchdule((int) event.getId());
-		mWeekView.notifyDatasetChanged();
 	}
 
 	@Override
@@ -352,7 +350,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 		if (newMonth == month) {
 
-
 			if (isCheck) {
 
 				Random random = new Random();
@@ -361,6 +358,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				int nowYear = startCalendar.get(Calendar.YEAR);
 				int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
 				int nowSecond = startCalendar.get(Calendar.SECOND);
+
 				startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
 				startCalendar.set(Calendar.MINUTE, startMinOfDay);
 				startCalendar.set(Calendar.MONTH, nowMonth);
@@ -368,8 +366,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 				Calendar endCalendar = (Calendar) startCalendar.clone();
 				endCalendar.set(Calendar.MINUTE, endMinOfDay);
-				endCalendar.set(Calendar.HOUR, endTimeOfDay);
+				endCalendar.set(Calendar.HOUR_OF_DAY, endTimeOfDay);
 				endCalendar.set(Calendar.MONTH, nowMonth);
+
 				WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
 				event.setColor(bgColor[random.nextInt(6)]);
 				events.add(event);
@@ -400,6 +399,11 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
 			R.color.suggestion_highlight_text, R.color.primary};
+
+	@Override
+	public void updateSchedule() {
+		presenter.getSchduleList(date);
+	}
 
 	@Override
 	public void setScheduleList(List<Schedule> schedules) {

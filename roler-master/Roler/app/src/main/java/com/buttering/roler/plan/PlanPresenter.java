@@ -183,6 +183,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<Integer>() {
 					@Override
 					public void onCompleted() {
+						view.refreshProgress();
 					}
 
 					@Override
@@ -206,6 +207,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
+						view.refreshProgress();
 						unsubscribe();
 					}
 
