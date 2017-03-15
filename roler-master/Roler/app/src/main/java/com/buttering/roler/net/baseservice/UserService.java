@@ -249,6 +249,37 @@ public class UserService extends BaseService {
 		});
 	}
 
+	public Observable<Void> changePwd(String pwd){
+		return Observable.create(subscriber -> {
+			getAPI().changePwd(pwd)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+									subscriber.onNext(null);
+								}
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+
+		});
+	}
+
 
 	public interface UserAPI {
 
@@ -261,6 +292,9 @@ public class UserService extends BaseService {
 
 		@PUT("/sign/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
+
+		@POST("/sign/change_pwd")
+		Observable<ResponseBody> changePwd(@Field("pwd") String pwd);
 
 
 		@FormUrlEncoded

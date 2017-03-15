@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buttering.roler.find.ExFindPwdActivity;
 import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
@@ -91,6 +92,9 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	@BindView(R.id.pw_et)
 	TextView pw_et;
 
+	@BindView(R.id.activity_login_find_pwd_tv)
+	TextView find_pwd_tv;
+
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -153,6 +157,18 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 		presenter = new SignUpProfilePresenter();
 
+		findPwd();
+
+	}
+
+	private void findPwd() {
+		find_pwd_tv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(LogInActivity.this, ExFindPwdActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void initLoginSetting() {
