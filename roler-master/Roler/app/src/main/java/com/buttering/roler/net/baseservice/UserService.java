@@ -284,21 +284,21 @@ public class UserService extends BaseService {
 	public interface UserAPI {
 
 		@FormUrlEncoded
-		@POST("/sign/in")
+		@POST("/users/signin")
 		Observable<ResponseBody> signIn(@Field("email") String email, @Field("password") String password);
 
-		@GET("/sign/duplitcation")
+		@GET("/users/duplitcation")
 		Observable<ResponseBody> isDuplicateEmail(@Query("email") String email);
 
-		@PUT("/sign/photos")
+		@PUT("/users/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
 
-		@POST("/sign/change_pwd")
+		@POST("/users/change_pwd")
 		Observable<ResponseBody> changePwd(@Field("pwd") String pwd);
 
 
 		@FormUrlEncoded
-		@POST("/sign/up")
+		@POST("/users/signup")
 		Observable<ResponseBody> signUp(@Field("name") String name, @Field("email") String email, @Field("password") String password);
 
 		@FormUrlEncoded
