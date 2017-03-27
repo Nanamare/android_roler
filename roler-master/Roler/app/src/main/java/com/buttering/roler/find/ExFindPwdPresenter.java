@@ -10,24 +10,24 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by kinamare on 2017-03-15.
  */
 
-public class FindPwdPresenter extends BasePresenter implements IFindPwdPresenter {
+public class ExFindPwdPresenter extends BasePresenter implements IExFindPwdPresenter {
 
 	private UserService userService;
-	private IFindPwdView view;
+	private IExFindPwdView view;
 
-	public FindPwdPresenter(IFindPwdView view){
+	public ExFindPwdPresenter(IExFindPwdView view){
 		userService = new UserService();
 		this.view = view;
 	}
 
 	@Override
-	public void changePwd(String pwd) {
-		userService.changePwd(pwd)
+	public void checkPwd(String name, String pwd) {
+		userService.checkPwd(name, pwd)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Subscriber<Void>() {
+				.subscribe(new Subscriber<String>() {
 					@Override
 					public void onCompleted() {
-						view.moveToLoginActivity();
+
 					}
 
 					@Override
@@ -36,8 +36,8 @@ public class FindPwdPresenter extends BasePresenter implements IFindPwdPresenter
 					}
 
 					@Override
-					public void onNext(Void aVoid) {
-
+					public void onNext(String authorizationCode) {
+						view.visibleAuthorizationTextView(authorizationCode);
 					}
 				});
 	}

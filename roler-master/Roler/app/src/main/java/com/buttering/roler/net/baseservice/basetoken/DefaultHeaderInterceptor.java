@@ -22,7 +22,7 @@ public class DefaultHeaderInterceptor implements Interceptor {
 
         Request.Builder requestBuilder = original.newBuilder();
 
-        if (TextUtils.isEmpty(token) == false) {
+        if (!TextUtils.isEmpty(token)) {
                 requestBuilder.header("access_token", token);
         }
 

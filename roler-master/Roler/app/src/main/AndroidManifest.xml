@@ -101,7 +101,17 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".find.FindPwdActivity">
+        <activity android:name=".find.IReSetPwdActivity">
+
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data
+                android:host="change_pwd"
+                android:scheme="roler" />
+            </intent-filter>
+
         </activity>
         <activity android:name=".find.ExFindPwdActivity">
         </activity>

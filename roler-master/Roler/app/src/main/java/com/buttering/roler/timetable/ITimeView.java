@@ -14,4 +14,5 @@ public interface ITimeView {
 	void setScheduleList(List<Schedule> schedules);
 	void showLoadingBar();
 	void hideLoadingBar();
+	void updateWeekView();
 }

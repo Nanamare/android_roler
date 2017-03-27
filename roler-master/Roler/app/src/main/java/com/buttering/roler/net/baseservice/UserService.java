@@ -1,7 +1,6 @@
 package com.buttering.roler.net.baseservice;
 
 import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.net.serialization.RolerResponse;
 import com.buttering.roler.util.SharePrefUtil;
@@ -179,8 +178,7 @@ public class UserService extends BaseService {
 								String result = parseParams(responseBody.string());
 								if (result.equals("true")) {
 									subscriber.onCompleted();
-
-								} else {
+								} else if (result.equals("false")) {
 									subscriber.onError(new Throwable("이메일 또는 비밀번호를 확인해주세요"));
 								}
 							} catch (IOException e) {
@@ -192,14 +190,15 @@ public class UserService extends BaseService {
 						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
 							String result = ja.get("result").getAsString();
-							String name = ja.get("name").getAsString();
-							String email = ja.get("email").getAsString();
-							String id = ja.get("id").getAsString();
-							String picUrl = ja.get("imageUrl").getAsString();
-							String accessToken = ja.get("access_token").getAsString();
-							SharePrefUtil.putSharedPreference("accessToken",accessToken);
-
-							MyInfoDAO.getInstance().loginAccountInfo(id, email, name, picUrl);
+							if (result.equals("true")) {
+								String name = ja.get("name").getAsString();
+								String email = ja.get("email").getAsString();
+								String id = ja.get("id").getAsString();
+								String picUrl = ja.get("imageUrl").getAsString();
+								String accessToken = ja.get("access_token").getAsString();
+								SharePrefUtil.putSharedPreference("accessToken", accessToken);
+								MyInfoDAO.getInstance().loginAccountInfo(id, email, name, picUrl);
+							}
 							return result;
 						}
 
@@ -249,7 +248,39 @@ public class UserService extends BaseService {
 		});
 	}
 
-	public Observable<Void> changePwd(String pwd){
+	public Observable<String> checkPwd(String name, String pwd) {
+		return Observable.create(subscriber -> {
+			getAPI().checkPwd(name, pwd)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+							try {
+								String result = responseBody.string();
+								if (getStatusResult(result) == "true") {
+
+									subscriber.onCompleted();
+								}
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+
+		});
+	}
+
+	public Observable<Void> changePwd(String pwd) {
 		return Observable.create(subscriber -> {
 			getAPI().changePwd(pwd)
 					.subscribeOn(Schedulers.io())
@@ -269,17 +300,15 @@ public class UserService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									subscriber.onNext(null);
+									onCompleted();
 								}
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
 					});
-
 		});
 	}
-
 
 	public interface UserAPI {
 
@@ -293,9 +322,11 @@ public class UserService extends BaseService {
 		@PUT("/users/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
 
-		@POST("/users/change_pwd")
-		Observable<ResponseBody> changePwd(@Field("pwd") String pwd);
+		@POST("/users/check")
+		Observable<ResponseBody> checkPwd(@Query("name") String name, @Query("email") String email);
 
+		@POST("/users/change")
+		Observable<ResponseBody> changePwd(@Field("passsword") String pwd);
 
 		@FormUrlEncoded
 		@POST("/users/signup")

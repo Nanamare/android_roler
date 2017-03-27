@@ -62,7 +62,7 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-						unsubscribe();
+//						view.updateSchedule();
 					}
 
 					@Override
@@ -87,7 +87,7 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-
+						view.updateWeekView();
 					}
 
 					@Override

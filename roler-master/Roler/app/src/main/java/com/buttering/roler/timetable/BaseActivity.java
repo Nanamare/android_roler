@@ -104,7 +104,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				alert.setView(innerView);
 				// Set an EditText view to get user input
 
-
 				TextView startTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
 				startTime.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -117,7 +116,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 								startTimeOfDay = hourOfDay;
 								startMinOfDay = minute;
-								startTime.setText(" "+hourOfDay + " 시 " + minute+ " 분 ");
+								startTime.setText(" " + hourOfDay + " 시 " + minute + " 분 ");
 							}
 						};
 
@@ -140,7 +139,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 								endTimeOfDay = hourOfDay;
 								endMinOfDay = minute;
-								endTime.setText(" "+hourOfDay + " 시 " + minute+ " 분 ");
+								endTime.setText(" " + hourOfDay + " 시 " + minute + " 분 ");
 							}
 						};
 
@@ -386,6 +385,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 
 				presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date);
+
 			}
 
 			events.addAll(event);
@@ -440,7 +440,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			viewEvents.get(i).setEndTime(getEndTime);
 
 		}
-
+		for(int i =0; i<event.size(); i++){
+			for(int j = 0; j<viewEvents.size(); j++){
+				if(events.get(i).getId() == viewEvents.get(j).getId()){
+					events.remove(i);
+				}
+			}
+		}
 		event.addAll(viewEvents);
 		mWeekView.notifyDatasetChanged();
 
@@ -459,6 +465,11 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
+	}
+
+	@Override
+	public void updateWeekView() {
+		mWeekView.notifyDatasetChanged();
 	}
 
 }

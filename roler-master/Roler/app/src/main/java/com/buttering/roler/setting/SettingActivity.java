@@ -96,13 +96,11 @@ public class SettingActivity extends AppCompatActivity {
 			SharePrefUtil.putSharedPreference("isLoggedIn",false);
 			SharePrefUtil.putSharedPreference("isGoogleLogin", false);
 			SharePrefUtil.putSharedPreference("isNaverLogin", false);
+			SharePrefUtil.delSharePreference("accessToken");
 			mOAuthLoginModule = OAuthLogin.getInstance();
 			mOAuthLoginModule.logout(this);
-//			SharePrefUtil.putSharedPreference("isNaverSignUp", false);
-//			SharePrefUtil.putSharedPreference("isGoogleSignUp", false);
 			Intent loginIntent = new Intent(this, LogInActivity.class);
 			loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//			startActivity(loginIntent);
 			startActivityForResult(loginIntent,single_top_activity);
 			finish();
 		});
