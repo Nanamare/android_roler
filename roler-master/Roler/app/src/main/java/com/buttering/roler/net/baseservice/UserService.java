@@ -260,7 +260,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -268,13 +268,19 @@ public class UserService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-
-									subscriber.onCompleted();
+									subscriber.onNext(parseParams(result));
 								}
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
+
+						private String parseParams(String json) {
+							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+							String code = ja.get("authorization_code").getAsString();
+							return code;
+						}
+
 					});
 
 		});

@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdView {
 
@@ -37,7 +38,7 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ex_find_pwd);
-
+		ButterKnife.bind(this);
 		presenter = new ExFindPwdPresenter(this);
 
 		findPwdFromEmail();

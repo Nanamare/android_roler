@@ -92,7 +92,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
-                android:text="이름을 알려주세요"
+                android:hint="이름을 알려주세요"
                 android:textSize="12sp"/>
         </LinearLayout>
 
@@ -110,7 +110,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
-                android:text="이메일을 입력해주세요."
+                android:hint="이메일을 입력해주세요."
                 android:textSize="12sp"/>
         </LinearLayout>
 
