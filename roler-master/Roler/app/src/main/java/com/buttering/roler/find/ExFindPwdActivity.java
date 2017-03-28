@@ -29,6 +29,10 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 	TextView email_edt;
 	@BindView(R.id.activity_ex_find_pwd_authorization_edt)
 	TextView authorization_edt;
+	@BindView(R.id.activity_ex_find_pwd_phone_btn)
+	Button phone_btn;
+	@BindView(R.id.activity_ex_find_token_btn)
+	Button token_btn;
 
 	private ExFindPwdPresenter presenter;
 	private String userName;
@@ -121,13 +125,24 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 	public void visibleAuthorizationTextView(String autorizationCode) {
 
 		authorization_edt.setVisibility(View.VISIBLE);
-		email_btn.setVisibility(View.GONE);
+		email_edt.setVisibility(View.GONE);
 		name_edt.setVisibility(View.GONE);
+		phone_btn.setVisibility(View.GONE);
+		email_btn.setVisibility(View.GONE);
+		token_btn.setVisibility(View.VISIBLE);
 
-		if(authorization_edt.getText().equals(autorizationCode)){
-			Intent moveToSetUpPwdActivity = new Intent(this, IReSetPwdActivity.class);
-			startActivity(moveToSetUpPwdActivity);
-		}
+		token_btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(autorizationCode.equals(authorization_edt.getText().toString())){
+					Intent moveToSetUpPwdActivity = new Intent(ExFindPwdActivity.this, ReSetPwdActivity.class);
+					moveToSetUpPwdActivity.putExtra("userEmail",userEmail);
+					startActivity(moveToSetUpPwdActivity);
+				} else {
+					Toast.makeText(ExFindPwdActivity.this, "인증코드를 확인해주세요", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
 	}
 }

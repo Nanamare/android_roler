@@ -18,8 +18,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class IReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdView {
+public class ReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdView {
 
 	@BindView(R.id.activity_find_pwd_input_edt)
 	EditText input_edt;
@@ -28,10 +29,14 @@ public class IReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdV
 	@BindView(R.id.activity_find_pwd_change_btn)
 	Button change_btn;
 
+	private ReSetPwdPresenter presenter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reset_pwd);
+		ButterKnife.bind(this);
+		presenter = new ReSetPwdPresenter(this);
 		setToolbar();
 		setUpPwd();
 	}
@@ -40,10 +45,16 @@ public class IReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdV
 		change_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Intent intent = getIntent();
+				String userEmail = intent.getStringExtra("userEmail");
+
 				String input = input_edt.getText().toString();
 				String reInput = reInput_edt.getText().toString();
 				if (isValid(input, reInput)) {
 					//presenter 자리
+					presenter.changePwd(input, userEmail);
+				} else {
+					Toast.makeText(ReSetPwdActivity.this, "잘못된 값", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

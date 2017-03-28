@@ -23,13 +23,13 @@ public class ReSetPwdPresenter extends BasePresenter implements IReSetPwdPresent
 
 
 	@Override
-	public void changePwd(String userPwd) {
-		userService.changePwd(userPwd)
+	public void changePwd(String userPwd, String email) {
+		userService.changePwd(userPwd, email)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-						view.moveToLoginActivity();
+
 					}
 
 					@Override
@@ -39,7 +39,7 @@ public class ReSetPwdPresenter extends BasePresenter implements IReSetPwdPresent
 
 					@Override
 					public void onNext(Void aVoid) {
-
+						view.moveToLoginActivity();
 					}
 				});
 	}

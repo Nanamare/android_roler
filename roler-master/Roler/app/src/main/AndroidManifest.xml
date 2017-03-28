@@ -101,7 +101,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".find.IReSetPwdActivity">
+        <activity android:name=".find.ReSetPwdActivity"
+                  android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
             <action android:name="android.intent.action.VIEW"/>
@@ -113,7 +114,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".find.ExFindPwdActivity">
+        <activity android:name=".find.ExFindPwdActivity"
+                  android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

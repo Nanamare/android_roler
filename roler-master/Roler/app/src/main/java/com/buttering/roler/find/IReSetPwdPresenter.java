@@ -5,5 +5,5 @@ package com.buttering.roler.find;
  */
 
 public interface IReSetPwdPresenter {
-	void changePwd(String userPwd);
+	void changePwd(String userPwd,String email);
 }

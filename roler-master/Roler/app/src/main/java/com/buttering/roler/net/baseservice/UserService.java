@@ -277,7 +277,7 @@ public class UserService extends BaseService {
 
 						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String code = ja.get("authorization_code").getAsString();
+							String code = ja.get("confirmation_token").getAsString();
 							return code;
 						}
 
@@ -286,9 +286,9 @@ public class UserService extends BaseService {
 		});
 	}
 
-	public Observable<Void> changePwd(String pwd) {
+	public Observable<Void> changePwd(String pwd, String email) {
 		return Observable.create(subscriber -> {
-			getAPI().changePwd(pwd)
+			getAPI().changePwd(pwd, email)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -298,7 +298,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -306,7 +306,7 @@ public class UserService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									onCompleted();
+									subscriber.onNext(null);
 								}
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -328,11 +328,12 @@ public class UserService extends BaseService {
 		@PUT("/users/photos")
 		Observable<RolerResponse> setProfilePhotos(@Body RolerRequest req);
 
-		@POST("/users/check")
+		@GET("/users/check")
 		Observable<ResponseBody> checkPwd(@Query("name") String name, @Query("email") String email);
 
+		@FormUrlEncoded
 		@POST("/users/change")
-		Observable<ResponseBody> changePwd(@Field("passsword") String pwd);
+		Observable<ResponseBody> changePwd(@Field("password") String pwd, @Field("email") String email);
 
 		@FormUrlEncoded
 		@POST("/users/signup")

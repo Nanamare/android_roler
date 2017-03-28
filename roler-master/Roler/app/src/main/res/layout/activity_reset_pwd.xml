@@ -6,7 +6,7 @@
     android:id="@+id/activity_find_pwd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.buttering.roler.find.IReSetPwdActivity">
+    tools:context="com.buttering.roler.find.ReSetPwdActivity">
 
     <include
         android:id="@+id/custom_toolBar"

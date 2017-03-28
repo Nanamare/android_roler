@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="1"
-                    android:textSize="13sp"/>
+                    android:textSize="8sp"/>
 
                 <TextView
                     android:id="@+id/tv_comma"
@@ -38,7 +38,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_rolePrimaryPlan"
                     android:text="."
-                    android:textSize="13sp"/>
+                    android:textSize="8sp"/>
 
                 <TextView
                     android:id="@+id/tv_roleNamePlan"
@@ -47,7 +47,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_comma"
                     android:text="임시임시임시제목"
-                    android:textSize="13sp"/>
+                    android:textSize="8sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:text="역할 설명하는 곳"
-                    android:textSize="10sp"/>
+                    android:textSize="8sp"/>
 
 
                 <com.github.lzyzsd.circleprogress.CircleProgress
