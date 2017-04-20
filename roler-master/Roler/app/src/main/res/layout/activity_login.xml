@@ -68,15 +68,6 @@
         android:layout_above="@+id/buttonOAuthLoginImg"
         android:layout_alignStart="@+id/login_btn" />
 
-    <ImageView
-        android:background="@drawable/img_logo_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_btn"
-        android:layout_above="@+id/email_et"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"/>
-
     <TextView
         android:id="@+id/activity_login_find_pwd_tv"
         android:textSize="15sp"
@@ -85,6 +76,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/pw_et"
         android:layout_alignEnd="@+id/pw_et"/>
+
+    <ImageView
+        android:background="@drawable/img_logo_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_btn"
+        android:layout_above="@+id/email_et"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"/>
 
 
 </RelativeLayout>

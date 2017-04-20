@@ -113,6 +113,7 @@
                 android:layout_below="@+id/bt_editRoleInfo">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:id="@+id/empty_role_ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -123,6 +124,12 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="역할을 추가해보세요"/>
+
+                    <ImageView
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_logo_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
 
                 <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
