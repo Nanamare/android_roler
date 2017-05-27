@@ -63,22 +63,14 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int RUQUEST_IMAGE_FROM_ALBUM = 5;
 
-	@BindView(R.id.iv_picture)
-	CircleImageView iv_picture;
-	@BindView(R.id.tv_editRoleInfo)
-	TextView tv_editRoleInfo;
-	@BindView(R.id.bt_editRoleInfo)
-	Button bt_editRoleInfo;
-	@BindView(R.id.bt_editProfile)
-	Button bt_editProfile;
-	@BindView(R.id.tv_name)
-	TextView tv_name;
-	@BindView(R.id.vp_roleDetail)
-	FeatureCoverFlow vp_roleDetail;
-	@BindView(R.id.activity_role_email)
-	TextView activity_role_email;
-	@BindView(R.id.empty_role_ll)
-	LinearLayout empty_role_ll;
+	@BindView(R.id.iv_picture) CircleImageView iv_picture;
+	@BindView(R.id.tv_editRoleInfo) TextView tv_editRoleInfo;
+	@BindView(R.id.bt_editRoleInfo) Button bt_editRoleInfo;
+	@BindView(R.id.bt_editProfile) Button bt_editProfile;
+	@BindView(R.id.tv_name) TextView tv_name;
+	@BindView(R.id.vp_roleDetail) FeatureCoverFlow vp_roleDetail;
+	@BindView(R.id.activity_role_email) TextView activity_role_email;
+	@BindView(R.id.empty_role_ll) LinearLayout empty_role_ll;
 
 	public List<Role> allRoleList = new ArrayList<>();
 	public RoleActivityAdapter adapter = null;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.buttering.roler">
 
     <!-- 유저 퍼미션 추가 -->
@@ -20,14 +21,20 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
+
+
     <application
+        tools:node="replace"
         android:name=".util.MyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/icon_roler"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/NoAppBarTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <activity
             android:name=".splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -60,9 +67,6 @@
             android:name=".role.RoleActivity"
             android:label="My Page"
             android:theme="@style/NoAppBarTheme">
-            <meta-data
-                android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version"/>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.buttering.roler.role.RoleActivity"/>
@@ -101,22 +105,26 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".find.ReSetPwdActivity"
-                  android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".find.ReSetPwdActivity"
+            android:windowSoftInputMode="adjustResize">
 
+        </activity>
+        <activity
+            android:name=".find.ExFindPwdActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
+        <!--Token refresh receiver -->
+        <receiver android:name=".util.TokenAlarmReceive">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-            <category android:name="android.intent.category.BROWSABLE"/>
-            <data
-                android:host="change_pwd"
-                android:scheme="roler" />
+                <action android:name="com.buttering.roler.TOKEN_REFRESH"/>
             </intent-filter>
+        </receiver>
 
-        </activity>
-        <activity android:name=".find.ExFindPwdActivity"
-                  android:windowSoftInputMode="adjustResize">
-        </activity>
+        <service android:name=".util.TokenRefreshService">
+        </service>
+
     </application>
 
 </manifest>

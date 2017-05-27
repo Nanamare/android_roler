@@ -58,7 +58,7 @@ import rx.Subscriber;
  */
 public class LogInActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ILoginView {
 
-	public static final String EXTRA_MESSAGE = "com.buttering.roler";
+	private static final String EXTRA_MESSAGE = "com.buttering.roler";
 	private static final String TAG = "Login_Activity";
 	private static final String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
 	private static final String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
@@ -76,8 +76,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	public ISignUpProfilePresenter presenter;
 
-	@BindView(R.id.activity_login_google_btn)
-	ImageButton login_google_btn;
+	@BindView(R.id.activity_login_google_btn) protected ImageButton login_google_btn;
 
 	@BindView(R.id.activity_login_signIn_btn)
 	Button login_signIn_btn;
@@ -149,7 +148,9 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 		ButterKnife.bind(this);
 
-		loginPresenter = new LoginPresenter(this);
+		checkPlayServices();
+
+		loginPresenter = new LoginPresenter(this,this);
 		signUpPresenter = new SignUpPresenter();
 
 		initLoginSetting();
@@ -431,13 +432,25 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 			}
 		}
 
-		;
+
 	};
+
+
+
+
+	@Override
+	protected void onPause() {
+		if (mGoogleApiClient != null) {
+			mGoogleApiClient.disconnect();
+		}
+		super.onPause();
+	}
+
 
 
 	public void mOnClick(View view) {
 		switch (view.getId()) {
-			case R.id.activity_login_google_btn:
+			case R.id.activity_login_google_btn: {
 				checkThePemission();
 				mGoogleApiClient = new GoogleApiClient.Builder(this)
 						.addConnectionCallbacks(this)
@@ -448,6 +461,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 				mGoogleApiClient.connect();
 				break;
+			}
 		}
 
 	}
@@ -612,7 +626,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 							connectionResult.toString()));
 			try {
 				//이게 핵심?
-				connectionResult.startResolutionForResult(this, 0);
+				connectionResult.startResolutionForResult(this, PLAY_SERVICES_RESOLUTION_REQUEST);
 			} catch (IntentSender.SendIntentException e) {
 				Log.e(TAG, e.toString(), e);
 			}
@@ -637,13 +651,20 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {;
 		switch (requestCode) {
-			case single_top_activity: {
-
+			case single_top_activity : {
+				break;
 			}
+			case PLAY_SERVICES_RESOLUTION_REQUEST : {
+				mGoogleApiClient.connect();
+				break;
+			}
+
 		}
+
+		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 
 }

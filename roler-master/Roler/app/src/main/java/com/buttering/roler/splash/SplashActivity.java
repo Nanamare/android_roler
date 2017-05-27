@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +22,10 @@ import butterknife.ButterKnife;
 /**
  * Created by nanamare on 2016-07-30.
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
-	@BindView(R.id.title)
-	protected TextView splash_title;
-	@BindView(R.id.subTitle)
-	protected TextView splash_subTitle;
+	@BindView(R.id.title) protected AppCompatTextView splash_title;
+	@BindView(R.id.subTitle) protected AppCompatTextView splash_subTitle;
 
 	private static final String TAG = SplashActivity.class.getSimpleName();
 
@@ -39,15 +39,14 @@ public class SplashActivity extends Activity {
 		splash_title.setVisibility(View.INVISIBLE);
 		splash_subTitle.setVisibility(View.INVISIBLE);
 
-		if (NetUtil.isNetworkAvailable(getApplicationContext())) {
+		/**
+		 * check the network state
+		 */
+		if (NetUtil.isNetworkAvailable(this)) {
 
-			new Handler().postDelayed(() -> {
-				splash_title.setVisibility(View.VISIBLE);
-			}, 1000);
+			new Handler().postDelayed(() -> splash_title.setVisibility(View.VISIBLE), 1000);
 
-			new Handler().postDelayed(() -> {
-				splash_subTitle.setVisibility(View.VISIBLE);
-			}, 1500);
+			new Handler().postDelayed(() -> splash_subTitle.setVisibility(View.VISIBLE), 1500);
 
 
 			Intent intent = new Intent(this, LogInActivity.class);
@@ -66,15 +65,13 @@ public class SplashActivity extends Activity {
 			} else {
 
 				new Handler().postDelayed(() -> {
-
 					startActivity(intent);
 					finish();
 				}, 1500);
 			}
 
-
 		} else {
-			Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), getString(R.string.confirm_internet_connection), Toast.LENGTH_LONG).show();
 			super.onPause();
 		}
 

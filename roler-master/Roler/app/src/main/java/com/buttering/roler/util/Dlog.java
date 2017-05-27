@@ -44,31 +44,6 @@ public class Dlog {
 	 **/
 	public static final void d(Map<String, String> map, String json) {
 
-		if (UserService.DEBUG) {
-			try {
-				System.out.println(" ");
-				System.out.println(" ");
-				System.out.println("//---------------------------------------------------------------------------------------------------------------");
-				System.out.println(buildLogMsg("start"));
-				for (String key : map.keySet()) {
-					System.out.println(String.format("%s :  %S", key, map.get(key)));
-				}
-				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				JsonParser jp = new JsonParser();
-				JsonElement je = jp.parse(json);
-				String prettyJson = gson.toJson(je);
-				System.out.println(prettyJson);
-
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-			System.out.println(" ");
-			System.out.println("//---------------------------------------------------------------------------------------------------------------");
-			System.out.println(" ");
-			System.out.println(" ");
-		}
-
-
 
 	}
 

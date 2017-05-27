@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\kinamare\\Documents\\androidRoler\\roler-master\\Roler\\libraries\\network\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sq\\values-sq.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 187,
+                    "endOffset": 288
+                },
+                "from": {
+                    "file": "C:\\Users\\kinamare\\.android\\build-cache\\1b3e99a50ee59d280dac1d2eb65c1461d5f1a5aa\\output\\res\\values-sq\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 285,
+                        "endColumn": 187,
+                        "endOffset": 472
+                    }
+                }
+            }
+        ]
+    }
+]

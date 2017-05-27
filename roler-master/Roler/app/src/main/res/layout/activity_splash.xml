@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -17,14 +17,14 @@
             android:scaleType="center"
             android:src="@drawable/bg_splash"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="역할 중심 일정 관리 앱"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginTop="40dp"

@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,28 +64,17 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-	@BindView(R.id.role_empty_ll)
-	LinearLayout role_empty_ll;
-	@BindView(R.id.activity_plan_name_tv)
-	TextView name;
-	@BindView(R.id.vp_rolePlanPage)
-	FeatureCoverFlow vp_rolePlanPage;
-	@BindView(R.id.rv_todolist)
-	RecyclerView rv_todolist;
-	@BindView(R.id.rl_planBelowBottom)
-	CardView rl_planBelowBottom;
-	@BindView(R.id.tv_yearMonth)
-	TextView tv_yearMonth;
-	@BindView(R.id.tv_date)
-	TextView tv_date;
-	@BindView(R.id.tv_day)
-	TextView tv_day;
-	@BindView(R.id.activity_plan_arrow_left_iv)
-	ImageView left_arrow_iv;
-	@BindView(R.id.activity_plan_arrow_right_iv)
-	ImageView right_arrow_iv;
-	@BindView(R.id.rl_planBottom)
-	RelativeLayout rl_planBottom;
+	@BindView(R.id.role_empty_ll) LinearLayout role_empty_ll;
+	@BindView(R.id.activity_plan_name_tv) AppCompatTextView name;
+	@BindView(R.id.vp_rolePlanPage) FeatureCoverFlow vp_rolePlanPage;
+	@BindView(R.id.rv_todolist) RecyclerView rv_todolist;
+	@BindView(R.id.rl_planBelowBottom) CardView rl_planBelowBottom;
+	@BindView(R.id.tv_yearMonth) AppCompatTextView tv_yearMonth;
+	@BindView(R.id.tv_date) AppCompatTextView tv_date;
+	@BindView(R.id.tv_day) AppCompatTextView tv_day;
+	@BindView(R.id.activity_plan_arrow_left_iv) AppCompatImageView left_arrow_iv;
+	@BindView(R.id.activity_plan_arrow_right_iv) AppCompatImageView right_arrow_iv;
+	@BindView(R.id.rl_planBottom) RelativeLayout rl_planBottom;
 
 	private List<Role> allRoleList = new ArrayList<>();
 	private List<List<Todo>> allTodoList = new ArrayList<>();
@@ -92,7 +83,6 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	private int currentPosition;
 	private IPlanPresenter planPresenter;
 	private ACProgressFlower dialog;
-	private List<Role> roles = new ArrayList<>();
 	private Todo todo = null;
 	private List<Todo> todolist = new ArrayList<>();
 	private ILoginPresenter tokenPresenter;
@@ -127,7 +117,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		setDate();
 
 		planPresenter = new PlanPresenter(this, this);
-		tokenPresenter = new LoginPresenter();
+		tokenPresenter = new LoginPresenter(this);
 
 		int roleSize = allRoleList.size();
 		if (roleSize == 0) {
@@ -214,6 +204,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			}
 		});
 
+
 		right_arrow_iv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -278,6 +269,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 	}
 
+
 	private void setDate() {
 		Calendar calendar = Calendar.getInstance();
 		DateFormat sdf = new SimpleDateFormat("yyyy - MM");
@@ -289,6 +281,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		final String[] week = {"일", "월", "화", "수", "목", "금", "토"};
 		tv_day.setText(week[calendar.get(calendar.DAY_OF_WEEK) - 1] + "요일");
 	}
+
 
 	private void setUserName() {
 		name.setText(MyInfoDAO.getInstance().getNickName() + " 님 ");

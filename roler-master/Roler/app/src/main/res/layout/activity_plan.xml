@@ -18,38 +18,38 @@
         android:layout_height="530dp"
         android:layout_below="@id/custom_toolBar">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_yearMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="year.month"
+            tools:text="year.month"
             android:textSize="15sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Sunday"
+            tools:text="Sunday"
             android:textSize="15sp"/>
 
         <LinearLayout
             android:id="@+id/ll_swipe_arrow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:gravity="center">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/activity_plan_arrow_left_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical|left"
-                android:layout_marginRight="80dp"
+                android:layout_marginRight="70dp"
                 android:background="@drawable/icon_arrow_left"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,16 +58,16 @@
                 android:text="31"
                 android:textSize="35sp"/>
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/activity_plan_arrow_right_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="80dp"
+                android:layout_marginLeft="70dp"
                 android:background="@drawable/icon_arrow_right"/>
         </LinearLayout>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/activity_plan_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,30 +75,28 @@
             android:textSize="15sp"/>
 
         <FrameLayout
-            android:layout_below="@+id/ll_swipe_arrow"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:gravity="center_horizontal|center_vertical"
                 android:id="@+id/role_empty_ll"
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_marginTop="30dp"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="역할을 추가해보세요"
+                <ImageView
+                    android:src="@drawable/add_role_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_height="300dp"/>
             </LinearLayout>
 
         <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
             android:id="@+id/vp_rolePlanPage"
             android:layout_marginTop="-17dp"
+            android:layout_below="@id/ll_swipe_arrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_swipe_arrow"
             coverflow:coverHeight="200dp"
             coverflow:coverWidth="150dp"
             coverflow:maxScaleFactor="2.0"
@@ -106,6 +104,7 @@
             coverflow:rotationThreshold="1.0"
             coverflow:scalingThreshold="0.2">
         </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+
         </FrameLayout>
     </RelativeLayout>
 

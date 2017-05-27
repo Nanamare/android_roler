@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_name"
             android:layout_marginTop="5dp"
-            android:text="Roler@roler.com"/>
+            tools:text="Roler@roler.com"/>
 
     </LinearLayout>
 
@@ -75,9 +75,9 @@
         android:weightSum="20">
 
         <LinearLayout
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/tv_editRoleInfo"
@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:text="역할 정보 추가하기 "
+                android:layout_marginTop="10dp"
+                android:text="@string/add_role_information"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -95,16 +96,15 @@
                 android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/tv_editRoleInfo"
                 android:background="@drawable/ic_add_circle_outline_black_18dp"
                 android:gravity="center_vertical"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -113,36 +113,30 @@
                 android:layout_below="@+id/bt_editRoleInfo">
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:padding="5dp"
                     android:id="@+id/empty_role_ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="역할을 추가해보세요"/>
-
-                    <ImageView
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/img_logo_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/add_role_image"/>
                 </LinearLayout>
 
                 <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                android:id="@+id/vp_roleDetail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/tv_editRoleInfo"
-                coverflow:coverHeight="150dp"
-                coverflow:coverWidth="150dp"
-                coverflow:maxScaleFactor="2.0"
-                coverflow:reflectionGap="1px"
-                coverflow:rotationThreshold="1.0"
-                coverflow:scalingThreshold="0.2">
+                    android:id="@+id/vp_roleDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/tv_editRoleInfo"
+                    coverflow:coverHeight="150dp"
+                    coverflow:coverWidth="150dp"
+                    coverflow:maxScaleFactor="2.0"
+                    coverflow:reflectionGap="1px"
+                    coverflow:rotationThreshold="1.0"
+                    coverflow:scalingThreshold="0.2">
                 </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
             </FrameLayout>

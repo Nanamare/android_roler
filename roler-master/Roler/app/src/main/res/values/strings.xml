@@ -2,12 +2,12 @@
     <string name="app_name">Roler</string>
 
     //signUpActivity
-    <string name="join_empty_email">Please enter your email</string>
-    <string name="join_too_long_email">Your email must be less than characters</string>
-    <string name="join_invalid_email">The email format is not correct</string>
-    <string name="join_invalid_pwd">The password format is not correct</string>
-    <string name="join_empty_pwd">Please enter a password</string>
-    <string name="join_too_short_pwd">Password must be longer than 8 characters</string>
+    <string name="join_empty_email">이메일을 입력해주세요.</string>
+    <string name="join_too_long_email">이메일 길이를 초과하였습니다.</string>
+    <string name="join_invalid_email">이메일 형식이 맞지 않습니다.</string>
+    <string name="join_invalid_pwd">비밀번호 형식이 맞지 않습니다.</string>
+    <string name="join_empty_pwd">비밀번호를 입력해주세요</string>
+    <string name="join_too_short_pwd">비밀번호는 8자리 이상으로 해주세요.</string>
     <string name="banner_ad_unit_id">ca-app-pub-6734975683573162/7719479339</string>
 
     //myinfokey
@@ -16,4 +16,9 @@
      <string name="invite"> 님 롤러를 사용해주셔서 감사합니다. 잘 사용하셨다면 친구들에게 추천해보세요!
     </string>
 
+    <string name="confirm_internet_connection">인터넷 연결을 확인해 주세요</string>
+
+    <string name="find_pwd">비밀번호 찾기</string>
+
+    <string name="add_role_information">역할 정보 추가하기 </string>
 </resources>

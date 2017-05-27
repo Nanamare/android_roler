@@ -9,12 +9,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.vocketlist.android.network.service.HttpResponseErrorInterceptor;
+import com.vocketlist.android.network.service.LoggingInterceptor;
+import com.vocketlist.android.network.service.WebkitCookieJar;
+import com.vocketlist.android.network.utils.Timeout;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
-import okio.Timeout;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -57,13 +59,9 @@ public class BaseService<T> {
 		Gson myGson = gsonBuilder.create();
 
 
-		OkHttpClient httpClient = new OkHttpClient.Builder()
-				.addInterceptor(new DefaultHeaderInterceptor())
-				.build();
-
 
 		retrofit = new Retrofit.Builder()
-				.client(httpClient)
+				.client(mDefaultHttpClientBuilder.build())
 				.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create(myGson))
 				.baseUrl(BASE_URL)
@@ -84,6 +82,18 @@ public class BaseService<T> {
 		}
 		return "false";
 	}
+
+
+	public final static OkHttpClient.Builder mDefaultHttpClientBuilder = new OkHttpClient.Builder()
+			.cookieJar(new WebkitCookieJar())
+			.connectTimeout(Timeout.getConnectionTimeout(), Timeout.UNIT)
+			.readTimeout(Timeout.getReadTimeout(), Timeout.UNIT)
+			.addInterceptor(new DefaultHeaderInterceptor())
+			.addInterceptor(new HttpResponseErrorInterceptor())
+			.addNetworkInterceptor(new LoggingInterceptor(MyApplication.getInstance().getContext()));
+
+
+
 
 	public T getAPI() {
 		return service;

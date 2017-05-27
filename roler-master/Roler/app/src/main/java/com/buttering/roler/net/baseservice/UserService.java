@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,8 +28,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class UserService extends BaseService {
-
-	public static boolean DEBUG = false;
 
 	private String userId;
 	private String name;
@@ -209,6 +208,7 @@ public class UserService extends BaseService {
 
 	}
 
+
 	public Observable<Void> registerToken(String token, String email) {
 		return Observable.create(subscriber -> {
 			getAPI().registerToken(token, email)
@@ -316,7 +316,45 @@ public class UserService extends BaseService {
 		});
 	}
 
+	public Observable<Void> refreshToken(String id, String email){
+		return Observable.create(subscriber -> {
+			getAPI().refreshToken(id, email)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<Response<ResponseBody>>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+							e.printStackTrace();
+						}
+
+						@Override
+						public void onNext(Response<ResponseBody> responseBodyResponse) {
+							String json = null;
+							try {
+								json = responseBodyResponse.body().string();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+							String accessToken = ja.get("access_token").getAsString();
+							SharePrefUtil.putSharedPreference("accessToken", accessToken);
+
+
+						}
+					});
+
+		});
+	}
+
 	public interface UserAPI {
+
+		@FormUrlEncoded
+		@POST("/users/refresh")
+		Observable<Response<ResponseBody>> refreshToken(@Field("id") String id,@Field("email") String email);
 
 		@FormUrlEncoded
 		@POST("/users/signin")
