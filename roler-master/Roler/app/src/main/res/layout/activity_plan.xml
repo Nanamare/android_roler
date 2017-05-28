@@ -1,184 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:coverflow="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffff"
-                tools:context="com.buttering.roler.plan.PlanActivity">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.buttering.roler.plan.PlanActivity">
 
-    <include
-        android:id="@+id/custom_toolBar"
-        layout="@layout/toolbar"/>
-
-
-    <RelativeLayout
-        android:id="@+id/rl_planTop"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="530dp"
-        android:layout_below="@id/custom_toolBar">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_yearMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            tools:text="year.month"
-            android:textSize="15sp"/>
+        <include
+            android:id="@+id/custom_toolBar"
+            layout="@layout/toolbar"/>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            tools:text="Sunday"
-            android:textSize="15sp"/>
+    </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_swipe_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/activity_plan_arrow_left_iv"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical|left"
-                android:layout_marginRight="70dp"
-                android:background="@drawable/icon_arrow_left"/>
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_day"
-                android:layout_centerHorizontal="true"
-                android:text="31"
-                android:textSize="35sp"/>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/activity_plan_arrow_right_iv"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/icon_arrow_right"/>
-        </LinearLayout>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/activity_plan_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="15sp"/>
-
-        <FrameLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:gravity="center_horizontal|center_vertical"
-                android:id="@+id/role_empty_ll"
-                android:visibility="invisible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:src="@drawable/add_role_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"/>
-            </LinearLayout>
-
-        <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-            android:id="@+id/vp_rolePlanPage"
-            android:layout_marginTop="-17dp"
-            android:layout_below="@id/ll_swipe_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            coverflow:coverHeight="200dp"
-            coverflow:coverWidth="150dp"
-            coverflow:maxScaleFactor="2.0"
-            coverflow:reflectionGap="1px"
-            coverflow:rotationThreshold="1.0"
-            coverflow:scalingThreshold="0.2">
-        </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
-
-        </FrameLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_planBottom"
+    <!-- 콘텐츠 -->
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_planTop"
-        android:layout_marginTop="-250dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/rl_planBelowBottom"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            coverflow:cardCornerRadius="3dp"
-            coverflow:cardMaxElevation="4dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/activity_plan_top_ll"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/tv_numberText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="No."
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/tv_listText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_toRightOf="@id/tv_numberText"
-                    android:text="List"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/tv_doText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:text="Done"
-                    android:textSize="20sp"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/ll_bottomLine1"
+                    android:id="@+id/activity_plan_date_ll"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/tv_numberText"
-                    android:layout_marginTop="10dp"
-                    android:background="#d9d9d9"
-                    android:orientation="horizontal"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_todolist"
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_yearMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        tools:text="2017-05"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textSize="15sp"
+                        tools:text="Sunday"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/activity_plan_name_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textSize="15sp"
+                        tools:text="신현성 님"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/activity_plan_arrow_left_iv"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/icon_arrow_left"/>
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="31"
+                        android:textSize="35sp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="left">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/activity_plan_arrow_right_iv"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/icon_arrow_right"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/role_empty_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:src="@drawable/add_role_image"/>
+                    </LinearLayout>
+
+                    <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+                        android:layout_marginTop="-100dp"
+                        android:id="@+id/vp_rolePlanPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        coverflow:coverHeight="200dp"
+                        coverflow:coverWidth="150dp"
+                        coverflow:maxScaleFactor="2.0"
+                        coverflow:reflectionGap="1px"
+                        coverflow:rotationThreshold="1.0"
+                        coverflow:scalingThreshold="0.2">
+                    </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="-210dp"
+                android:id="@+id/activity_plan_bottom_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/rl_planBelowBottom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/ll_bottomLine1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp">
+                    coverflow:cardCornerRadius="3dp"
+                    coverflow:cardMaxElevation="4dp">
 
-                </android.support.v7.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
 
-    </RelativeLayout>
+                            <TextView
+                                android:id="@+id/tv_numberText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:text="No."
+                                android:textSize="20sp"/>
 
+                            <TextView
+                                android:id="@+id/tv_listText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:text="List"
+                                android:textSize="20sp"/>
 
-</RelativeLayout>
+                            <TextView
+                                android:id="@+id/tv_doText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_weight="1"
+                                android:text="Done"
+                                android:textSize="20sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_todolist"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp">
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

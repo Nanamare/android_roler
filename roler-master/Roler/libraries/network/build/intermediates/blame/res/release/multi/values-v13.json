@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\kinamare\\Documents\\androidRoler\\roler-master\\Roler\\libraries\\network\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v13\\values-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 58,
+                    "endOffset": 109
+                },
+                "from": {
+                    "file": "C:\\Users\\kinamare\\.android\\build-cache\\29cc094fe908914ca85c2bd31c1126ae4f1241af\\output\\res\\values-v13\\values-v13.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 58,
+                        "endOffset": 109
+                    }
+                }
+            }
+        ]
+    }
+]

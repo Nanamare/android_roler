@@ -131,7 +131,7 @@
             android:paddingRight="20dp">
 
             <LinearLayout
-                android:id="@+id/activity_setting_chPwd_ll"
+                android:id="@+id/activity_setting_find_pwd_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -141,7 +141,7 @@
                     android:id="@+id/activity_setting_chPwd_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Change Password"/>
+                    android:text="Find Password"/>
             </LinearLayout>
 
             <View

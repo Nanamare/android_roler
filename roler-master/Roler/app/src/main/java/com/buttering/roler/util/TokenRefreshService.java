@@ -18,6 +18,11 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class TokenRefreshService extends Service {
 
+	public static final String TOKEN_REFRESH = "com.buttering.roler.TOKEN_REFRESH";
+	public TokenRefreshService(){
+
+	}
+
 	UserService userService = new UserService();
 
 	@Nullable
@@ -28,7 +33,7 @@ public class TokenRefreshService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "Token refresh", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "ROLER 토큰 새로고침 백그라운드 작업 시작", Toast.LENGTH_SHORT).show();
 
 		userService.refreshToken(MyInfoDAO.getInstance().getUserId()
 				, MyInfoDAO.getInstance().getEmail())

@@ -3,6 +3,7 @@ package com.buttering.roler.setting;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.buttering.roler.BuildConfig;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
+import com.buttering.roler.find.ExFindPwdActivity;
+import com.buttering.roler.find.ReSetPwdActivity;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.ads.AdRequest;
@@ -29,26 +32,16 @@ public class SettingActivity extends AppCompatActivity {
 
 	@BindView(R.id.activity_setting_version_ll)
 	LinearLayout ll_version;
-	@BindView(R.id.activity_setting_tutorial_ll)
-	LinearLayout ll_tutorial;
-	@BindView(R.id.activity_setting_inviteFriend_ll)
-	LinearLayout ll_inviteFriend;
-	@BindView(R.id.activity_setting_chPwd_ll)
-	LinearLayout ll_chPwd;
-	@BindView(R.id.activity_setting_noti_ll)
-	LinearLayout ll_noti;
-	@BindView(R.id.activity_setting_policy_ll)
-	LinearLayout ll_policy;
-	@BindView(R.id.activity_setting_terms_ll)
-	LinearLayout ll_terms;
-	@BindView(R.id.activity_setting_logout)
-	LinearLayout ll_logout;
+	@BindView(R.id.activity_setting_tutorial_ll) LinearLayout ll_tutorial;
+	@BindView(R.id.activity_setting_inviteFriend_ll) LinearLayout ll_inviteFriend;
+	@BindView(R.id.activity_setting_find_pwd_ll) LinearLayout ll_findPwd;
+	@BindView(R.id.activity_setting_noti_ll) LinearLayout ll_noti;
+	@BindView(R.id.activity_setting_policy_ll) LinearLayout ll_policy;
+	@BindView(R.id.activity_setting_terms_ll) LinearLayout ll_terms;
+	@BindView(R.id.activity_setting_logout) LinearLayout ll_logout;
+	@BindView(R.id.activity_setting_version_tv) TextView tv_version;
 
-
-	@BindView(R.id.activity_setting_version_tv)
-	TextView tv_version;
-
-	private static int single_top_activity = 999;
+	private static final int single_top_activity = 999;
 
 	private OAuthLogin mOAuthLoginModule;
 
@@ -100,18 +93,21 @@ public class SettingActivity extends AppCompatActivity {
 			mOAuthLoginModule = OAuthLogin.getInstance();
 			mOAuthLoginModule.logout(this);
 			Intent loginIntent = new Intent(this, LogInActivity.class);
-			loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			startActivityForResult(loginIntent,single_top_activity);
-			finish();
+			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+				loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+			}
+			else {
+				loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			}
+				startActivity(loginIntent);
 		});
 
 	}
 
 	private void moveToChPwdAcitivity() {
-		ll_chPwd.setOnClickListener(view -> {
-//			Intent ResetIntent = new Intent(this, ResetPwdActivity.class);
-//			startActivity(ResetIntent);
-			Toast.makeText(this, "프로필 리셋 액티비티 이동", Toast.LENGTH_SHORT).show();
+		ll_findPwd.setOnClickListener(view -> {
+			Intent ResetIntent = new Intent(this, ExFindPwdActivity.class);
+			startActivity(ResetIntent);
 		});
 	}
 
@@ -148,7 +144,7 @@ public class SettingActivity extends AppCompatActivity {
 			finish();
 		});
 		textView.setTextColor(Color.BLACK);
-		textView.setText("    Options");
+		textView.setText("Options");
 		setSupportActionBar(toolbar);
 
 	}

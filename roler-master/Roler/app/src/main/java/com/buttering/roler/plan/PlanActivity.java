@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +35,7 @@ import com.buttering.roler.login.LoginPresenter;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
+import com.buttering.roler.util.DepthBaseActivity;
 import com.buttering.roler.util.MyApplication;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -60,7 +60,7 @@ import rx.Subscriber;
 /**
  * Created by nanamare on 16. 7. 31..
  */
-public class PlanActivity extends AppCompatActivity implements IPlanView {
+public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
@@ -74,7 +74,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	@BindView(R.id.tv_day) AppCompatTextView tv_day;
 	@BindView(R.id.activity_plan_arrow_left_iv) AppCompatImageView left_arrow_iv;
 	@BindView(R.id.activity_plan_arrow_right_iv) AppCompatImageView right_arrow_iv;
-	@BindView(R.id.rl_planBottom) RelativeLayout rl_planBottom;
+	@BindView(R.id.activity_plan_bottom_ll) LinearLayout plan_bottom_ll;
 
 	private List<Role> allRoleList = new ArrayList<>();
 	private List<List<Todo>> allTodoList = new ArrayList<>();
@@ -86,6 +86,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	private Todo todo = null;
 	private List<Todo> todolist = new ArrayList<>();
 	private ILoginPresenter tokenPresenter;
+	private int roleSize;
 
 	private LinearLayoutManager linearLayoutManager;
 
@@ -119,11 +120,14 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		planPresenter = new PlanPresenter(this, this);
 		tokenPresenter = new LoginPresenter(this);
 
-		int roleSize = allRoleList.size();
+		roleSize = allRoleList.size();
 		if (roleSize == 0) {
 			role_empty_ll.setVisibility(View.VISIBLE);
 			vp_rolePlanPage.setVisibility(View.GONE);
+			plan_bottom_ll.setVisibility(View.GONE);
 		}
+
+
 		allTodoList = receiveTodoItems();
 		planPresenter.getRoleContent();
 
@@ -180,54 +184,55 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 			@Override
 			public void onScrolling() {
 				//TODO CoverFlow began scrolling
-				Toast.makeText(PlanActivity.this, "Todolist 로딩중", Toast.LENGTH_SHORT).show();
+				Toast.makeText(PlanActivity.this, getString(R.string.load_role), Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
 
 	private void swipeRole() {
-		left_arrow_iv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				currentPosition = vp_rolePlanPage.getScrollPosition();
-				if (currentPosition == 0) {
-					currentPosition = vp_rolePlanPage.getCount();
-					vp_rolePlanPage.scrollToPosition(currentPosition);
+
+			left_arrow_iv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					currentPosition = vp_rolePlanPage.getScrollPosition();
+					if (currentPosition == 0) {
+						currentPosition = vp_rolePlanPage.getCount();
+						vp_rolePlanPage.scrollToPosition(currentPosition);
+					}
+					if (currentPosition > 0) {
+						currentPosition -= 1;
+						vp_rolePlanPage.scrollToPosition(currentPosition);
+					}
+
+					int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
+					planPresenter.loadToList(role_id);
 				}
-				if (currentPosition > 0) {
-					currentPosition -= 1;
-					vp_rolePlanPage.scrollToPosition(currentPosition);
+			});
+
+
+			right_arrow_iv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					currentPosition = vp_rolePlanPage.getScrollPosition();
+					if (currentPosition < vp_rolePlanPage.getCount() - 1) {
+						currentPosition += 1;
+						vp_rolePlanPage.scrollToPosition(currentPosition);
+
+					} else if (currentPosition == vp_rolePlanPage.getCount() - 1) {
+						vp_rolePlanPage.scrollToPosition(0);
+						currentPosition = 0;
+
+					}
+
+					int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
+					planPresenter.loadToList(role_id);
 				}
-
-				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
-				planPresenter.loadToList(role_id);
-			}
-		});
-
-
-		right_arrow_iv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				currentPosition = vp_rolePlanPage.getScrollPosition();
-				if (currentPosition < vp_rolePlanPage.getCount() - 1) {
-					currentPosition += 1;
-					vp_rolePlanPage.scrollToPosition(currentPosition);
-
-				} else if (currentPosition == vp_rolePlanPage.getCount() - 1) {
-					vp_rolePlanPage.scrollToPosition(0);
-					currentPosition = 0;
-
-				}
-
-				int role_id = ((Role) adapter.getItem(currentPosition)).getRole_id();
-				planPresenter.loadToList(role_id);
-			}
-		});
+			});
 	}
 
 	private void addTodoList() {
 
-		rl_planBottom.setOnClickListener(v -> {
+		plan_bottom_ll.setOnClickListener(v -> {
 			if (allRoleList.size() != 0) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
 
@@ -263,7 +268,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 				alert.show();
 			}  else {
-				Toast.makeText(this, "역할을 먼저 추가해보세요!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.empty_role), Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -305,7 +310,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		LocalBroadcastManager.getInstance(this).registerReceiver(
 				badgeReceiver,
@@ -332,7 +337,7 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 
 		} else if (id == R.id.action_refresh) {
 
-			Toast.makeText(this, "refreshing...", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getString(R.string.refresh_plan), Toast.LENGTH_SHORT).show();
 			planPresenter.getRoleContent();
 
 		}
@@ -387,7 +392,13 @@ public class PlanActivity extends AppCompatActivity implements IPlanView {
 		if (roleList.size() == 0) {
 			role_empty_ll.setVisibility(View.VISIBLE);
 			vp_rolePlanPage.setVisibility(View.GONE);
+			plan_bottom_ll.setVisibility(View.GONE);
+			left_arrow_iv.setVisibility(View.GONE);
+			right_arrow_iv.setVisibility(View.GONE);
 		} else {
+			left_arrow_iv.setVisibility(View.VISIBLE);
+			right_arrow_iv.setVisibility(View.VISIBLE);
+			plan_bottom_ll.setVisibility(View.VISIBLE);
 			role_empty_ll.setVisibility(View.GONE);
 			allRoleList = roleList;
 			adapter = new PlanActivityAdapter(this, allRoleList);

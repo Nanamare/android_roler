@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,9 +104,14 @@ public class ReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdVi
 	private void setToolbar() {
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
-		TextView textView = (TextView) findViewById(R.id.toolbar_title);
+		TextView textView = (TextView) toolbar.findViewById(R.id.toolbar_title);
+		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
+		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+		imageView.setOnClickListener(view -> {
+			finish();
+		});
 		textView.setTextColor(Color.BLACK);
-		textView.setText("비밀 번호 찾기");
+		textView.setText("Find Password");
 		setSupportActionBar(toolbar);
 
 	}

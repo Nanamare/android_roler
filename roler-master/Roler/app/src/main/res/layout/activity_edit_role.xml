@@ -91,7 +91,7 @@
             android:id="@+id/tv_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="   우선순위   "
+            android:text="우선 순위 설정"
             android:layout_alignBaseline="@+id/et_priority"
             android:layout_alignBottom="@+id/et_priority"
             android:layout_alignParentStart="true"/>

@@ -21,4 +21,9 @@
     <string name="find_pwd">비밀번호 찾기</string>
 
     <string name="add_role_information">역할 정보 추가하기 </string>
+
+    <!--plan activity-->
+    <string name="load_role">로딩 중입니다</string>
+    <string name="empty_role">역할을 먼저 추가해보세요!</string>
+    <string name="refresh_plan">새로고침 중입니다.</string>
 </resources>

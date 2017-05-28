@@ -76,22 +76,12 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	public ISignUpProfilePresenter presenter;
 
-	@BindView(R.id.activity_login_google_btn) protected ImageButton login_google_btn;
-
-	@BindView(R.id.activity_login_signIn_btn)
-	Button login_signIn_btn;
-
-	@BindView(R.id.activity_login_signUp_btn)
-	Button login_signUp_btn;
-
-	@BindView(R.id.email_et)
-	TextView email_et;
-
-	@BindView(R.id.pw_et)
-	TextView pw_et;
-
-	@BindView(R.id.activity_login_find_pwd_tv)
-	TextView find_pwd_tv;
+	@BindView(R.id.activity_login_google_btn) ImageButton login_google_btn;
+	@BindView(R.id.activity_login_signIn_btn) Button login_signIn_btn;
+	@BindView(R.id.activity_login_signUp_btn) Button login_signUp_btn;
+	@BindView(R.id.email_et) TextView email_et;
+	@BindView(R.id.pw_et) TextView pw_et;
+	@BindView(R.id.activity_login_find_pwd_tv) TextView find_pwd_tv;
 
 
 	@Override

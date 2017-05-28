@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sample-->
+    <string name="base_sample_host" translatable="false">https://jsonplaceholder.typicode.com/</string>
+</resources>

@@ -79,7 +79,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	private ACProgressFlower dialog;
 	private IRolePresenter presenter;
 	private Bitmap bp;
-	private File imgfile;
+	private File imgFile;
 	private String mCurrentPhotoPath;
 
 
@@ -234,28 +234,28 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 								Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 								if (intent.resolveActivity(getPackageManager()) != null) {
 									// Create the File where the photo should go
-									imgfile = null;
+									imgFile = null;
 									try {
-										imgfile = createImageFile();
+										imgFile = createImageFile();
 									} catch (IOException ex) {
 										// Error occurred while creating the File
 										ex.printStackTrace();
 									}
 									// Continue only if the File was successfully created
-									if (imgfile != null) {
-										intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgfile));
+									if (imgFile != null) {
+										intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgFile));
 										startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 									}
 								}
 							} else if (index == 1) {
-								imgfile = null;
+								imgFile = null;
 								try {
-									imgfile = createImageFile();
+									imgFile = createImageFile();
 								} catch (IOException ex) {
 									// Error occurred while creating the File
 									ex.printStackTrace();
 								}
-								if (imgfile != null) {
+								if (imgFile != null) {
 									Intent intent = new Intent(Intent.ACTION_PICK);
 									intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
 									startActivityForResult(intent, RUQUEST_IMAGE_FROM_ALBUM);
@@ -397,12 +397,12 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	private void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath) {
 
-		imgfile = new File(strFilePath);
+		imgFile = new File(strFilePath);
 		OutputStream out = null;
 
 		try {
-			imgfile.createNewFile();
-			out = new FileOutputStream(imgfile);
+			imgFile.createNewFile();
+			out = new FileOutputStream(imgFile);
 
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 		} catch (Exception e) {
@@ -429,7 +429,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 						e.printStackTrace();
 					}
 
-					SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
+					SaveBitmapToFileCache(bp, imgFile.getAbsolutePath());
 					iv_picture.setImageBitmap(resizeBitmap(bp, 2048));
 
 					break;
@@ -449,7 +449,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 					Matrix matrix = new Matrix();
 					ExifInterface ei = null;
 					try {
-						ei = new ExifInterface(imgfile.getAbsolutePath());
+						ei = new ExifInterface(imgFile.getAbsolutePath());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -474,7 +474,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 					if (bp != null) {
 						Bitmap rotatedBitmap = Bitmap.createBitmap(bp, 0, 0, bp.getWidth(), bp.getHeight(), matrix, true);
 						iv_picture.setImageBitmap(resizeBitmap(rotatedBitmap, 2048));
-						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
+						SaveBitmapToFileCache(bp, imgFile.getAbsolutePath());
 
 					}
 				} else {
@@ -483,8 +483,8 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			}
 		}
 
-		if (imgfile != null) {
-			signUpPresenter.uploadProfileImg(imgfile)
+		if (imgFile != null) {
+			signUpPresenter.uploadProfileImg(imgFile)
 					.subscribe(new Subscriber<String>() {
 						@Override
 						public void onCompleted() {

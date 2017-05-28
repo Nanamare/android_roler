@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +45,9 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 		setContentView(R.layout.activity_ex_find_pwd);
 		ButterKnife.bind(this);
 		presenter = new ExFindPwdPresenter(this);
-
+		setToolbar();
 		findPwdFromEmail();
 
-		setToolbar();
 
 	}
 
@@ -113,11 +113,18 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 	}
 
 	private void setToolbar() {
+
 		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
-		TextView textView = (TextView) findViewById(R.id.toolbar_title);
+		TextView textView = (TextView) toolbar.findViewById(R.id.toolbar_title);
+		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
+		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+		imageView.setOnClickListener(view -> {
+			finish();
+		});
 		textView.setTextColor(Color.BLACK);
-		textView.setText("비밀번호 찾기");
+		textView.setText("Find Password");
 		setSupportActionBar(toolbar);
+
 	}
 
 

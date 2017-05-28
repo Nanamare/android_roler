@@ -122,8 +122,8 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".util.TokenRefreshService">
-        </service>
+        <service android:name=".util.TokenRefreshService"
+            android:enabled="true"/>
 
     </application>
 

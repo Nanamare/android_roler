@@ -64,15 +64,14 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-//		long triggerTime = setTriggerTime();
 		long triggerTime = Calendar.getInstance().getTimeInMillis();
 
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime, 1000 * 60 * 15  , pendingIntent);
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, triggerTime, 1000 * 60 * 15, pendingIntent);
 
 	}
-	private long setTriggerTime()
-	{
+
+	private long setTriggerTime() {
 		// current Time
 		long atime = System.currentTimeMillis();
 		Calendar calendar = Calendar.getInstance();
@@ -95,4 +94,6 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 		return triggerTime;
 	}
+
+
 }
