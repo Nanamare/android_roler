@@ -62,18 +62,17 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-//						view.updateSchedule();
+
 					}
 
 					@Override
 					public void onError(Throwable e) {
 						e.printStackTrace();
-						onError(e);
 					}
 
 					@Override
 					public void onNext(Void aVoid) {
-						onCompleted();
+						view.updateSchedule();
 					}
 				}));
 
@@ -87,7 +86,7 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-						view.updateWeekView();
+
 					}
 
 					@Override
@@ -97,7 +96,7 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 					@Override
 					public void onNext(Void aVoid) {
-
+						view.updateWeekView();
 					}
 				}));
 	}

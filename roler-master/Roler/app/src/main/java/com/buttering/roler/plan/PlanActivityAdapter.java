@@ -1,26 +1,22 @@
 package com.buttering.roler.plan;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
-import com.buttering.roler.role.RoleActivityAdapter;
-import com.buttering.roler.util.SharePrefUtil;
-import com.github.lzyzsd.circleprogress.CircleProgress;
-import com.wdullaer.materialdatetimepicker.time.CircleView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.itangqi.waveloadingview.WaveLoadingView;
 
 /**
  * Created by nanamare on 16. 7. 31..
@@ -29,7 +25,6 @@ public class PlanActivityAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Role> roles;
-	private int progress;
 
 	public PlanActivityAdapter(Context context, List<Role> roles) {
 		this.context = context;
@@ -77,7 +72,8 @@ public class PlanActivityAdapter extends BaseAdapter {
 		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
-		viewHolder.cp_planPercent.setProgress(roles.get(position).getProgress());
+		viewHolder.waveLoadingView.setProgressValue(roles.get(position).getProgress());
+		viewHolder.waveLoadingView.setCenterTitle(roles.get(position).getProgress() + "%");
 
 		return convertView;
 	}
@@ -93,16 +89,16 @@ public class PlanActivityAdapter extends BaseAdapter {
 
 
 	public static class ViewHolder {
-		@BindView(R.id.rl_roleItemTop)
-		RelativeLayout rl_roleItemTop;
+		@BindView(R.id.ll_roleItemTop)
+		LinearLayout rl_roleItemTop;
 		@BindView(R.id.tv_rolePrimaryPlan)
 		TextView tv_rolePrimaryPlan;
 		@BindView(R.id.tv_roleNamePlan)
 		TextView tv_roleNamePlan;
 		@BindView(R.id.tv_roleContentPlan)
 		TextView tv_roleContentPlan;
-		@BindView(R.id.cp_planPercent)
-		CircleProgress cp_planPercent;
+		@BindView(R.id.waveLoadingView)
+		WaveLoadingView waveLoadingView;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

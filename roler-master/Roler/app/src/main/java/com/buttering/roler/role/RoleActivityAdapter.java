@@ -1,26 +1,22 @@
 package com.buttering.roler.role;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Role;
-import com.github.lzyzsd.circleprogress.CircleProgress;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.itangqi.waveloadingview.WaveLoadingView;
 
 
 /**
@@ -71,11 +67,13 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 
 		viewHolder.role_title.setText("우선순위 " + String.valueOf(roles.get(position).getRolePrimary()));
-		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
+		viewHolder.ll_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 		viewHolder.role_subTitle.setText("역할을 실천해 나가세요!");
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRole_id()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());
+		viewHolder.cp_rolePercent.setProgressValue(roles.get(position).getProgress());
+		viewHolder.cp_rolePercent.setCenterTitle(roles.get(position).getProgress() + "%");
 
 		return convertView;
 	}
@@ -96,16 +94,14 @@ public class RoleActivityAdapter extends BaseAdapter {
 		TextView roleName;
 		@BindView(R.id.tv_roleContent)
 		TextView roleContent;
-		@BindView(R.id.rl_roleItemTop)
-		RelativeLayout rl_roleItemTop;
+		@BindView(R.id.role_ll_roleItemTop)
+		LinearLayout ll_roleItemTop;
 		@BindView(R.id.cp_rolePercent)
-		CircleProgress cp_rolePercent;
+		WaveLoadingView cp_rolePercent;
 		@BindView(R.id.activity_role_title)
 		TextView role_title;
 		@BindView(R.id.activity_role_subTitle)
 		TextView role_subTitle;
-		@BindView(R.id.role_card)
-		RelativeLayout role_card;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

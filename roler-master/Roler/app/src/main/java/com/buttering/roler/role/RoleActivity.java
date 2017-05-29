@@ -66,7 +66,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	@BindView(R.id.iv_picture) CircleImageView iv_picture;
 	@BindView(R.id.tv_editRoleInfo) TextView tv_editRoleInfo;
 	@BindView(R.id.bt_editRoleInfo) Button bt_editRoleInfo;
-	@BindView(R.id.bt_editProfile) Button bt_editProfile;
 	@BindView(R.id.tv_name) TextView tv_name;
 	@BindView(R.id.vp_roleDetail) FeatureCoverFlow vp_roleDetail;
 	@BindView(R.id.activity_role_email) TextView activity_role_email;

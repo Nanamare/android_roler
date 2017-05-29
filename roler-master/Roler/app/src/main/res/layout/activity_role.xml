@@ -1,168 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                xmlns:coverflow="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.buttering.roler.plan.PlanActivity">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.buttering.roler.plan.PlanActivity">
 
-    <include
-        android:id="@+id/custom_toolBar"
-        layout="@layout/toolbar"/>
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_picture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/custom_toolBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_menu"/>
-
-    <LinearLayout
-        android:id="@+id/rl_profileLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/iv_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="kozy brown"
-                android:textSize="18sp"/>
-
-            <Button
-                android:id="@+id/bt_editProfile"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignBaseline="@+id/tv_name"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="2dp"
-                android:layout_toRightOf="@id/tv_name"
-                android:background="@drawable/ic_menu"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/activity_role_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name"
-            android:layout_marginTop="5dp"
-            tools:text="Roler@roler.com"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/rl_recyclerLayout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/adView"
-        android:layout_below="@id/rl_profileLayout"
-        android:orientation="vertical"
-        android:weightSum="20">
+        android:layout_height="wrap_content">
 
+        <include
+            android:id="@+id/custom_toolBar"
+            layout="@layout/toolbar"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!-- 콘텐츠 -->
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <!-- 최상단 레이아웃-->
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_editRoleInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="@string/add_role_information"
-                android:textColor="@color/black"
-                android:textSize="20sp"/>
-
-            <Button
-                android:id="@+id/bt_editRoleInfo"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/ic_add_circle_outline_black_18dp"
-                android:gravity="center_vertical"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10">
-
-            <FrameLayout
+            <LinearLayout
+                android:padding="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/bt_editRoleInfo">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:padding="5dp"
-                    android:id="@+id/empty_role_ll"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_picture"
+                    android:text="My profile"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_picture"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ic_menu"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="kozy brown"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activity_role_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:text="Roler@roler.com"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_editRoleInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_role_information"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/bt_editRoleInfo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/ic_add_circle_outline_black_18dp"
+                    android:gravity="center_vertical"/>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
+                    <LinearLayout
+                        android:padding="5dp"
+                        android:id="@+id/empty_role_ll"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/add_role_image"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                    android:id="@+id/vp_roleDetail"
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/add_role_image"/>
+                    </LinearLayout>
+
+                    <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+                        android:layout_marginTop="-100dp"
+                        android:id="@+id/vp_roleDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_editRoleInfo"
+                        coverflow:coverHeight="200dp"
+                        coverflow:coverWidth="150dp"
+                        coverflow:maxScaleFactor="2.0"
+                        coverflow:reflectionGap="1px"
+                        coverflow:rotationThreshold="1.0"
+                        coverflow:scalingThreshold="0.2">
+                    </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="-80dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/tv_editRoleInfo"
-                    coverflow:coverHeight="150dp"
-                    coverflow:coverWidth="150dp"
-                    coverflow:maxScaleFactor="2.0"
-                    coverflow:reflectionGap="1px"
-                    coverflow:rotationThreshold="1.0"
-                    coverflow:scalingThreshold="0.2">
-                </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id">
+                </com.google.android.gms.ads.AdView>
 
-            </FrameLayout>
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_picture"
-        android:layout_toStartOf="@+id/rl_profileLayout"
-        android:text="My profile"/>
+    </android.support.v4.widget.NestedScrollView>
 
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
-
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

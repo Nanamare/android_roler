@@ -125,6 +125,8 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 			role_empty_ll.setVisibility(View.VISIBLE);
 			vp_rolePlanPage.setVisibility(View.GONE);
 			plan_bottom_ll.setVisibility(View.GONE);
+			left_arrow_iv.setVisibility(View.GONE);
+			right_arrow_iv.setVisibility(View.GONE);
 		}
 
 

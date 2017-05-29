@@ -326,7 +326,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "삭제" + event.getName(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "삭제" + event.getId(), Toast.LENGTH_SHORT).show();
 		presenter.deleteSchdule((int) event.getId());
 	}
 

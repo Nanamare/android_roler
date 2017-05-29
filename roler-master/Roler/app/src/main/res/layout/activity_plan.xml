@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#e4e4e4"
     tools:context="com.buttering.roler.plan.PlanActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -38,6 +38,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_marginTop="5dp"
                     android:id="@+id/activity_plan_date_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,6 +46,7 @@
                     android:weightSum="3">
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:layout_marginLeft="10dp"
                         android:id="@+id/tv_yearMonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -62,6 +64,7 @@
                         tools:text="Sunday"/>
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:layout_marginRight="10dp"
                         android:id="@+id/activity_plan_name_tv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -79,11 +82,12 @@
                     android:weightSum="3">
 
                     <LinearLayout
+                        android:layout_marginLeft="10dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="right">
+                        android:gravity="left">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:id="@+id/activity_plan_arrow_left_iv"
@@ -103,11 +107,12 @@
                         android:textSize="35sp"/>
 
                     <LinearLayout
+                        android:layout_marginRight="10dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="left">
+                        android:gravity="right">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:id="@+id/activity_plan_arrow_right_iv"
@@ -138,11 +143,11 @@
                     </LinearLayout>
 
                     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                        android:layout_marginTop="-100dp"
+                        android:layout_marginTop="-80dp"
                         android:id="@+id/vp_rolePlanPage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        coverflow:coverHeight="200dp"
+                        coverflow:coverHeight="150dp"
                         coverflow:coverWidth="150dp"
                         coverflow:maxScaleFactor="2.0"
                         coverflow:reflectionGap="1px"
@@ -155,7 +160,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="-210dp"
+                android:layout_marginTop="-110dp"
                 android:id="@+id/activity_plan_bottom_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

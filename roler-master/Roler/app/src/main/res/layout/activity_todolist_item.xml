@@ -1,12 +1,12 @@
 <com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="5dp"
-    android:id="@+id/swipe_layout">
+    android:layout_marginTop="5dp">
 
     <LinearLayout
         android:id="@+id/ll_swipe_left"
@@ -14,17 +14,17 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:gravity="center_horizontal"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:background="@color/c1">
+            android:background="@color/c1"
+            android:gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/activity_todolist_delete_Tv"
-                android:gravity="center_vertical|center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="   삭제   "
                 android:textColor="@color/white"/>
 
@@ -34,43 +34,45 @@
     </LinearLayout>
 
 
-<LinearLayout
-    android:weightSum="10"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-    <TextView
-        android:layout_weight="1"
-        android:id="@+id/tv_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="01"
-        android:textSize="15sp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"/>
-    <TextView
-        android:layout_weight="9"
-        android:id="@+id/tv_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="교양과제 제출하기"
-        android:textSize="15sp"
-        android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:text="01"
+            android:textSize="15sp"/>
 
-    <CheckBox
-        android:layout_weight="0"
-        android:id="@+id/cb_todo"
-        android:layout_marginRight="15dp"
-        android:background="@color/hard_grey"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:button="@drawable/checkboxxml"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/tv_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_weight="9"
+            android:text="교양과제 제출하기"
+            android:textSize="15sp"/>
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/cb_todo"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_weight="0"
+            android:background="@color/hard_grey"
+            android:button="@drawable/checkboxxml"/>
+
+    </LinearLayout>
 </com.daimajia.swipe.SwipeLayout>

@@ -1,149 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginBottom="10dp"
-              android:orientation="vertical">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:cardCornerRadius="0dp">
+    <!-- 콘텐츠 -->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:id="@+id/role_card"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="288dp">
+            android:layout_height="wrap_content"
+            custom:cardCornerRadius="0dp">
 
-            <RelativeLayout
-                android:id="@+id/rl_roleItemTop"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_vertical"
-                android:background="#f5a4c8"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_rolePrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="1"
-                    android:textSize="8sp"/>
-
-                <TextView
-                    android:id="@+id/tv_comma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="3dp"
-                    android:layout_toRightOf="@id/tv_rolePrimary"
-                    android:text="."
-                    android:textSize="8sp"/>
-
-                <TextView
-                    android:id="@+id/tv_roleName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_comma"
-                    android:text="임시임시임시제목"
-                    android:textSize="8sp"/>
-
-                <!--<Button-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_marginRight="5dp"-->
-                    <!--android:background="@drawable/ic_action_settings"/>-->
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/rl_roleItemTop"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp">
-
-
-                <TextView
-                    android:id="@+id/activity_role_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="단기목표"
-                    android:textSize="8sp"/>
-
-
-                <TextView
-                    android:id="@+id/activity_role_subTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/activity_role_title"
-                    android:text="역할을 위한 단기 목표 설정하기"
-                    android:textSize="10sp"/>
 
                 <LinearLayout
-                    android:id="@+id/activity_role_ll_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/activity_role_subTitle"
-                    android:orientation="vertical">
+                    android:id="@+id/role_ll_roleItemTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#f5a4c8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-
-                    <TextView
-                        android:id="@+id/tv_roleContent"
-                        android:layout_width="100dp"
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_rolePrimary"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/activity_role_title"
-                        android:layout_marginTop="10dp"
-                        android:text="임시임시임시 내용내용 내욘ㄴ언아렁니ㅏ렁나ㅣ"
+                        android:text="1"
                         android:textSize="8sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_comma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=". "
+                        android:textSize="9sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_roleName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="임시임시임시제목"
+                        android:textSize="9sp"/>
 
 
                 </LinearLayout>
 
-                <TextView
-                    android:textSize="8sp"
-                    android:id="@+id/activity_role_achive_tv"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/activity_role_frame_achivement"
-                    android:layout_alignStart="@+id/activity_role_frame_achivement"
-                    android:layout_marginStart="8dp"
-                    android:text="성취율"/>
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                <FrameLayout
-                    android:id="@+id/activity_role_frame_achivement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:background="#f0ffff">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <com.github.lzyzsd.circleprogress.CircleProgress
-                        android:id="@+id/cp_rolePercent"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        custom:circle_finished_color="#f5a4c8"
-                        custom:circle_progress="0"
-                        custom:circle_text_color="@color/wallet_holo_blue_light"
-                        custom:circle_unfinished_color="#ffffff"/>
-                </FrameLayout>
-            </RelativeLayout>
+                        <TextView
+                            android:id="@+id/activity_role_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="단기목표"
+                            android:textSize="8sp"/>
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
 
-</LinearLayout>
+                        <TextView
+                            android:id="@+id/activity_role_subTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="역할을 위한 단기 목표 설정하기"
+                            android:textSize="10sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_roleContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="9sp"
+                            tools:text="임시"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:weightSum="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_weight="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <me.itangqi.waveloadingview.WaveLoadingView
+                                android:id="@+id/cp_rolePercent"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                app:wlv_borderColor="@color/colorAccent"
+                                app:wlv_borderWidth="1dp"
+                                app:wlv_progressValue="40"
+                                app:wlv_round_rectangle="true"
+                                app:wlv_shapeType="circle"
+                                app:wlv_titleCenter="달성률"
+                                app:wlv_titleCenterColor="@android:color/holo_blue_dark"
+                                app:wlv_titleCenterSize="10sp"
+                                app:wlv_triangle_direction="north"
+                                app:wlv_waveAmplitude="70"
+                                app:wlv_waveColor="@color/colorAccent"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:textSize="10sp"
+                                android:text="열심히 목표를 성취하는 당신 화이팅!"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
