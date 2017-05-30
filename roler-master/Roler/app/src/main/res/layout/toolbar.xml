@@ -1,5 +1,5 @@
 <android.support.v7.widget.Toolbar
-    android:background="#78a1ec"
+    android:background="#d1e5f9"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme"

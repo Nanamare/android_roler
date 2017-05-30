@@ -139,6 +139,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		scrollPostion();
 
 
+
 //		FCM
 		SharePrefUtil.putSharedPreference("isFcmToken", false);
 		if (checkPlayServices()) {

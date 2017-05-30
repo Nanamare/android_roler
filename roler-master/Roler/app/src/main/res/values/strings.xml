@@ -20,7 +20,8 @@
 
     <string name="find_pwd">비밀번호 찾기</string>
 
-    <string name="add_role_information">역할 정보 추가하기 </string>
+    <string name="add_role_information">역할 추가하기</string>
+    <string name="delete_role_information">역할 삭제하기</string>
 
     <!--plan activity-->
     <string name="load_role">로딩 중입니다</string>

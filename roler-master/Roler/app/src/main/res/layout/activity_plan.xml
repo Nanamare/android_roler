@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e4e4e4"
     tools:context="com.buttering.roler.plan.PlanActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -143,16 +142,16 @@
                     </LinearLayout>
 
                     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                        android:layout_marginTop="-80dp"
+                        android:layout_marginTop="-50dp"
                         android:id="@+id/vp_rolePlanPage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        coverflow:coverHeight="150dp"
-                        coverflow:coverWidth="150dp"
-                        coverflow:maxScaleFactor="2.0"
-                        coverflow:reflectionGap="1px"
+                        coverflow:coverHeight="250dp"
+                        coverflow:coverWidth="300dp"
+                        coverflow:maxScaleFactor="1.0"
+                        coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="0.2">
+                        coverflow:scalingThreshold="0.3">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
                 </FrameLayout>
@@ -160,7 +159,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="-110dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="-50dp"
                 android:id="@+id/activity_plan_bottom_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

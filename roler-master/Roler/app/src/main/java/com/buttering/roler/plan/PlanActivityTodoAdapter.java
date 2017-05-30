@@ -2,6 +2,7 @@ package com.buttering.roler.plan;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,10 +53,15 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 		holder.tv_no.setText(String.valueOf(position));
 		holder.cb_todo.setChecked(todos.get(position).getDone());
 		holder.tv_list.setText(todos.get(position).getContent());
-		if(todos.get(position).getDone()){
+		if (todos.get(position).getDone()) {
+
+			holder.tv_list.setPaintFlags(holder.tv_list.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+			holder.tv_no.setPaintFlags(holder.tv_no.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tv_list.setTextColor(Color.LTGRAY);
 			holder.tv_no.setTextColor(Color.LTGRAY);
+
 		} else {
+
 			holder.tv_list.setTextColor(Color.DKGRAY);
 			holder.tv_no.setTextColor(Color.DKGRAY);
 		}
@@ -63,8 +69,12 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 		holder.cb_todo.setOnClickListener(v -> {
 			if (holder.cb_todo.isChecked()) {
-				holder.tv_list.setTextColor(Color.LTGRAY);
-				holder.tv_no.setTextColor(Color.LTGRAY);
+
+				if ((holder.tv_list.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
+					holder.tv_list.setPaintFlags(holder.tv_list.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+				if ((holder.tv_no.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
+					holder.tv_no.setPaintFlags(holder.tv_no.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+
 				todos.get(position).setDone(true);
 				presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
 			} else {

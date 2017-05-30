@@ -15,8 +15,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,11 +67,13 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	@BindView(R.id.iv_picture) CircleImageView iv_picture;
 	@BindView(R.id.tv_editRoleInfo) TextView tv_editRoleInfo;
-	@BindView(R.id.bt_editRoleInfo) Button bt_editRoleInfo;
+//	@BindView(R.id.bt_editRoleInfo) Button bt_editRoleInfo;
 	@BindView(R.id.tv_name) TextView tv_name;
 	@BindView(R.id.vp_roleDetail) FeatureCoverFlow vp_roleDetail;
 	@BindView(R.id.activity_role_email) TextView activity_role_email;
 	@BindView(R.id.empty_role_ll) LinearLayout empty_role_ll;
+	@BindView(R.id.activity_role_deleteTv) AppCompatTextView deleteRoleTv;
+	@BindView(R.id.activity_role_scroll_view) NestedScrollView scrollView;
 
 	public List<Role> allRoleList = new ArrayList<>();
 	public RoleActivityAdapter adapter = null;
@@ -80,7 +84,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	private Bitmap bp;
 	private File imgFile;
 	private String mCurrentPhotoPath;
-
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -135,33 +138,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			vp_roleDetail.setVisibility(View.GONE);
 			empty_role_ll.setVisibility(View.VISIBLE);
 		}
-
-		vp_roleDetail.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-
-				AlertDialog.Builder alert = new AlertDialog.Builder(RoleActivity.this);
-				alert.setMessage("역할을 삭제 하시겠습니까?").setCancelable(false)
-						.setPositiveButton("확인", (dialog, which) -> {
-							if (allRoleList.size() != 0) {
-								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
-							} else {
-								vp_roleDetail.setVisibility(View.GONE);
-								empty_role_ll.setVisibility(View.VISIBLE);
-								presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
-							}
-						})
-						.setNegativeButton("취소", (dialog, which) -> {
-
-						});
-
-				AlertDialog alertDialog = alert.create();
-				alertDialog.show();
-
-				return false;
-			}
-		});
-
 
 		//load RoleContent
 		presenter.getRoleContent();
@@ -303,11 +279,33 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	}
 
-	@OnClick({R.id.tv_editRoleInfo, R.id.bt_editRoleInfo})
-	public void Onclick() {
+	@OnClick({R.id.tv_editRoleInfo})
+	public void editOnnClick() {
 		Intent intent = new Intent(RoleActivity.this, EditRoleActivity.class);
 		startActivity(intent);
 		finish();
+	}
+
+	@OnClick(R.id.activity_role_deleteTv)
+	public void roleDelteOnClick(){
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(RoleActivity.this);
+		alert.setMessage("현재 역할을 삭제 하시겠습니까?").setCancelable(false)
+				.setPositiveButton("확인", (dialog, which) -> {
+					if (allRoleList.size() != 0) {
+						presenter.deleteRole(((Role) adapter.getItem(vp_roleDetail.getScrollPosition())).getRole_id());
+					} else {
+						vp_roleDetail.setVisibility(View.GONE);
+						empty_role_ll.setVisibility(View.VISIBLE);
+					}
+				})
+				.setNegativeButton("취소", (dialog, which) -> {
+
+				});
+
+		AlertDialog alertDialog = alert.create();
+		alertDialog.show();
+
 	}
 
 	@Override

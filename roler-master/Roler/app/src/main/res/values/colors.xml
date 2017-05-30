@@ -98,4 +98,13 @@
     <color name="gray_9E9E9">#FFE9E9E9</color>
 
 
+    <!-- custom color roler-->
+
+    <color name="role_color_1">#f7a3c8</color>
+    <color name="role_color_2">#aafff6</color>
+    <color name="role_color_3">#a9fca9</color>
+    <color name="role_color_4">#fcc7a9</color>
+    <color name="role_color_5">#fcf9a9</color>
+
+
 </resources>

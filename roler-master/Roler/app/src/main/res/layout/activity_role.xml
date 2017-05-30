@@ -21,6 +21,7 @@
 
     <!-- 콘텐츠 -->
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/activity_role_scroll_view"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,27 +87,52 @@
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:weightSum="2"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_editRoleInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_role_information"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"/>
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
-                <android.support.v7.widget.AppCompatButton
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/bt_editRoleInfo"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/ic_add_circle_outline_black_18dp"
-                    android:gravity="center_vertical"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_editRoleInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_role_information"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                    <!--<android.support.v7.widget.AppCompatButton-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:id="@+id/bt_editRoleInfo"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:background="@drawable/ic_add_circle_outline_black_18dp"-->
+                        <!--android:gravity="center_vertical"/>-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/activity_role_deleteTv"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="@string/delete_role_information"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
                 
             </LinearLayout>
 
@@ -132,26 +158,27 @@
                             android:src="@drawable/add_role_image"/>
                     </LinearLayout>
 
+
                     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                        android:layout_marginTop="-100dp"
+                        android:layout_marginTop="-50dp"
                         android:id="@+id/vp_roleDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/tv_editRoleInfo"
-                        coverflow:coverHeight="200dp"
-                        coverflow:coverWidth="150dp"
-                        coverflow:maxScaleFactor="2.0"
-                        coverflow:reflectionGap="1px"
+                        coverflow:coverHeight="300dp"
+                        coverflow:coverWidth="300dp"
+                        coverflow:maxScaleFactor="1.0"
+                        coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="0.2">
+                        coverflow:scalingThreshold="0.3">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
+
 
                 </FrameLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="-80dp"
+                android:layout_marginTop="-70dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

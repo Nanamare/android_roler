@@ -74,7 +74,9 @@ public class PlanActivityAdapter extends BaseAdapter {
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
 		viewHolder.waveLoadingView.setProgressValue(roles.get(position).getProgress());
 		viewHolder.waveLoadingView.setCenterTitle(roles.get(position).getProgress() + "%");
-
+		viewHolder.waveLoadingView.setBorderColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+		viewHolder.waveLoadingView.setCenterTitleColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
+		viewHolder.waveLoadingView.setWaveColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
 		return convertView;
 	}
 
@@ -84,8 +86,8 @@ public class PlanActivityAdapter extends BaseAdapter {
 		this.roles = roles;
 	}
 
-	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
-			R.color.suggestion_highlight_text, R.color.primary};
+	final int[] bgColor = {R.color.holo_green_dark, R.color.role_color_1, R.color.role_color_2, R.color.role_color_3,
+			R.color.role_color_4, R.color.role_color_5};
 
 
 	public static class ViewHolder {

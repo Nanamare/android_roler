@@ -16,19 +16,19 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             custom:cardCornerRadius="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:id="@+id/role_ll_roleItemTop"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:background="#f5a4c8"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -39,21 +39,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
-                        android:textSize="8sp"/>
+                        android:textSize="25sp"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_comma"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=". "
-                        android:textSize="9sp"/>
+                        android:textSize="25sp"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_roleName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="임시임시임시제목"
-                        android:textSize="9sp"/>
+                        android:textSize="25sp"/>
 
 
                 </LinearLayout>
@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="단기목표"
-                            android:textSize="8sp"/>
+                            android:textSize="20sp"/>
 
 
                         <TextView
@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="역할을 위한 단기 목표 설정하기"
-                            android:textSize="10sp"/>
+                            android:textSize="20sp"/>
 
                     </LinearLayout>
 
@@ -95,7 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textSize="9sp"
+                            android:textSize="20sp"
                             tools:text="임시"/>
 
                     </LinearLayout>
@@ -114,8 +114,8 @@
 
                             <me.itangqi.waveloadingview.WaveLoadingView
                                 android:id="@+id/cp_rolePercent"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 app:wlv_borderColor="@color/colorAccent"
                                 app:wlv_borderWidth="1dp"
                                 app:wlv_progressValue="40"
@@ -123,7 +123,7 @@
                                 app:wlv_shapeType="circle"
                                 app:wlv_titleCenter="달성률"
                                 app:wlv_titleCenterColor="@android:color/holo_blue_dark"
-                                app:wlv_titleCenterSize="10sp"
+                                app:wlv_titleCenterSize="20sp"
                                 app:wlv_triangle_direction="north"
                                 app:wlv_waveAmplitude="70"
                                 app:wlv_waveColor="@color/colorAccent"/>
@@ -136,7 +136,7 @@
                             android:layout_height="match_parent">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:textSize="10sp"
+                                android:textSize="15sp"
                                 android:text="열심히 목표를 성취하는 당신 화이팅!"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>

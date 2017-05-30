@@ -72,8 +72,12 @@ public class RoleActivityAdapter extends BaseAdapter {
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRole_id()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
 		viewHolder.roleName.setText(roles.get(position).getRoleName());
-		viewHolder.cp_rolePercent.setProgressValue(roles.get(position).getProgress());
-		viewHolder.cp_rolePercent.setCenterTitle(roles.get(position).getProgress() + "%");
+		viewHolder.waveLoadingView.setProgressValue(roles.get(position).getProgress());
+		viewHolder.waveLoadingView.setCenterTitle(roles.get(position).getProgress() + "%");
+		viewHolder.waveLoadingView.setBorderColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+		viewHolder.waveLoadingView.setCenterTitleColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
+		viewHolder.waveLoadingView.setWaveColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+
 
 		return convertView;
 	}
@@ -83,9 +87,8 @@ public class RoleActivityAdapter extends BaseAdapter {
 		this.roles = roles;
 	}
 
-	//색 추가로 더 넣어줘야 함
-	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
-			R.color.suggestion_highlight_text, R.color.bg_msg_from};
+	final int[] bgColor = {R.color.holo_green_dark, R.color.role_color_1, R.color.role_color_2, R.color.role_color_3,
+			R.color.role_color_4, R.color.role_color_5};
 
 	public static class ViewHolder {
 		@BindView(R.id.tv_rolePrimary)
@@ -97,7 +100,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 		@BindView(R.id.role_ll_roleItemTop)
 		LinearLayout ll_roleItemTop;
 		@BindView(R.id.cp_rolePercent)
-		WaveLoadingView cp_rolePercent;
+		WaveLoadingView waveLoadingView;
 		@BindView(R.id.activity_role_title)
 		TextView role_title;
 		@BindView(R.id.activity_role_subTitle)
