@@ -151,7 +151,7 @@
                         coverflow:maxScaleFactor="1.0"
                         coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="0.3">
+                        coverflow:scalingThreshold="3.0">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
                 </FrameLayout>

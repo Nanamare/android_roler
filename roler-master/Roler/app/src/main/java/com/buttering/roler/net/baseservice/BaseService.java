@@ -30,7 +30,6 @@ public class BaseService<T> {
 
 	public static final String BASE_URL = "http://52.78.65.255:3000";
 
-
 	private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
 		Response originalResponse = chain.proceed(chain.request());
 		if (NetUtil.isNetworkAvailable(MyApplication.getInstance().getContext())) {

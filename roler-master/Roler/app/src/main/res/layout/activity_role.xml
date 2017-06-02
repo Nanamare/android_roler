@@ -87,6 +87,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:weightSum="2"
                 android:orientation="horizontal"
@@ -169,7 +170,7 @@
                         coverflow:maxScaleFactor="1.0"
                         coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="0.3">
+                        coverflow:scalingThreshold="3.0">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
 

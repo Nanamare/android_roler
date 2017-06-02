@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Roler</string>
 
+    <!-- local WebActivity -->
+    <string name="html_license">roler_license.html</string>
+    <string name="html_all">all.html</string>
+
+
     //signUpActivity
     <string name="join_empty_email">이메일을 입력해주세요.</string>
     <string name="join_too_long_email">이메일 길이를 초과하였습니다.</string>
@@ -13,7 +18,7 @@
     //myinfokey
     <string name="key_alias">Roler_KEY</string>
 
-     <string name="invite"> 님 롤러를 사용해주셔서 감사합니다. 잘 사용하셨다면 친구들에게 추천해보세요!
+    <string name="invite"> 님 롤러를 사용해주셔서 감사합니다. 잘 사용하셨다면 친구들에게 추천해보세요!
     </string>
 
     <string name="confirm_internet_connection">인터넷 연결을 확인해 주세요</string>
@@ -27,4 +32,9 @@
     <string name="load_role">로딩 중입니다</string>
     <string name="empty_role">역할을 먼저 추가해보세요!</string>
     <string name="refresh_plan">새로고침 중입니다.</string>
+    <!-- role activity -->
+    <string name="role_name">%s 님</string>
+
+    <!-- find password -->
+    <string name="find_pwd_phone">다음 버전에서 지원할 계획입니다.\n 이메일로 받기를 이용해 주세요.</string>
 </resources>

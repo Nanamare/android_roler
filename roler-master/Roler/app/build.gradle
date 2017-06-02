@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 
-
 android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
@@ -17,7 +16,7 @@ android {
     }
     defaultConfig {
         applicationId "com.buttering.roler"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"

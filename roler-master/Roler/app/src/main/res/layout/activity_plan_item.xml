@@ -89,7 +89,7 @@
 
                         <TextView
                             android:id="@+id/tv_roleContentPlan"
-                            android:layout_width="80dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:text="역할 설명하는 곳"
                             android:textSize="20sp"/>

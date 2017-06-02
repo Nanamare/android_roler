@@ -17,9 +17,10 @@ import com.buttering.roler.BuildConfig;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.find.ExFindPwdActivity;
-import com.buttering.roler.find.ReSetPwdActivity;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.util.SharePrefUtil;
+import com.buttering.roler.web.LicenseActivity;
+import com.buttering.roler.web.TermServiceActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -30,14 +31,13 @@ import butterknife.ButterKnife;
 
 public class SettingActivity extends AppCompatActivity {
 
-	@BindView(R.id.activity_setting_version_ll)
-	LinearLayout ll_version;
+	@BindView(R.id.activity_setting_version_ll) LinearLayout ll_version;
 	@BindView(R.id.activity_setting_tutorial_ll) LinearLayout ll_tutorial;
 	@BindView(R.id.activity_setting_inviteFriend_ll) LinearLayout ll_inviteFriend;
 	@BindView(R.id.activity_setting_find_pwd_ll) LinearLayout ll_findPwd;
 	@BindView(R.id.activity_setting_noti_ll) LinearLayout ll_noti;
 	@BindView(R.id.activity_setting_policy_ll) LinearLayout ll_policy;
-	@BindView(R.id.activity_setting_terms_ll) LinearLayout ll_terms;
+	@BindView(R.id.activity_setting_license_ll) LinearLayout ll_license;
 	@BindView(R.id.activity_setting_logout) LinearLayout ll_logout;
 	@BindView(R.id.activity_setting_version_tv) TextView tv_version;
 
@@ -66,17 +66,19 @@ public class SettingActivity extends AppCompatActivity {
 	}
 
 	private void setTermsPolicy() {
-		ll_terms.setOnClickListener(new View.OnClickListener() {
+		ll_license.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+				Intent pdfIntent = new Intent(SettingActivity.this, LicenseActivity.class);
+				pdfIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(pdfIntent);
 			}
 		});
 		ll_policy.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+				Intent pdfIntent = new Intent(SettingActivity.this, TermServiceActivity.class);
+				pdfIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(pdfIntent);
 			}
 		});

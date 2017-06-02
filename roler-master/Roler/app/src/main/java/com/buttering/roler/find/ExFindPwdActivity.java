@@ -19,21 +19,16 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdView {
 
-	@BindView(R.id.activity_ex_find_pwd_email_btn)
-	Button email_btn;
-	@BindView(R.id.activity_ex_find_pwd_name_edt)
-	TextView name_edt;
-	@BindView(R.id.activity_ex_find_pwd_email_edt)
-	TextView email_edt;
-	@BindView(R.id.activity_ex_find_pwd_authorization_edt)
-	TextView authorization_edt;
-	@BindView(R.id.activity_ex_find_pwd_phone_btn)
-	Button phone_btn;
-	@BindView(R.id.activity_ex_find_token_btn)
-	Button token_btn;
+	@BindView(R.id.activity_ex_find_pwd_email_btn) Button email_btn;
+	@BindView(R.id.activity_ex_find_pwd_name_edt) TextView name_edt;
+	@BindView(R.id.activity_ex_find_pwd_email_edt) TextView email_edt;
+	@BindView(R.id.activity_ex_find_pwd_authorization_edt) TextView authorization_edt;
+	@BindView(R.id.activity_ex_find_pwd_phone_btn) Button phone_btn;
+	@BindView(R.id.activity_ex_find_token_btn) Button token_btn;
 
 	private ExFindPwdPresenter presenter;
 	private String userName;
@@ -49,6 +44,11 @@ public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdVi
 		findPwdFromEmail();
 
 
+	}
+
+	@OnClick(R.id.activity_ex_find_pwd_phone_btn)
+	public void findPwdOnclick(){
+		Toast.makeText(this, getString(R.string.find_pwd_phone), Toast.LENGTH_SHORT).show();
 	}
 
 	private void findPwdFromEmail() {

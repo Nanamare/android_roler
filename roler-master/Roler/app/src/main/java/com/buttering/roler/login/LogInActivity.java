@@ -619,6 +619,8 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				connectionResult.startResolutionForResult(this, PLAY_SERVICES_RESOLUTION_REQUEST);
 			} catch (IntentSender.SendIntentException e) {
 				Log.e(TAG, e.toString(), e);
+				//재시도
+				mGoogleApiClient.connect();
 			}
 		} else {
 			Toast.makeText(getApplicationContext(), "이미 로그인 중", Toast.LENGTH_SHORT).show();
@@ -646,10 +648,10 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 			case single_top_activity : {
 				break;
 			}
-			case PLAY_SERVICES_RESOLUTION_REQUEST : {
-				mGoogleApiClient.connect();
-				break;
-			}
+//			case PLAY_SERVICES_RESOLUTION_REQUEST : {
+//				mGoogleApiClient.connect();
+//				break;
+//			}
 
 		}
 

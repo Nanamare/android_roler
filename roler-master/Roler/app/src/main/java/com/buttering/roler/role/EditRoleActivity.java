@@ -82,11 +82,11 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		}
 
 		score = new ArrayList<>();
-		score.add("1순위");
-		score.add("2순위");
-		score.add("3순위");
-		score.add("4순위");
-		score.add("5순위");
+		score.add("1 순위");
+		score.add("2 순위");
+		score.add("3 순위");
+		score.add("4 순위");
+		score.add("5 순위");
 
 		setPriority();
 		generatePicker();

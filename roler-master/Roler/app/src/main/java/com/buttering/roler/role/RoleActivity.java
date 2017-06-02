@@ -188,7 +188,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	}
 
 	private void setProfileItem() {
-		tv_name.setText(MyInfoDAO.getInstance().getNickName());
+		tv_name.setText(getString(R.string.role_name,MyInfoDAO.getInstance().getNickName()));
 		activity_role_email.setText(MyInfoDAO.getInstance().getEmail());
 
 	}

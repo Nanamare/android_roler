@@ -80,7 +80,7 @@
             android:textSize="15sp"
             android:textColor="@color/actionbar"
             android:textColorHint="@color/actionbar"
-            android:hint="우선순위를 설정하세요!"
+            android:hint="우선순위를 설정해주세요!"
             android:id="@+id/et_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

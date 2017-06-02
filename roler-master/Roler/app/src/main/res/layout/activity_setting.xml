@@ -201,7 +201,7 @@
             android:paddingRight="20dp">
 
             <LinearLayout
-                android:id="@+id/activity_setting_terms_ll"
+                android:id="@+id/activity_setting_license_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -211,7 +211,7 @@
                     android:id="@+id/activity_setting_terms_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Terms Of Service"/>
+                    android:text="Open License"/>
             </LinearLayout>
 
             <View

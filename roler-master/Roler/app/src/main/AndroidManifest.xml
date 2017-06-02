@@ -3,6 +3,9 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.buttering.roler">
 
+    <!-- <permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" android:protectionLevel="signature"/> -->
+
+
     <!-- 유저 퍼미션 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -17,24 +20,24 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
-
-
     <application
-        tools:node="replace"
         android:name=".util.MyApplication"
         android:allowBackup="false"
         android:icon="@drawable/icon_roler"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/NoAppBarTheme">
+        android:theme="@style/NoAppBarTheme"
+        tools:node="replace">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
+
         <activity
             android:name=".splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -93,6 +96,8 @@
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name=".web.LicenseActivity">
+        </activity>
 
         <service android:name=".fcm.MyFcmListenerService">
             <intent-filter>
@@ -108,23 +113,24 @@
         <activity
             android:name=".find.ReSetPwdActivity"
             android:windowSoftInputMode="adjustResize">
-
         </activity>
         <activity
             android:name=".find.ExFindPwdActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
 
-        <!--Token refresh receiver -->
+        <activity android:name=".web.TermServiceActivity"/>
+
+        <!-- Token refresh receiver -->
         <receiver android:name=".util.TokenAlarmReceive">
             <intent-filter>
                 <action android:name="com.buttering.roler.TOKEN_REFRESH"/>
             </intent-filter>
         </receiver>
 
-        <service android:name=".util.TokenRefreshService"
+        <service
+            android:name=".util.TokenRefreshService"
             android:enabled="true"/>
-
     </application>
 
 </manifest>
