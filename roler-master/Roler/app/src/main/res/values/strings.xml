@@ -5,6 +5,13 @@
     <string name="html_license">roler_license.html</string>
     <string name="html_all">all.html</string>
 
+    <!-- Schedule Activity -->
+    <string name="add_schedule_title">일정 추가 하기</string>
+    <string name="add_start_time_title">시작 시간을 선택해주세요</string>
+    <string name="add_end_time_title">종료 시간을 선택해주세요</string>
+    <string name="set_time_title" formatted="false">%2d시 %2d분</string>
+    <string name="schedule_contents" formatted="false">%1s ~ %2s \n %3s</string>
+    <string name="empty_schedule_content">일정에 대한 설명을 입력해 주세요.</string>
 
     //signUpActivity
     <string name="join_empty_email">이메일을 입력해주세요.</string>
@@ -37,4 +44,8 @@
 
     <!-- find password -->
     <string name="find_pwd_phone">다음 버전에서 지원할 계획입니다.\n 이메일로 받기를 이용해 주세요.</string>
+
+    <!-- toolbar title collection -->
+    <string name="activity_base_toolbar_title">오늘의 일정 관리</string>
+
 </resources>

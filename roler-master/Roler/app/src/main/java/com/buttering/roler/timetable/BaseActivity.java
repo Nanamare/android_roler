@@ -1,22 +1,19 @@
 package com.buttering.roler.timetable;
 
-/**
- * Created by nanamare on 2016-07-31.
- */
-
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,186 +24,177 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
-import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Schedule;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
-/**
- * This is a base activity which contains week view and all the codes necessary to initialize the
- * week view.
- * Created by Raquib-ul-Alam Kanak on 1/3/2014.
- * Website: http://alamkanak.github.io
- */
 public class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, ITimeView {
+
+
+	@BindView(R.id.activity_base_fab) FloatingActionButton floatingActionButton;
 
 	private static final int TYPE_DAY_VIEW = 1;
 	private static final int TYPE_THREE_DAY_VIEW = 2;
 	private static final int TYPE_WEEK_VIEW = 3;
 
+	private ACProgressFlower dialog;
+	private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 	private int mWeekViewType;
+	private ITimePresenter presenter;
+	private WeekView mWeekView;
+	private String nowDate;
 	private int startTimeOfDay;
 	private int startMinOfDay;
 	private int endTimeOfDay;
 	private int endMinOfDay;
 
-	private String contents;
-	private String date;
-
-	private boolean isCheck;
-
-	private ACProgressFlower dialog;
-
-
-	private List<WeekViewEvent> event = new ArrayList<>();
-	private List<WeekViewEvent> events;
-
-	private WeekView mWeekView;
-
-	private FloatingActionButton floatingActionButton;
-
-	private ITimePresenter presenter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
+		ButterKnife.bind(this);
+
 		presenter = new TimePresenter(this);
 
 		setToolbar();
-
-		//today
-		Calendar cal = Calendar.getInstance();
-		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
-		date = dateType.format(cal.getTime());
-
-		floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-		floatingActionButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				final View innerView = getLayoutInflater().inflate(R.layout.dialog_time_custom, null);
-				AlertDialog.Builder alert = new AlertDialog.Builder(BaseActivity.this);
-				alert.setTitle("일정 추가 하기");
-				alert.setView(innerView);
-				// Set an EditText view to get user input
-
-				TextView startTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
-				startTime.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						final Calendar c = Calendar.getInstance();
-						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
-						int minute = c.get(Calendar.MINUTE);
-						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-							@Override
-							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-								startTimeOfDay = hourOfDay;
-								startMinOfDay = minute;
-								startTime.setText(" " + hourOfDay + " 시 " + minute + " 분 ");
-							}
-						};
-
-						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
-						dialog.setTitle("시작 시간을 골라주세요");
-						dialog.show();
-
-					}
-				});
-
-				TextView endTime = (TextView) innerView.findViewById(R.id.dialog_endTime_edt);
-				endTime.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						final Calendar c = Calendar.getInstance();
-						int hourofDay = c.get(Calendar.HOUR_OF_DAY);
-						int minute = c.get(Calendar.MINUTE);
-						TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-							@Override
-							public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-								endTimeOfDay = hourOfDay;
-								endMinOfDay = minute;
-								endTime.setText(" " + hourOfDay + " 시 " + minute + " 분 ");
-							}
-						};
-
-						ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
-						dialog.setTitle("종료 시간을 골라주세요");
-						dialog.show();
-
-					}
-				});
-
-
-				alert.setPositiveButton("확인", (dialog, whichButton) -> {
-					EditText content = (EditText) innerView.findViewById(R.id.dialog_time_content);
-					contents = content.getText().toString();
-					if (!contents.isEmpty()) {
-						isCheck = true;
-						mWeekView.notifyDatasetChanged();
-
-					} else {
-						Toast.makeText(getApplicationContext(), "일정에 대한 설명을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-					}
-				});
-
-
-				alert.setNegativeButton("취소",
-						(dialog, whichButton) -> {
-							// Canceled.
-						});
-				AlertDialog dialog = alert.create();
-				dialog.show();
-			}
-		});
-
+		setToday();
 
 		// Get a reference for the week view in the layout.
 		mWeekView = (WeekView) findViewById(R.id.weekView);
 
-		// Show a toast message about the touched event.
+		// Set an action when any event is clicked.
 		mWeekView.setOnEventClickListener(this);
-		mWeekView.setEmptyViewClickListener(new WeekView.EmptyViewClickListener() {
-			@Override
-			public void onEmptyViewClicked(Calendar time) {
-				Toast.makeText(BaseActivity.this, "비어있는 곳 클릭", Toast.LENGTH_SHORT).show();
-
-
-			}
-		});
-
 
 		// The week view has infinite scrolling horizontally. We have to provide the events of a
 		// month every time the month changes on the week view.
-
 		mWeekView.setMonthChangeListener(this);
 
 		// Set long press listener for events.
 		mWeekView.setEventLongPressListener(this);
 
-		// Set long press listener for empty view
-		mWeekView.setEmptyViewLongPressListener(this);
-
-
-		// Set up a date time interpreter to interpret how the date and time will be formatted in
-		// the week view. This is optional.
 		setupDateTimeInterpreter(false);
 
-		presenter.getSchduleList(date);
+		//load Schedule
+		presenter.getSchduleList(nowDate);
 
+
+	}
+
+	@OnClick(R.id.activity_base_fab)
+	public void addScheduleOnClick(){
+		createAddScheduleDialog();
+	}
+
+	private void createAddScheduleDialog() {
+		final View innerView = getLayoutInflater().inflate(R.layout.dialog_time_custom, null);
+		TextView startTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
+		TextView endTime = (TextView) innerView.findViewById(R.id.dialog_endTime_edt);
+		AlertDialog.Builder alert = new AlertDialog.Builder(BaseActivity.this);
+		alert.setTitle(getString(R.string.add_schedule_title));
+		alert.setView(innerView);
+
+		final Calendar c = Calendar.getInstance();
+		int hourofDay = c.get(Calendar.HOUR_OF_DAY);
+		int minute = c.get(Calendar.MINUTE);
+
+		//set start time
+		startTime.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+					@Override
+					public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+						startTimeOfDay = hourOfDay;
+						startMinOfDay = minute;
+						startTime.setText(getString(R.string.set_time_title,hourOfDay,minute));
+					}
+				};
+
+				ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
+				dialog.setTitle(getString(R.string.add_start_time_title));
+				dialog.show();
+
+			}
+		});
+
+		endTime.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+					@Override
+					public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+						endTimeOfDay = hourOfDay;
+						endMinOfDay = minute;
+						endTime.setText(getString(R.string.set_time_title,hourOfDay,minute));
+					}
+				};
+
+				ScheduleDialog dialog = new ScheduleDialog(BaseActivity.this, timeSetListener, hourofDay, minute, true);
+				dialog.setTitle(getString(R.string.add_end_time_title));
+				dialog.show();
+
+			}
+		});
+
+		alert.setPositiveButton("확인", (dialog, whichButton) -> {
+			AppCompatEditText content = (AppCompatEditText) innerView.findViewById(R.id.dialog_time_content);
+			String contents = content.getText().toString();
+			if (!contents.isEmpty()) {
+				//Todo send to SERVER
+
+				Calendar startCalendar = Calendar.getInstance();
+
+				int nowMonth = startCalendar.get(Calendar.MONTH);
+				int nowYear = startCalendar.get(Calendar.YEAR);
+				int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
+				int nowSecond = startCalendar.get(Calendar.SECOND);
+
+				Calendar calendar = Calendar.getInstance();
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
+				String startDate = sdf.format(calendar.getTime());
+
+				Calendar calendar2 = Calendar.getInstance();
+				calendar2.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
+				String endDate = sdf.format(calendar2.getTime());
+
+
+				presenter.addSchdule(getString(R.string.schedule_contents,startDate ,endDate ,contents)
+						, startDate, endDate, nowDate);
+
+			} else {
+				Toast.makeText(this, getString(R.string.empty_schedule_content), Toast.LENGTH_SHORT).show();
+			}
+		});
+
+
+		alert.setNegativeButton("취소",
+				(dialog, whichButton) -> {
+					// Todo Canceled. NOTHING
+				});
+		AlertDialog dialog = alert.create();
+		dialog.show();
+
+	}
+
+
+	private void setToday() {
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
+		nowDate = dateType.format(cal.getTime());
 	}
 
 
@@ -216,16 +204,12 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("오늘의 일정 관리");
+		textView.setText(getString(R.string.activity_base_toolbar_title));
 		setSupportActionBar(toolbar);
-
 		imageView.setOnClickListener(v -> {
 			finish();
 		});
-
-
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -284,10 +268,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	}
 
 	/**
-	 * Set up a date time interpreter which will show short date values when in week view and long
-	 * date values otherwise.
+	 * Set up a nowDate time interpreter which will show short nowDate values when in week view and long
+	 * nowDate values otherwise.
 	 *
-	 * @param shortDate True if the date values should be short.
+	 * @param shortDate True if the nowDate values should be short.
 	 */
 	private void setupDateTimeInterpreter(final boolean shortDate) {
 		mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
@@ -313,20 +297,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	}
 
 	protected String getEventTitle(Calendar time) {
-		return String.format("%02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-
+		return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Override
 	public void onEventClick(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "길게 클릭하면 삭제 됩니다", Toast.LENGTH_SHORT).show();
-
-
+		Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "삭제" + event.getId(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Delete : " + event.getName(), Toast.LENGTH_SHORT).show();
 		presenter.deleteSchdule((int) event.getId());
 	}
 
@@ -342,114 +323,34 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
-		Calendar dates = Calendar.getInstance();
-		int month = dates.get(Calendar.MONTH);
-
-		events = new ArrayList<>();
-
-		if (newMonth == month) {
-
-			if (isCheck) {
-
-				Random random = new Random();
-				Calendar startCalendar = Calendar.getInstance();
-				int nowMonth = startCalendar.get(Calendar.MONTH);
-				int nowYear = startCalendar.get(Calendar.YEAR);
-				int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
-				int nowSecond = startCalendar.get(Calendar.SECOND);
-
-				startCalendar.set(Calendar.HOUR_OF_DAY, startTimeOfDay);
-				startCalendar.set(Calendar.MINUTE, startMinOfDay);
-				startCalendar.set(Calendar.MONTH, nowMonth);
-				startCalendar.set(Calendar.YEAR, nowYear);
-
-				Calendar endCalendar = (Calendar) startCalendar.clone();
-				endCalendar.set(Calendar.MINUTE, endMinOfDay);
-				endCalendar.set(Calendar.HOUR_OF_DAY, endTimeOfDay);
-				endCalendar.set(Calendar.MONTH, nowMonth);
-
-				WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startCalendar) + contents, startCalendar, endCalendar);
-				event.setColor(bgColor[random.nextInt(6)]);
-				events.add(event);
-				isCheck = false;
-
-				Calendar calendar = Calendar.getInstance();
-				//		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
-				String startTime = sdf.format(calendar.getTime());
-
-				Calendar calendar2 = Calendar.getInstance();
-				calendar2.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
-				String endTime = sdf.format(calendar2.getTime());
-
-
-				presenter.addSchdule(getEventTitle(startCalendar) + contents, startTime, endTime, date);
-
+		// Return only the events that matches newYear and newMonth.
+		List<WeekViewEvent> matchedEvents = new ArrayList<WeekViewEvent>();
+		for (WeekViewEvent event : events) {
+			if (eventMatches(event, newYear, newMonth)) {
+				matchedEvents.add(event);
 			}
-
-			events.addAll(event);
-
-			return events;
-		} else {
-			return events;
 		}
 
+		return matchedEvents;
 	}
 
-	final int[] bgColor = {R.color.holo_green_dark, R.color.primary, R.color.colorAccent, R.color.body_background_green,
-			R.color.suggestion_highlight_text, R.color.primary};
+	private boolean eventMatches(WeekViewEvent event, int year, int month) {
+		return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month);
+	}
 
 	@Override
 	public void updateSchedule() {
-		presenter.getSchduleList(date);
+		presenter.getSchduleList(nowDate);
 	}
 
 	@Override
 	public void setScheduleList(List<Schedule> schedules) {
-		List<WeekViewEvent> viewEvents = new ArrayList<>();
-		int cashingSize = schedules.size();
-
-		for (int loop = 0; loop < cashingSize; loop++) {
-			WeekViewEvent weekViewEvent = new WeekViewEvent();
-			viewEvents.add(weekViewEvent);
+		this.events.clear();
+		for (Schedule event : schedules) {
+			this.events.add(event.toWeekViewEvent(event, nowDate));
 		}
-		for (int i = 0; i < cashingSize; i++) {
-			Random random = new Random();
-			viewEvents.get(i).setId(schedules.get(i).getId());
-			viewEvents.get(i).setName(schedules.get(i).getContent());
-			viewEvents.get(i).setColor(bgColor[random.nextInt(6)]);
 
-			Calendar getStartTime = Calendar.getInstance();
-			SimpleDateFormat start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				getStartTime.setTime(start.parse(date + ' ' + schedules.get(i).getStartTime()));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-			Calendar getEndTime = Calendar.getInstance();
-			SimpleDateFormat end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				getEndTime.setTime(end.parse(date + ' ' + schedules.get(i).getEndTime()));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-			viewEvents.get(i).setStartTime(getStartTime);
-			viewEvents.get(i).setEndTime(getEndTime);
-
-		}
-		for(int i =0; i<event.size(); i++){
-			for(int j = 0; j<viewEvents.size(); j++){
-				if(events.get(i).getId() == viewEvents.get(j).getId()){
-					events.remove(i);
-				}
-			}
-		}
-		event.addAll(viewEvents);
-		mWeekView.notifyDatasetChanged();
-
+		getWeekView().notifyDatasetChanged();
 	}
 
 	@Override

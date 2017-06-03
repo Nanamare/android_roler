@@ -65,7 +65,7 @@ public class ScheduleService extends BaseService {
 									subscriber.onNext(roleList);
 
 								} else {
-									subscriber.onError(new Throwable());
+									subscriber.onNext(null);
 								}
 
 							} catch (IOException e) {

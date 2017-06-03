@@ -96,7 +96,8 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 					@Override
 					public void onNext(Void aVoid) {
-						view.updateWeekView();
+//						view.updateWeekView();
+						view.updateSchedule();
 					}
 				}));
 	}

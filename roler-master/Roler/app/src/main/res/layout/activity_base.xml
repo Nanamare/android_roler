@@ -20,8 +20,8 @@
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:eventTextColor="@android:color/white"
-        app:textSize="12sp"
+        app:eventTextColor="@android:color/black"
+        app:textSize="15sp"
         app:hourHeight="60dp"
         app:headerColumnPadding="8dp"
         app:headerColumnTextColor="@color/colorAccent"
@@ -37,7 +37,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/activity_base_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"

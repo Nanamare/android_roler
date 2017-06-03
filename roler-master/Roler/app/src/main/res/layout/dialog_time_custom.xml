@@ -78,7 +78,7 @@
         android:focusableInTouchMode="true"
         android:gravity="left">
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/dialog_time_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
