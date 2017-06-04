@@ -39,21 +39,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
-                        android:textSize="25sp"/>
+                        android:textSize="21sp"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_comma"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=". "
-                        android:textSize="25sp"/>
+                        android:textSize="21sp"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_roleName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="임시임시임시제목"
-                        android:textSize="25sp"/>
+                        android:textSize="21sp"/>
 
 
                 </LinearLayout>
@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="단기목표"
-                            android:textSize="20sp"/>
+                            android:textSize="17sp"/>
 
 
                         <TextView
@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="역할을 위한 단기 목표 설정하기"
-                            android:textSize="20sp"/>
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
 
@@ -95,7 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             tools:text="임시"/>
 
                     </LinearLayout>
@@ -139,7 +139,7 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_marginLeft="10dp"
                                 android:textSize="15sp"
-                                android:text="열심히 목표를 성취하는 당신 화이팅!"
+                                android:text="차근차근 목표를 성취하는 당신 화이팅!"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 

@@ -159,15 +159,14 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				int nowMonth = startCalendar.get(Calendar.MONTH);
 				int nowYear = startCalendar.get(Calendar.YEAR);
 				int nowDay = startCalendar.get(Calendar.DAY_OF_MONTH);
-				int nowSecond = startCalendar.get(Calendar.SECOND);
 
 				Calendar calendar = Calendar.getInstance();
 				DateFormat sdf = new SimpleDateFormat(getString(R.string.add_schedule_date_format));
-				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
+				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay);
 				String startDate = sdf.format(calendar.getTime());
 
 				Calendar calendar2 = Calendar.getInstance();
-				calendar2.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay, nowSecond);
+				calendar2.set(nowYear, nowMonth, nowDay, endTimeOfDay, endMinOfDay);
 				String endDate = sdf.format(calendar2.getTime());
 
 

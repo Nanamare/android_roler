@@ -27,7 +27,7 @@
 
 
         <LinearLayout
-            android:weightSum="5"
+            android:weightSum="13"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,11 +35,12 @@
             <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_weight="2"
+                android:layout_weight="6"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -132,6 +133,7 @@
 
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/activity_profile_hs_blog_tv"
                         android:text="@string/hs_hobby_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -146,11 +148,12 @@
             <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_weight="2"
+                android:layout_weight="6"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -265,6 +268,8 @@
 
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activity_profile_bong_tv"
+                    android:textStyle="bold"
                     android:text="@string/vocketlist_contents"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

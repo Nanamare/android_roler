@@ -10,7 +10,7 @@
     <string name="add_start_time_title">시작 시간을 선택해주세요</string>
     <string name="add_end_time_title">종료 시간을 선택해주세요</string>
     <string name="set_time_title" formatted="false">%2d시 %2d분</string>
-    <string name="schedule_contents" formatted="false">%1s ~ %2s \n%3s</string>
+    <string name="schedule_contents" formatted="false">%1s ~ %2s\n%3s</string>
     <string name="empty_schedule_content">일정에 대한 설명을 입력해 주세요.</string>
 
 
@@ -59,7 +59,8 @@
     <string name="loading_dialog_title">LOADING</string>
 
     <!-- SIMPLE DATE FORMAT -->
-    <string name="add_schedule_date_format">HH:mm:ss</string>
+    <string name="add_schedule_date_format">HH:mm</string>
+    <string name="add_schedule_date">HH:mm:ss</string>
 
     <!-- Today Date Format-->
     <string name="today_data_format">yyyy-MM-dd</string>
@@ -74,14 +75,16 @@
     <string name="hyunsung_develop_position_contents">클라이언트 개발</string>
     <string name="sangbeen_develop_position_contents">서버 개발</string>
     <string name="university_title">학교 :\u0020</string>
-    <string name="university">인천대학교 졸업</string>
+    <string name="university">인천대학교 컴퓨터공학과 졸업</string>
     <string name="job_title">직업 :\u0020</string>
-    <string name="hs_job_content">취준생(취업하고 싶어요 ^ㅠ^)</string>
+    <string name="hs_job_content">백수(취업하고 싶어요 ^ㅠ^)</string>
     <string name="sb_job_content">하나 아이엔에스 교육생</string>
     <string name="hobby_title">취미 :\u0020</string>
-    <string name="hs_hobby_content">개인 블로그</string>
-    <string name="sb_hobby_content">야구 보기</string>
+    <string name="hs_hobby_content">피아노 연주, 개인 블로그(클릭시 이동합니다.)</string>
+    <string name="sb_hobby_content">야구 보기, 기술 블로그(클릭시 이동합니다.)</string>
     <string name="vocketlist_title">자매품 :\u0020</string>
     <string name="vocketlist_contents">나만의 봉사 큐레이터 봉봉봉 (클릭시 이동합니다.)</string>
+    <string name="vocketlist_url">https://play.google.com/apps/testing/com.vocketlist.android</string>
+    <string name="hs_blog_url">http://nanamare.tistory.com/</string>
 
 </resources>
