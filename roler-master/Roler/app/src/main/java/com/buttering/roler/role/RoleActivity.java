@@ -52,6 +52,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import rx.Subscriber;
@@ -67,7 +68,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 	@BindView(R.id.iv_picture) CircleImageView iv_picture;
 	@BindView(R.id.tv_editRoleInfo) TextView tv_editRoleInfo;
-//	@BindView(R.id.bt_editRoleInfo) Button bt_editRoleInfo;
 	@BindView(R.id.tv_name) TextView tv_name;
 	@BindView(R.id.vp_roleDetail) FeatureCoverFlow vp_roleDetail;
 	@BindView(R.id.activity_role_email) TextView activity_role_email;
@@ -79,7 +79,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	public RoleActivityAdapter adapter = null;
 	public ISignUpProfilePresenter signUpPresenter;
 
-	private ACProgressFlower dialog;
+	private SweetAlertDialog materialDialog;
 	private IRolePresenter presenter;
 	private Bitmap bp;
 	private File imgFile;
@@ -160,7 +160,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("MY Page");
+		textView.setText("My Page");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(v -> {
@@ -253,9 +253,9 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 
 		Glide.with(this)
 				.load(MyInfoDAO.getInstance().getPicUrl())
-				.diskCacheStrategy(DiskCacheStrategy.RESULT)
-				.override(300, 300)
+				.diskCacheStrategy(DiskCacheStrategy.NONE)
 				.skipMemoryCache(true)
+				.override(300, 300)
 				.into(iv_picture);
 	}
 
@@ -320,21 +320,6 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 			vp_roleDetail.setAdapter(adapter);
 			vp_roleDetail.setVisibility(View.VISIBLE);
 		}
-	}
-
-	@Override
-	public void showLoadingBar() {
-		dialog = new ACProgressFlower.Builder(this)
-				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
-				.themeColor(Color.WHITE)
-				.fadeColor(Color.DKGRAY).build();
-		dialog.show();
-	}
-
-	@Override
-	public void hideLoadingBar() {
-		if (dialog != null)
-			dialog.dismiss();
 	}
 
 	@Override
@@ -500,6 +485,21 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 					});
 		}
 
+	}
+
+	@Override
+	public void showLoadingBar() {
+		materialDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+		materialDialog.getProgressHelper().setBarColor(this.getResources().getColor(R.color.dialog_color));
+		materialDialog.setTitleText(getString(R.string.loading_dialog_title));
+		materialDialog.setCancelable(false);
+		materialDialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (materialDialog != null)
+			materialDialog.dismiss();
 	}
 
 

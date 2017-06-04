@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+
                 android:id="@+id/activity_plan_top_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,6 +76,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -151,7 +154,7 @@
                         coverflow:maxScaleFactor="1.0"
                         coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="3.0">
+                        coverflow:scalingThreshold="1.0">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
                 </FrameLayout>

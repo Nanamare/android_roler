@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:coverflow="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,83 +22,96 @@
     <!-- 콘텐츠 -->
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/activity_role_scroll_view"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- 최상단 레이아웃-->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!-- background layout-->
             <LinearLayout
-                android:padding="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/iv_picture"
-                    android:text="My profile"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_picture"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:src="@drawable/ic_menu"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="kozy brown"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/activity_role_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    tools:text="Roler@roler.com"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:weightSum="2"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="260dp"
+                android:background="@drawable/earth"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_picture"
+                        android:text="My profile"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_picture"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:src="@drawable/ic_menu"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:text="kozy brown"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/activity_role_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        tools:text="Roler@roler.com"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_editRoleInfo"
@@ -109,32 +122,32 @@
                         android:textSize="20sp"/>
 
                     <!--<android.support.v7.widget.AppCompatButton-->
-                        <!--android:layout_gravity="center_vertical"-->
-                        <!--android:id="@+id/bt_editRoleInfo"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:background="@drawable/ic_add_circle_outline_black_18dp"-->
-                        <!--android:gravity="center_vertical"/>-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:id="@+id/bt_editRoleInfo"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="@drawable/ic_add_circle_outline_black_18dp"-->
+                    <!--android:gravity="center_vertical"/>-->
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/activity_role_deleteTv"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:text="@string/delete_role_information"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete_role_information"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
 
                 </LinearLayout>
 
-                
+
             </LinearLayout>
 
             <LinearLayout
@@ -146,11 +159,11 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:padding="5dp"
                         android:id="@+id/empty_role_ll"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:padding="5dp"
                         android:visibility="gone">
 
                         <ImageView
@@ -161,16 +174,16 @@
 
 
                     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
-                        android:layout_marginTop="-50dp"
                         android:id="@+id/vp_roleDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="-50dp"
                         coverflow:coverHeight="300dp"
                         coverflow:coverWidth="300dp"
                         coverflow:maxScaleFactor="1.0"
                         coverflow:reflectionGap="2dp"
                         coverflow:rotationThreshold="1.0"
-                        coverflow:scalingThreshold="3.0">
+                        coverflow:scalingThreshold="1.0">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
 
 
@@ -179,9 +192,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="-70dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-70dp">
 
                 <com.google.android.gms.ads.AdView
                     android:id="@+id/adView"
@@ -194,7 +207,6 @@
                 </com.google.android.gms.ads.AdView>
 
             </LinearLayout>
-
 
 
         </LinearLayout>

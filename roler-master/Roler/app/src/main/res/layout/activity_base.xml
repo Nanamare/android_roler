@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:eventTextColor="@android:color/black"
-        app:textSize="15sp"
+        app:eventTextSize="15sp"
+        app:textSize="12sp"
         app:hourHeight="60dp"
         app:headerColumnPadding="8dp"
         app:headerColumnTextColor="@color/colorAccent"
@@ -43,7 +44,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/add_schedule" />
     </FrameLayout>
 
 

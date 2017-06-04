@@ -10,8 +10,9 @@
     <string name="add_start_time_title">시작 시간을 선택해주세요</string>
     <string name="add_end_time_title">종료 시간을 선택해주세요</string>
     <string name="set_time_title" formatted="false">%2d시 %2d분</string>
-    <string name="schedule_contents" formatted="false">%1s ~ %2s \n %3s</string>
+    <string name="schedule_contents" formatted="false">%1s ~ %2s \n%3s</string>
     <string name="empty_schedule_content">일정에 대한 설명을 입력해 주세요.</string>
+
 
     //signUpActivity
     <string name="join_empty_email">이메일을 입력해주세요.</string>
@@ -46,6 +47,41 @@
     <string name="find_pwd_phone">다음 버전에서 지원할 계획입니다.\n 이메일로 받기를 이용해 주세요.</string>
 
     <!-- toolbar title collection -->
-    <string name="activity_base_toolbar_title">오늘의 일정 관리</string>
+    <string name="activity_base_toolbar_title">일정 관리</string>
+
+    <!-- time dialog custom -->
+    <string name="select_time_table">\u0020\u0020CLICK\u0020\u0020</string>
+    <string name="start_time_title">시작 시간\u0020\u0020:</string>
+    <string name="end_time_title">종료 시간\u0020\u0020:</string>
+    <string name="schedule_contents_title">일정에 대한 설명을 입력해 주세요.</string>
+
+    <!-- loading dialog -->
+    <string name="loading_dialog_title">LOADING</string>
+
+    <!-- SIMPLE DATE FORMAT -->
+    <string name="add_schedule_date_format">HH:mm:ss</string>
+
+    <!-- Today Date Format-->
+    <string name="today_data_format">yyyy-MM-dd</string>
+
+    <!-- alert dialog -->
+    <string name="positive_title">확인</string>
+    <string name="negative_title">취소</string>
+    
+    <!-- Profile Activity -->
+    
+    <string name="develop_position_title">개발 분야 :\u0020</string>
+    <string name="hyunsung_develop_position_contents">클라이언트 개발</string>
+    <string name="sangbeen_develop_position_contents">서버 개발</string>
+    <string name="university_title">학교 :\u0020</string>
+    <string name="university">인천대학교 졸업</string>
+    <string name="job_title">직업 :\u0020</string>
+    <string name="hs_job_content">취준생(취업하고 싶어요 ^ㅠ^)</string>
+    <string name="sb_job_content">하나 아이엔에스 교육생</string>
+    <string name="hobby_title">취미 :\u0020</string>
+    <string name="hs_hobby_content">개인 블로그</string>
+    <string name="sb_hobby_content">야구 보기</string>
+    <string name="vocketlist_title">자매품 :\u0020</string>
+    <string name="vocketlist_contents">나만의 봉사 큐레이터 봉봉봉 (클릭시 이동합니다.)</string>
 
 </resources>

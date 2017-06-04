@@ -203,7 +203,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("역할 정보 수정");
+		textView.setText("역할 수정");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {

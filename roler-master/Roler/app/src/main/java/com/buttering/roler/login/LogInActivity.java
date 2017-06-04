@@ -51,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Subscriber;
 
 /**
@@ -72,7 +73,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private GoogleApiClient mGoogleApiClient;
 	private ILoginPresenter loginPresenter;
 	private ISignUpPresenter signUpPresenter;
-	private ACProgressFlower dialog;
+	private SweetAlertDialog materialDialog;
 
 	public ISignUpProfilePresenter presenter;
 
@@ -629,17 +630,17 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	@Override
 	public void showLoadingBar() {
-		dialog = new ACProgressFlower.Builder(this)
-				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
-				.themeColor(Color.WHITE)
-				.fadeColor(Color.DKGRAY).build();
-		dialog.show();
+		materialDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+		materialDialog.getProgressHelper().setBarColor(this.getResources().getColor(R.color.dialog_color));
+		materialDialog.setTitleText(getString(R.string.loading_dialog_title));
+		materialDialog.setCancelable(false);
+		materialDialog.show();
 	}
 
 	@Override
 	public void hideLoadingBar() {
-		if (dialog != null)
-			dialog.dismiss();
+		if (materialDialog != null)
+			materialDialog.dismiss();
 	}
 
 	@Override

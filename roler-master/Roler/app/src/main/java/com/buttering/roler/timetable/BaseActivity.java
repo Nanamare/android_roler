@@ -1,7 +1,6 @@
 package com.buttering.roler.timetable;
 
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -36,8 +36,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressConstant;
-import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class BaseActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, ITimeView {
 
@@ -48,7 +47,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	private static final int TYPE_THREE_DAY_VIEW = 2;
 	private static final int TYPE_WEEK_VIEW = 3;
 
-	private ACProgressFlower dialog;
+	private SweetAlertDialog materialDialog;
 	private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 	private int mWeekViewType;
 	private ITimePresenter presenter;
@@ -100,8 +99,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	private void createAddScheduleDialog() {
 		final View innerView = getLayoutInflater().inflate(R.layout.dialog_time_custom, null);
-		TextView startTime = (TextView) innerView.findViewById(R.id.dialog_startTime_edt);
-		TextView endTime = (TextView) innerView.findViewById(R.id.dialog_endTime_edt);
+		AppCompatTextView startTime = (AppCompatTextView) innerView.findViewById(R.id.dialog_startTime_edt);
+		AppCompatTextView endTime = (AppCompatTextView) innerView.findViewById(R.id.dialog_endTime_edt);
 		AlertDialog.Builder alert = new AlertDialog.Builder(BaseActivity.this);
 		alert.setTitle(getString(R.string.add_schedule_title));
 		alert.setView(innerView);
@@ -149,7 +148,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 			}
 		});
 
-		alert.setPositiveButton("확인", (dialog, whichButton) -> {
+		alert.setPositiveButton(getString(R.string.positive_title), (dialog, whichButton) -> {
 			AppCompatEditText content = (AppCompatEditText) innerView.findViewById(R.id.dialog_time_content);
 			String contents = content.getText().toString();
 			if (!contents.isEmpty()) {
@@ -163,7 +162,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 				int nowSecond = startCalendar.get(Calendar.SECOND);
 
 				Calendar calendar = Calendar.getInstance();
-				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				DateFormat sdf = new SimpleDateFormat(getString(R.string.add_schedule_date_format));
 				calendar.set(nowYear, nowMonth, nowDay, startTimeOfDay, startMinOfDay, nowSecond);
 				String startDate = sdf.format(calendar.getTime());
 
@@ -181,7 +180,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 		});
 
 
-		alert.setNegativeButton("취소",
+		alert.setNegativeButton(getString(R.string.negative_title),
 				(dialog, whichButton) -> {
 					// Todo Canceled. NOTHING
 				});
@@ -191,9 +190,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 	}
 
 
+
 	private void setToday() {
 		Calendar cal = Calendar.getInstance();
-		DateFormat dateType = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateType = new SimpleDateFormat(getString(R.string.today_data_format));
 		nowDate = dateType.format(cal.getTime());
 	}
 
@@ -355,17 +355,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
 	@Override
 	public void showLoadingBar() {
-		dialog = new ACProgressFlower.Builder(this)
-				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
-				.themeColor(Color.WHITE)
-				.fadeColor(Color.DKGRAY).build();
-		dialog.show();
+		materialDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+		materialDialog.getProgressHelper().setBarColor(this.getResources().getColor(R.color.dialog_color));
+		materialDialog.setTitleText(getString(R.string.loading_dialog_title));
+		materialDialog.setCancelable(false);
+		materialDialog.show();
 	}
 
 	@Override
 	public void hideLoadingBar() {
-		if (dialog != null)
-			dialog.dismiss();
+		if (materialDialog != null)
+			materialDialog.dismiss();
 	}
 
 	@Override

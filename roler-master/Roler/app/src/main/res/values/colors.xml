@@ -100,11 +100,15 @@
 
     <!-- custom color roler-->
 
+    <color name="role_color_0">#c6cbff</color>
     <color name="role_color_1">#f7a3c8</color>
     <color name="role_color_2">#aafff6</color>
     <color name="role_color_3">#a9fca9</color>
     <color name="role_color_4">#fcc7a9</color>
     <color name="role_color_5">#fcf9a9</color>
+
+    <!-- dialog loading color -->
+    <color name="dialog_color">#A5DC86</color>
 
 
 </resources>

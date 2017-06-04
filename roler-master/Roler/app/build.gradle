@@ -143,8 +143,13 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     apply plugin: 'com.google.gms.google-services'
 
-    //progress
-    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+
     //위의 circleprogress 대체 함
     compile 'me.itangqi.waveloadingview:library:0.3.5'
+
+    //material sweet dialog
+    compile 'cn.pedant.sweetalert:library:1.3'
+
+    // GestureViews : https://github.com/alexvasilkov/GestureViews
+    compile 'com.alexvasilkov:gesture-views:2.3.0'
 }

@@ -27,6 +27,7 @@ import com.nhn.android.naverlogin.OAuthLogin;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -149,6 +150,12 @@ public class SettingActivity extends AppCompatActivity {
 		textView.setText("Options");
 		setSupportActionBar(toolbar);
 
+	}
+
+	@OnClick(R.id.activity_setting_version_ll)
+	public void versionOnClick(){
+		Intent gotoProfileActivity = new Intent(this, ProfileActivity.class);
+		startActivity(gotoProfileActivity);
 	}
 
 

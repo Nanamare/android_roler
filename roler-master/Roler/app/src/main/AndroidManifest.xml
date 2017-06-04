@@ -118,8 +118,11 @@
             android:name=".find.ExFindPwdActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
-
         <activity android:name=".web.TermServiceActivity"/>
+
+        <activity android:name=".setting.ProfileActivity">
+
+        </activity>
 
         <!-- Token refresh receiver -->
         <receiver android:name=".util.TokenAlarmReceive">

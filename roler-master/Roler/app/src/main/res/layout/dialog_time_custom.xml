@@ -15,17 +15,17 @@
         android:focusableInTouchMode="true"
         android:gravity="center_horizontal">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="시작 시간 : "
+            android:text="@string/start_time_title"
             android:textSize="18sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/dialog_startTime_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="  Click  "
+            android:hint="@string/select_time_table"
             android:textSize="18sp"/>
 
     </LinearLayout>
@@ -38,17 +38,17 @@
         android:focusableInTouchMode="true"
         android:gravity="center_horizontal">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="종료 시간 : "
+            android:text="@string/end_time_title"
             android:textSize="18sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/dialog_endTime_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="  Click  "
+            android:hint="@string/select_time_table"
             android:textSize="18sp"/>
 
     </LinearLayout>
@@ -60,12 +60,12 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:gravity="left">
+        android:gravity="center_horizontal">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="일정에 대한 설명을 입력해 주세요."
+            android:text="@string/schedule_contents_title"
             android:textSize="18sp"/>
 
     </LinearLayout>

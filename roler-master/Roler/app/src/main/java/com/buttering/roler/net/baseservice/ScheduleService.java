@@ -65,7 +65,8 @@ public class ScheduleService extends BaseService {
 									subscriber.onNext(roleList);
 
 								} else {
-									subscriber.onNext(null);
+									List<Schedule> emptyRoleList = new ArrayList<Schedule>();
+									subscriber.onNext(emptyRoleList);
 								}
 
 							} catch (IOException e) {

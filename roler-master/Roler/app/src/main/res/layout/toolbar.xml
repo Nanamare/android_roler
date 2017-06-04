@@ -1,66 +1,94 @@
 <android.support.v7.widget.Toolbar
-    android:background="#d1e5f9"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="@style/AppTheme"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:elevation="0dp"
+    android:background="#d1e5f9"
     android:focusableInTouchMode="true"
     android:minHeight="?attr/actionBarSize"
+    app:contentInsetEnd="16dp"
+    android:elevation="0dp"
+    android:theme="@style/AppTheme"
     android:nestedScrollingEnabled="false">
 
+
     <LinearLayout
-        android:id="@+id/toolbar_layout"
+        android:gravity="center_vertical"
+        android:weightSum="10"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="left|center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_marginRight="20dp"
-            android:gravity="left|center_horizontal"
-            android:layout_gravity="left|center_vertical"
-            android:id="@+id/toolBar_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:textStyle="bold"
-            android:textColor="@color/soft_grey"
-            android:textSize="18sp"
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="right"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_marginRight="20dp"
+                android:gravity="left"
+                android:id="@+id/toolBar_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/soft_grey"
+                android:textSize="18sp"
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:background="@drawable/img_logo_3"
+                android:layout_width="120dp"
+                android:layout_height="35dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="right"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
                 android:id="@+id/custom_toolbar_right_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
             <ImageView
-                android:layout_marginRight="20dp"
                 android:id="@+id/custom_toolbar_right_iv2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
 
+
         </LinearLayout>
-
-
 
     </LinearLayout>
 
 
-
 </android.support.v7.widget.Toolbar>
-
-

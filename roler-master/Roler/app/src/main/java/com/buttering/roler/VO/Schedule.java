@@ -117,7 +117,7 @@ public class Schedule {
 	}
 
 
-	final int[] bgColor = {R.color.holo_green_dark, R.color.role_color_1, R.color.role_color_2, R.color.role_color_3,
+	final int[] bgColor = {R.color.role_color_0, R.color.role_color_1, R.color.role_color_2, R.color.role_color_3,
 			R.color.role_color_4, R.color.role_color_5};
 
 

@@ -1,5 +1,6 @@
 package com.buttering.roler.plan;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +56,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import rx.Subscriber;
@@ -82,7 +86,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 	private PlanActivityTodoAdapter todoAdapter;
 	private int currentPosition;
 	private IPlanPresenter planPresenter;
-	private ACProgressFlower dialog;
+	private SweetAlertDialog materialDialog;
 	private Todo todo = null;
 	private List<Todo> todolist = new ArrayList<>();
 	private ILoginPresenter tokenPresenter;
@@ -439,14 +443,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		}
 	}
 
-	@Override
-	public void showLoadingBar() {
-		dialog = new ACProgressFlower.Builder(this)
-				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
-				.themeColor(Color.WHITE)
-				.fadeColor(Color.DKGRAY).build();
-		dialog.show();
-	}
 
 	@Override
 	public void setTodo(Todo todo) {
@@ -472,11 +468,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		planPresenter.updateRoleContent(currentPosition);
 	}
 
-	@Override
-	public void hideLoadingBar() {
-		if (dialog != null)
-			dialog.dismiss();
-	}
 
 	@Override
 	public void setTodoList(List<Todo> todoList) {
@@ -508,6 +499,21 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 	protected void onDestroy() {
 		super.onDestroy();
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(badgeReceiver);
+	}
+
+	@Override
+	public void showLoadingBar() {
+		materialDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+		materialDialog.getProgressHelper().setBarColor(this.getResources().getColor(R.color.dialog_color));
+		materialDialog.setTitleText(getString(R.string.loading_dialog_title));
+		materialDialog.setCancelable(false);
+		materialDialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (materialDialog != null)
+			materialDialog.dismiss();
 	}
 
 

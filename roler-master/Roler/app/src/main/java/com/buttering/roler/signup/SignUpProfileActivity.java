@@ -44,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -80,7 +81,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 	private Bitmap bp;
 	private File imgfile;
-	private ACProgressFlower dialog;
+	private SweetAlertDialog materialDialog;
 	private String mCurrentPhotoPath;
 
 	@Override
@@ -463,21 +464,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	}
 
 
-	@Override
-	public void showLoadingBar() {
-		dialog = new ACProgressFlower.Builder(this)
-				.direction(ACProgressConstant.DIRECT_CLOCKWISE)
-				.themeColor(Color.WHITE)
-				.fadeColor(Color.DKGRAY).build();
-		dialog.show();
-	}
-
-	@Override
-	public void hideLoadingBar() {
-		if (dialog != null)
-			dialog.dismiss();
-	}
-
 	private Bitmap resizeBitmap(Bitmap src, int maxRes) {
 		int iWidth = src.getWidth();      //비트맵이미지의 넓이
 		int iHeight = src.getHeight();     //비트맵이미지의 높이
@@ -532,6 +518,21 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void showLoadingBar() {
+		materialDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+		materialDialog.getProgressHelper().setBarColor(this.getResources().getColor(R.color.dialog_color));
+		materialDialog.setTitleText(getString(R.string.loading_dialog_title));
+		materialDialog.setCancelable(false);
+		materialDialog.show();
+	}
+
+	@Override
+	public void hideLoadingBar() {
+		if (materialDialog != null)
+			materialDialog.dismiss();
 	}
 
 
