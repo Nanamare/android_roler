@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buttering.roler.R;
+import com.buttering.roler.web.TermServiceActivity;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,8 +33,10 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
@@ -43,26 +46,15 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 public class SignUpActivity extends AppCompatActivity {
 
 
-	@BindView(R.id.activity_signup_ll_policy)
-	LinearLayout activity_signup_ll_policy;
-
-
-	@BindView(R.id.activity_signup_btn)
-	Button activity_signup_btn;
-
-	@BindView(R.id.activity_signup_edt_id)
-	EditText activity_signup_edt_id;
-
-	@BindView(R.id.activity_signup_edt_pwd)
-	EditText activity_signup_edt_pwd;
-
-	@BindView(R.id.activity_signup_tv_show)
-	TextView activity_signup_tv_show;
+	@BindView(R.id.activity_signup_ll_policy) LinearLayout activity_signup_ll_policy;
+	@BindView(R.id.activity_signup_btn) Button activity_signup_btn;
+	@BindView(R.id.activity_signup_edt_id) EditText activity_signup_edt_id;
+	@BindView(R.id.activity_signup_edt_pwd) EditText activity_signup_edt_pwd;
+	@BindView(R.id.activity_signup_tv_show) TextView activity_signup_tv_show;
 
 
 	private ISignUpPresenter presenter;
 	private boolean isShow;
-	private ISignUpProfileView signUpProfileView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +65,6 @@ public class SignUpActivity extends AppCompatActivity {
 		setToolbar();
 
 		setServiceText();
-
-		setLayoutInit();
 
 		presenter = new SignUpPresenter(SignUpActivity.this);
 
@@ -91,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Sign Up");
+		textView.setText(getString(R.string.activity_sign_up_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {
@@ -105,12 +95,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 		activity_signup_tv_show.setOnClickListener(view -> {
 			if (isShow) {
-				activity_signup_edt_pwd.setInputType(0x00000081);
-				activity_signup_tv_show.setText("Show");
+				// TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD == 0x00000081
+				activity_signup_edt_pwd.setInputType(InputType.TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+				activity_signup_tv_show.setText(getString(R.string.show_pwd));
 				isShow = false;
 			} else {
 				activity_signup_edt_pwd.setInputType(InputType.TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-				activity_signup_tv_show.setText("Hide");
+				activity_signup_tv_show.setText(getString(R.string.hide_pwd));
 				isShow = true;
 			}
 
@@ -123,64 +114,64 @@ public class SignUpActivity extends AppCompatActivity {
 
 		policyTv[0] = new TextView(this);
 		policyTv[0].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		policyTv[0].setText("By tapping to NEXT , you are indication that ");
-		policyTv[0].setTextSize(13);
+		policyTv[0].setText(getString(R.string.notice_service_0));
+		policyTv[0].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
 		policyTv[1] = new TextView(this);
 		policyTv[1].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		policyTv[1].setText(Html.fromHtml(" <b>Privacy Policy</b> "));
-		policyTv[1].setTextSize(13);
+		policyTv[1].setText(getString(R.string.notice_service_1));
+		policyTv[1].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
 		policyTv[2] = new TextView(this);
 		policyTv[2].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		policyTv[2].setText("and agree to the ");
-		policyTv[2].setTextSize(13);
+		policyTv[2].setText(getString(R.string.notice_service_2));
+		policyTv[2].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
 		policyTv[3] = new TextView(this);
 		policyTv[3].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		policyTv[3].setText(Html.fromHtml(" <b>Terms of Service</b>"));
-		policyTv[3].setTextSize(13);
+		policyTv[3].setText(getString(R.string.notice_service_3));
+		policyTv[3].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
 
 		dynamicView(activity_signup_ll_policy, policyTv, this);
 
 		//Privacy Policy 여기 나중에 수정이 필요하다.
 		policyTv[1].setOnClickListener(view -> {
-			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+			Intent pdfIntent = new Intent(this, TermServiceActivity.class);
 			startActivity(pdfIntent);
 
 		});
 		//Terms of Service
 		policyTv[3].setOnClickListener(view -> {
-			Intent pdfIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+			Intent pdfIntent = new Intent(this, TermServiceActivity.class);
 			startActivity(pdfIntent);
 		});
 	}
 
+	@OnClick(R.id.activity_signup_btn)
+	public void signUpOnClick(){
 
-	private void setLayoutInit() {
-		activity_signup_btn.setOnClickListener(view -> {
-			String email = activity_signup_edt_id.getText().toString().trim();
-			String passwd = activity_signup_edt_pwd.getText().toString();
+		String email = activity_signup_edt_id.getText().toString().trim();
+		String passwd = activity_signup_edt_pwd.getText().toString();
 
-			if (isValid(email, passwd)) {
-				presenter.checkDuplicateEmail(email)
-						.subscribe(new Subscriber<String>() {
-							@Override
-							public void onCompleted() {
-								presenter.registerUser(email, passwd);
-							}
+		if (isValid(email, passwd)) {
+			presenter.checkDuplicateEmail(email)
+					.subscribe(new Subscriber<Void>() {
+						@Override
+						public void onCompleted() {
+						}
 
-							@Override
-							public void onError(Throwable e) {
-								Toast.makeText(SignUpActivity.this, "already to join email", Toast.LENGTH_SHORT).show();
-							}
+						@Override
+						public void onError(Throwable e) {
+							e.printStackTrace();
+							Toast.makeText(SignUpActivity.this, getString(R.string.already_to_join_email), Toast.LENGTH_SHORT).show();
+						}
 
-							@Override
-							public void onNext(String s) {
-
-							}
-						});
-			}
-		});
+						@Override
+						public void onNext(Void aVoid) {
+							presenter.registerUser(email, passwd);
+						}
+					});
+		}
 
 	}
+
 
 	private boolean isValid(String email, String passwd) {
 

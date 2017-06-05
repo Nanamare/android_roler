@@ -40,8 +40,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
 
 	@Override
-	public Observable<String> signIn(String email, String pwd) {
-		view.showLoadingBar();
+	public Observable<Void> signIn(String email, String pwd) {
 
 		registerRefreshToken();
 

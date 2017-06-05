@@ -119,8 +119,8 @@ public class SharePrefUtil {
 		SharedPreferences prefs =
 				PreferenceManager.getDefaultSharedPreferences(context);
 
-		prefs.edit().remove(key);
-		prefs.edit().commit();
+		prefs.edit().remove(key).commit();
+
 	}
 
 

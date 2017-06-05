@@ -1,8 +1,10 @@
 package com.buttering.roler.net.baseservice;
 
+import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.User;
 import com.buttering.roler.net.serialization.RolerResponse;
+import com.buttering.roler.util.MyApplication;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -29,9 +31,6 @@ import rx.schedulers.Schedulers;
 
 public class UserService extends BaseService {
 
-	private String userId;
-	private String name;
-
 	public UserService() {
 		super(UserAPI.class);
 	}
@@ -42,59 +41,51 @@ public class UserService extends BaseService {
 	}
 
 
-	public Observable<User> signUp(User user) {
+	public Observable<Void> signUp(User user) {
 
+		return Observable.create(subscriber ->
+				getAPI().signUp(user.getName(), user.getEmail(), user.getPassword())
+				.subscribeOn(Schedulers.io())
+				.subscribe(new Subscriber<ResponseBody>() {
+					@Override
+					public void onCompleted() {
 
-		return Observable.create(subscriber -> {
+					}
 
-			getAPI()
-					.signUp(user.getName(), user.getEmail(), user.getPassword())
-					.subscribeOn(Schedulers.io())
-					.subscribe(new Subscriber<ResponseBody>() {
-						@Override
-						public void onCompleted() {
-							subscriber.onCompleted();
-							subscriber.unsubscribe();
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
 
-						}
+					@Override
+					public void onNext(ResponseBody responseBody) {
 
-						@Override
-						public void onError(Throwable e) {
-							e.printStackTrace();
-							subscriber.onError(e);
-						}
-
-						@Override
-						public void onNext(ResponseBody responseBody) {
-
-							try {
-								String result = parseParams(responseBody.string());
-								if (result.equals("true")) {
-									MyInfoDAO.getInstance().setUserId(userId);
-									MyInfoDAO.getInstance().setName(name);
-									MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
-									subscriber.onNext(user);
-
-								} else {
-									subscriber.onError(new Throwable());
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
+						try {
+							String result = parseParams(responseBody.string());
+							if (result.equals("true")) {
+								subscriber.onNext(null);
+							} else {
+								subscriber.onError(
+										new Throwable(MyApplication.getInstance().getString(R.string.impossible_sign_up)));
 							}
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
+					}
 
-						private String parseParams(String json) {
-							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String result = ja.get("result").getAsString();
-							userId = ja.get("id").getAsString();
-							name = ja.get("name").getAsString();
+					private String parseParams(String json) {
+						JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+						return ja.get("result").getAsString();
+					}
 
-							return result;
-						}
 
-					});
+//					private void saveMyInfo(String userId, String name) {
+//						MyInfoDAO.getInstance().setUserId(userId);
+//						MyInfoDAO.getInstance().setName(name);
+//						MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
+//					}
 
-		});
+				}));
 	}
 
 	public Observable<RolerResponse> setProfilePhotos(String profileImgUrl) {
@@ -110,7 +101,7 @@ public class UserService extends BaseService {
 	}
 
 
-	public Observable<String> isDuplicateEmail(String email) {
+	public Observable<Void> isDuplicateEmail(String email) {
 
 		return Observable.create(subscriber -> {
 			getAPI()
@@ -133,7 +124,7 @@ public class UserService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("true")) {
-									subscriber.onNext(result);
+									subscriber.onNext(null);
 								} else {
 									subscriber.onError(new Throwable());
 								}
@@ -145,8 +136,7 @@ public class UserService extends BaseService {
 
 						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String param = ja.get("result").getAsString();
-							return param;
+							return ja.get("result").getAsString();
 						}
 
 					});
@@ -154,21 +144,20 @@ public class UserService extends BaseService {
 		});
 	}
 
-	public Observable<String> signIn(String email, String pwd) {
+	public Observable<Void> signIn(String email, String pwd) {
 		return Observable.create(subscriber -> {
 			getAPI().signIn(email, pwd)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-							subscriber.onCompleted();
-							subscriber.unsubscribe();
 
 						}
 
 						@Override
 						public void onError(Throwable e) {
-							subscriber.onError(new Throwable("서버에 문제가 있습니다."));
+							subscriber.onError(new Throwable(
+									MyApplication.getInstance().getString(R.string.not_working_server)));
 						}
 
 						@Override
@@ -176,9 +165,11 @@ public class UserService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("true")) {
-									subscriber.onCompleted();
+									subscriber.onNext(null);
 								} else if (result.equals("false")) {
-									subscriber.onError(new Throwable("이메일 또는 비밀번호를 확인해주세요"));
+									subscriber.onError(
+											new Throwable(
+													MyApplication.getInstance().getString(R.string.check_user_info)));
 								}
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -316,7 +307,7 @@ public class UserService extends BaseService {
 		});
 	}
 
-	public Observable<Void> refreshToken(String id, String email){
+	public Observable<Void> refreshToken(String id, String email) {
 		return Observable.create(subscriber -> {
 			getAPI().refreshToken(id, email)
 					.subscribeOn(Schedulers.io())
@@ -354,7 +345,7 @@ public class UserService extends BaseService {
 
 		@FormUrlEncoded
 		@POST("/users/refresh")
-		Observable<Response<ResponseBody>> refreshToken(@Field("id") String id,@Field("email") String email);
+		Observable<Response<ResponseBody>> refreshToken(@Field("id") String id, @Field("email") String email);
 
 		@FormUrlEncoded
 		@POST("/users/signin")

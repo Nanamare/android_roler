@@ -77,7 +77,7 @@ public class BaseService<T> {
 
 			return result;
 		} catch (Exception e) {
-			System.out.print(e);
+			e.printStackTrace();
 		}
 		return "false";
 	}

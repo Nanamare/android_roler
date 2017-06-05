@@ -5,14 +5,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,6 +37,7 @@ import com.google.gson.JsonParser;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.vocketlist.android.roboguice.log.Ln;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -49,8 +48,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cc.cloudist.acplibrary.ACProgressConstant;
-import cc.cloudist.acplibrary.ACProgressFlower;
+import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Subscriber;
 
@@ -97,10 +95,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				}
 			}
 		}
-
-
 	}
-
 
 	private void checkThePemission() {
 		if (Build.VERSION.SDK_INT > 22) {
@@ -141,26 +136,71 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 		checkPlayServices();
 
-		loginPresenter = new LoginPresenter(this,this);
+		loginPresenter = new LoginPresenter(this, this);
 		signUpPresenter = new SignUpPresenter();
 
 		initLoginSetting();
 
 		presenter = new SignUpProfilePresenter();
 
-		findPwd();
 
 	}
 
-	private void findPwd() {
-		find_pwd_tv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(LogInActivity.this, ExFindPwdActivity.class);
-				startActivity(intent);
-			}
-		});
+	@OnClick(R.id.activity_login_find_pwd_tv)
+	public void findPwdOnClick() {
+		Intent intent = new Intent(LogInActivity.this, ExFindPwdActivity.class);
+		startActivity(intent);
 	}
+
+	@OnClick(R.id.activity_login_signUp_btn)
+	public void signUpOnClick() {
+		Intent intent = new Intent(this, SignUpActivity.class);
+		startActivity(intent);
+	}
+
+	@OnClick(R.id.activity_login_signIn_btn)
+	public void signInOnClick() {
+
+		String email = email_et.getText().toString();
+		String pwd = pw_et.getText().toString();
+
+		if (isValid(email, pwd)) {
+
+			showLoadingBar();
+
+			loginPresenter.signIn(email, pwd)
+					.subscribe(new Subscriber<Void>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+							hideLoadingBar();
+							e.printStackTrace();
+						}
+
+						@Override
+						public void onNext(Void aVoid) {
+
+							hideLoadingBar();
+							SharePrefUtil.putSharedPreference(getString(R.string.IS_LOGIN_KEY), true);
+							goToPlanActivity();
+
+						}
+					});
+		}
+
+	}
+
+	private void goToPlanActivity() {
+		Toast.makeText(LogInActivity.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	}
+
 
 	private void initLoginSetting() {
 
@@ -172,49 +212,8 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				, OAUTH_CLIENT_NAME
 		);
 
-
 		OAuthLoginButton mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
 		mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
-
-		login_signUp_btn.setOnClickListener(v -> {
-			Intent intent = new Intent(this, SignUpActivity.class);
-			startActivity(intent);
-		});
-
-		login_signIn_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String email = email_et.getText().toString();
-				String pwd = pw_et.getText().toString();
-				if (isValid(email, pwd)) {
-					loginPresenter.signIn(email, pwd)
-							.subscribe(new Subscriber<String>() {
-								@Override
-								public void onCompleted() {
-									hideLoadingBar();
-									Toast.makeText(LogInActivity.this, "로그인 완료 환영합니다", Toast.LENGTH_SHORT).show();
-									SharePrefUtil.putSharedPreference("isLoggedIn", true);
-									Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-									startActivity(intent);
-									finish();
-								}
-
-								@Override
-								public void onError(Throwable e) {
-									hideLoadingBar();
-									Toast.makeText(LogInActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-									e.printStackTrace();
-								}
-
-								@Override
-								public void onNext(String s) {
-
-								}
-							});
-				}
-
-			}
-		});
 
 	}
 
@@ -273,160 +272,149 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		@Override
 		public void run(boolean success) {
 			if (success) {
-				String accessToken = mOAuthLoginModule.getAccessToken(getApplicationContext());
-				String refreshToken = mOAuthLoginModule.getRefreshToken(getApplicationContext());
-				long expiresAt = mOAuthLoginModule.getExpiresAt(getApplicationContext());
-				String tokenType = mOAuthLoginModule.getTokenType(getApplicationContext());
-				Toast.makeText(LogInActivity.this, "네이버 로그인 접속 중", Toast.LENGTH_SHORT).show();
+
+				String accessToken = mOAuthLoginModule.getAccessToken(LogInActivity.this);
+				String refreshToken = mOAuthLoginModule.getRefreshToken(LogInActivity.this);
+				long expiresAt = mOAuthLoginModule.getExpiresAt(LogInActivity.this);
+				String tokenType = mOAuthLoginModule.getTokenType(LogInActivity.this);
+
+				showLoadingBar();
 
 				new Thread() {
 					@Override
 					public void run() {
-						String token = accessToken;// 네이버 로그인 접근 토큰;
-						String header = "Bearer " + token; // Bearer 다음에 공백 추가
-						try {
-							String apiURL = "https://openapi.naver.com/v1/nid/me";
-							URL url = new URL(apiURL);
-							HttpURLConnection con = (HttpURLConnection) url.openConnection();
-							con.setRequestMethod("GET");
-							con.setRequestProperty("Authorization", header);
-							int responseCode = con.getResponseCode();
-							BufferedReader br;
-							if (responseCode == 200) { // 정상 호출
-								br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-							} else {  // 에러 발생
-								br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-							}
-							String inputLine;
-							StringBuffer response = new StringBuffer();
-							while ((inputLine = br.readLine()) != null) {
-								response.append(inputLine);
-							}
-							br.close();
-							System.out.println(response.toString());
-							String res = response.toString();
-							JsonObject ja = new JsonParser().parse(res).getAsJsonObject();
-							String name = ja.getAsJsonObject("response").getAsJsonPrimitive("nickname").getAsString();
-							String email = ja.getAsJsonObject("response").getAsJsonPrimitive("email").getAsString();
-							String pwd = ja.getAsJsonObject("response").getAsJsonPrimitive("id").getAsString();
 
-							signUpPresenter.checkDuplicateEmail(email)
-									.subscribe(new Subscriber<String>() {
-										@Override
-										public void onCompleted() {
+						getNaverUserInfo(accessToken);
 
-											//네이버 유저 가입
-											presenter.signUp(email, pwd, name)
-													.subscribe(new Subscriber<User>() {
-														@Override
-														public void onCompleted() {
-
-															//가입 완료후 로그인
-															loginPresenter.signIn(email, pwd)
-																	.subscribe(new Subscriber<String>() {
-																		@Override
-																		public void onCompleted() {
-																			hideLoadingBar();
-																			SharePrefUtil.putSharedPreference("isNaverLogin", true);
-																			Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-																			intent.putExtra(EXTRA_MESSAGE, name);
-																			startActivity(intent);
-																			finish();
-																			unsubscribe();
-
-																		}
-
-																		@Override
-																		public void onError(Throwable e) {
-																			hideLoadingBar();
-																		}
-
-																		@Override
-																		public void onNext(String s) {
-
-																		}
-																	});
-
-
-														}
-
-														@Override
-														public void onError(Throwable e) {
-															e.printStackTrace();
-														}
-
-														@Override
-														public void onNext(User user) {
-															user.setName(name);
-															user.setPicture_url("");
-															user.setId(pwd);
-															user.setEmail(email);
-															MyInfoDAO.getInstance().saveUserInfo(user);
-															onCompleted();
-
-														}
-													});
-
-										}
-
-										@Override
-										public void onError(Throwable e) {
-
-											e.printStackTrace();
-											//가입 완료후 로그인
-											loginPresenter.signIn(email, pwd)
-													.subscribe(new Subscriber<String>() {
-														@Override
-														public void onCompleted() {
-															hideLoadingBar();
-															SharePrefUtil.putSharedPreference("isNaverLogin", true);
-															Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-															intent.putExtra(EXTRA_MESSAGE, name);
-															startActivity(intent);
-															finish();
-															unsubscribe();
-
-														}
-
-														@Override
-														public void onError(Throwable e) {
-
-														}
-
-														@Override
-														public void onNext(String s) {
-
-														}
-													});
-
-										}
-
-										@Override
-										public void onNext(String s) {
-
-										}
-									});
-
-						} catch (Exception e) {
-							System.out.println(e);
-						}
 					}
 
-				}.start(); //스레드 실행
+				}.start(); //start thread
 
 
 			} else {
+
 				String errorCode = mOAuthLoginModule.getLastErrorCode(getApplicationContext()).getCode();
 				String errorDesc = mOAuthLoginModule.getLastErrorDesc(getApplicationContext());
-				Toast.makeText(getApplicationContext(), "errorCode:" + errorCode
-						+ ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+
+				Ln.d(errorCode, errorDesc);
 			}
 		}
 
 
 	};
 
+	private void getNaverUserInfo(String accessToken) {
 
+		String token = accessToken;// 네이버 로그인 접근 토큰;
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
+
+		try {
+			String apiURL = "https://openapi.naver.com/v1/nid/me";
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Authorization", header);
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			if (responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {  // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				response.append(inputLine);
+			}
+			br.close();
+
+			System.out.println(response.toString());
+			String res = response.toString();
+			JsonObject ja = new JsonParser().parse(res).getAsJsonObject();
+			String name = ja.getAsJsonObject("response").getAsJsonPrimitive("nickname").getAsString();
+			String email = ja.getAsJsonObject("response").getAsJsonPrimitive("email").getAsString();
+			String pwd = ja.getAsJsonObject("response").getAsJsonPrimitive("id").getAsString();
+
+			checkNaverUserDuplication(name, email, pwd);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void checkNaverUserDuplication(String name, String email, String pwd) {
+
+		signUpPresenter.checkDuplicateEmail(email)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+						e.printStackTrace();
+
+						//already sign up naver user
+						loginNaverUser(email, pwd);
+
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						signUpNaverUserInfo(name, email, pwd);
+					}
+				});
+
+	}
+
+	private void signUpNaverUserInfo(String name, String email, String pwd) {
+
+		presenter.signUp(email, pwd, name)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+
+						loginNaverUser(email, pwd);
+
+					}
+				});
+
+	}
+
+	private void loginNaverUser(String email, String pwd) {
+
+		loginPresenter.signIn(email, pwd)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						hideLoadingBar();
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						hideLoadingBar();
+						SharePrefUtil.putSharedPreference("isNaverLogin", true);
+						goToPlanActivity();
+					}
+				});
+
+	}
 
 
 	@Override
@@ -437,23 +425,19 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		super.onPause();
 	}
 
+	@OnClick(R.id.activity_login_google_btn)
+	public void loginGoogleOnClick() {
 
+		checkThePemission();
 
-	public void mOnClick(View view) {
-		switch (view.getId()) {
-			case R.id.activity_login_google_btn: {
-				checkThePemission();
-				mGoogleApiClient = new GoogleApiClient.Builder(this)
-						.addConnectionCallbacks(this)
-						.addOnConnectionFailedListener(this)
-						.addApi(Plus.API)
-						.addScope(Plus.SCOPE_PLUS_PROFILE)
-						.build();
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.addApi(Plus.API)
+				.addScope(Plus.SCOPE_PLUS_PROFILE)
+				.build();
 
-				mGoogleApiClient.connect();
-				break;
-			}
-		}
+		mGoogleApiClient.connect();
 
 	}
 
@@ -495,108 +479,82 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				String name = currentPerson.getDisplayName();
 				String pwd = String.valueOf(currentPerson.getId());
 
-				signUpPresenter.checkDuplicateEmail(email)
-						.subscribe(new Subscriber<String>() {
-							@Override
-							public void onCompleted() {
+				showLoadingBar();
 
-								//네이버 유저 가입
-								presenter.signUp(email, pwd, name)
-										.subscribe(new Subscriber<User>() {
-											@Override
-											public void onCompleted() {
+				checkGoogleUserDuplication(email, name, pwd);
 
-												//가입 완료후 로그인
-												loginPresenter.signIn(email, pwd)
-														.subscribe(new Subscriber<String>() {
-															@Override
-															public void onCompleted() {
-																hideLoadingBar();
-																SharePrefUtil.putSharedPreference("isGoogleLogin", true);
-																Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-																intent.putExtra(EXTRA_MESSAGE, name);
-																startActivity(intent);
-																finish();
-																unsubscribe();
-
-															}
-
-															@Override
-															public void onError(Throwable e) {
-
-															}
-
-															@Override
-															public void onNext(String s) {
-
-															}
-														});
-
-
-											}
-
-											@Override
-											public void onError(Throwable e) {
-												e.printStackTrace();
-											}
-
-											@Override
-											public void onNext(User user) {
-												user.setName(name);
-												user.setPicture_url("");
-												user.setId(pwd);
-												user.setEmail(email);
-												MyInfoDAO.getInstance().saveUserInfo(user);
-												onCompleted();
-
-											}
-										});
-
-							}
-
-							@Override
-							public void onError(Throwable e) {
-
-								hideLoadingBar();
-								e.printStackTrace();
-								//가입 완료후 로그인
-								loginPresenter.signIn(email, pwd)
-										.subscribe(new Subscriber<String>() {
-											@Override
-											public void onCompleted() {
-												SharePrefUtil.putSharedPreference("isGoogleLogin", true);
-												Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-												intent.putExtra(EXTRA_MESSAGE, name);
-												startActivity(intent);
-												finish();
-												unsubscribe();
-
-											}
-
-											@Override
-											public void onError(Throwable e) {
-												e.printStackTrace();
-												hideLoadingBar();
-
-											}
-
-											@Override
-											public void onNext(String s) {
-
-											}
-										});
-
-							}
-
-							@Override
-							public void onNext(String s) {
-
-							}
-						});
 
 
 			}
 		}
+	}
+
+	private void checkGoogleUserDuplication(String email, String name, String pwd) {
+
+		signUpPresenter.checkDuplicateEmail(email)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+						e.printStackTrace();
+						loginGoogleUser(email, pwd);
+
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						signUpGoogleUserInfo(email, name, pwd);
+					}
+				});
+
+	}
+
+	private void signUpGoogleUserInfo(String email, String name, String pwd) {
+
+		presenter.signUp(email, pwd, name)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						loginGoogleUser(email, pwd);
+					}
+				});
+
+	}
+
+	private void loginGoogleUser(String email, String pwd) {
+
+		loginPresenter.signIn(email, pwd)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+						hideLoadingBar();
+						SharePrefUtil.putSharedPreference("isGoogleLogin", true);
+						goToPlanActivity();
+					}
+				});
+
 	}
 
 
@@ -644,9 +602,10 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {;
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		;
 		switch (requestCode) {
-			case single_top_activity : {
+			case single_top_activity: {
 				break;
 			}
 //			case PLAY_SERVICES_RESOLUTION_REQUEST : {

@@ -39,7 +39,7 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 
 	@Override
-	public Observable<User> signUp(String email, String pwd, String name) {
+	public Observable<Void> signUp(String email, String pwd, String name) {
 
 		User user = generateUser(email, pwd, name);
 

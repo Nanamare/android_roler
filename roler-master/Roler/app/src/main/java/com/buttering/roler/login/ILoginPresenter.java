@@ -7,7 +7,7 @@ import rx.Observable;
  */
 
 public interface ILoginPresenter {
-	Observable<String> signIn(String email, String pwd);
+	Observable<Void> signIn(String email, String pwd);
 	Observable<Void> registerToken(String token, String email);
 
 }

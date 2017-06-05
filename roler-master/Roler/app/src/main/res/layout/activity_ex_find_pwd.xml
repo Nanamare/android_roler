@@ -159,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/primary"
+                android:background="@color/role_color_0"
                 android:text="인증코드 확인"/>
 
             <Button
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/primary"
+                android:background="@color/role_color_0"
                 android:text="핸드폰으로 받기"/>
 
             <Button
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:background="@color/primary"
+                android:background="@color/role_color_0"
                 android:text="이메일로 받기"/>
 
         </LinearLayout>

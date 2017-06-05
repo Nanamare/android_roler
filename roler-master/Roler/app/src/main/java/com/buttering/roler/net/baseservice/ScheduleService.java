@@ -52,7 +52,6 @@ public class ScheduleService extends BaseService {
 						@Override
 						public void onError(Throwable e) {
 							e.printStackTrace();
-							onCompleted();
 						}
 
 						@Override
@@ -61,12 +60,12 @@ public class ScheduleService extends BaseService {
 							try {
 								String result = responseBody.string();
 								if (getStatusResult(result) == "true") {
-									List<Schedule> roleList = parseParams(result);
-									subscriber.onNext(roleList);
+									List<Schedule> scheduleList = parseParams(result);
+									subscriber.onNext(scheduleList);
 
 								} else {
-									List<Schedule> emptyRoleList = new ArrayList<Schedule>();
-									subscriber.onNext(emptyRoleList);
+									List<Schedule> emptyScheduleList = new ArrayList<Schedule>();
+									subscriber.onNext(emptyScheduleList);
 								}
 
 							} catch (IOException e) {

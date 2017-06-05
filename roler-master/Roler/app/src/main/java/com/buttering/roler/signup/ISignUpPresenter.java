@@ -13,5 +13,5 @@ import rx.Observable;
 public interface ISignUpPresenter extends IBasePresenter{
 	void registerUser(String email, String pwd);
 	void check_blank(EditText activity_signup_edt_id, EditText activity_signup_edt_pwd);
-	Observable<String> checkDuplicateEmail(String email);
+	Observable<Void> checkDuplicateEmail(String email);
 }

@@ -30,6 +30,10 @@ import android.widget.Toast;
 import com.buttering.roler.*;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Schedule;
+import com.buttering.roler.login.ILoginPresenter;
+import com.buttering.roler.login.ILoginView;
+import com.buttering.roler.login.LogInActivity;
+import com.buttering.roler.login.LoginPresenter;
 import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.util.SharePrefUtil;
 
@@ -42,6 +46,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -49,32 +54,27 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SignUpProfileActivity extends AppCompatActivity implements ISignUpProfileView {
+public class SignUpProfileActivity extends AppCompatActivity implements ISignUpProfileView, ILoginView {
 
 	private static final int REQUEST_WRITE_STORAGE = 112;
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int RUQUEST_IMAGE_FROM_ALBUM = 5;
 
-	@BindView(R.id.activity_signup_circleview)
-	de.hdodenhof.circleimageview.CircleImageView circleImageView;
+	public static final String putExtraEmail = "ROLER_USER_EMAIL";
+	public static final String putExtraPwd = "ROLER_USER_PWD";
 
-	@BindView(R.id.activity_signup_btn_next)
-	Button activity_signup_btn_next;
-
-	@BindView(R.id.activity_signup_profile_firstName)
-	EditText activity_signup_profile_firstName;
-	@BindView(R.id.activity_signup_profile_lastName)
-	EditText activity_signup_profile_lastName;
-
-	@BindView(R.id.activity_signup_profile_btn_male)
-	Button activity_signup_profile_btn_male;
-	@BindView(R.id.activity_signup_profile_btn_female)
-	Button activity_signup_profile_btn_female;
+	@BindView(R.id.activity_signup_circleview) de.hdodenhof.circleimageview.CircleImageView circleImageView;
+	@BindView(R.id.activity_signup_btn_next) Button activity_signup_btn_next;
+	@BindView(R.id.activity_signup_profile_firstName) EditText activity_signup_profile_firstName;
+	@BindView(R.id.activity_signup_profile_lastName) EditText activity_signup_profile_lastName;
+	@BindView(R.id.activity_signup_profile_btn_male) Button activity_signup_profile_btn_male;
+	@BindView(R.id.activity_signup_profile_btn_female) Button activity_signup_profile_btn_female;
 
 	public String email;
 	public String passwd;
 
 	public ISignUpProfilePresenter presenter;
+	public ILoginPresenter loginPresenter;
 
 	public boolean isMaleCheck;
 	public boolean isFemaleCheck;
@@ -124,14 +124,95 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		circleImageView.setOnClickListener(v -> takepicture());
 
 		Intent intent = getIntent();
-		email = intent.getExtras().getString("email");
-		passwd = intent.getExtras().getString("pwd");
-
-		setLayoutInit();
+		email = intent.getExtras().getString(putExtraEmail);
+		passwd = intent.getExtras().getString(putExtraPwd);
 
 		presenter = new SignUpProfilePresenter(this);
+		loginPresenter = new LoginPresenter(this,this);
 
 		setGender();
+
+	}
+
+	@OnClick(R.id.activity_signup_btn_next)
+	public void signUpOnClick(){
+
+		String firstName = activity_signup_profile_firstName.getText().toString();
+		String lastName = activity_signup_profile_lastName.getText().toString();
+		String fullName = firstName + lastName;
+
+		if (isValid(firstName, lastName)) {
+
+			showLoadingBar();
+
+			presenter
+					.signUp(email, passwd, fullName)
+					.subscribe(new Subscriber<Object>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(Object o) {
+							sendToServerUserImage();
+							sendToServerLogin();
+						}
+
+						private void sendToServerLogin() {
+
+							loginPresenter.signIn(email,passwd)
+									.observeOn(AndroidSchedulers.mainThread())
+									.subscribe(new Subscriber<Void>() {
+										@Override
+										public void onCompleted() {
+										}
+
+										@Override
+										public void onError(Throwable e) {
+
+										}
+
+										@Override
+										public void onNext(Void aVoid) {
+											hideLoadingBar();
+											SharePrefUtil.putSharedPreference("isLoggedIn", true);
+											goToPlanActivity();
+										}
+									});
+
+						}
+
+						private void sendToServerUserImage() {
+
+							if (imgfile != null) {
+								presenter.uploadProfileImg(imgfile)
+										.subscribe(new Subscriber<String>() {
+											@Override
+											public void onCompleted() {
+												unsubscribe();
+											}
+
+											@Override
+											public void onError(Throwable e) {
+												e.printStackTrace();
+											}
+
+											@Override
+											public void onNext(String s) {
+												onCompleted();
+											}
+										});
+							}
+
+						}
+					});
+		}
 
 	}
 
@@ -191,111 +272,12 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 	}
 
-	private void setLayoutInit() {
-		activity_signup_btn_next.setOnClickListener(view -> {
 
-			String firstName = activity_signup_profile_firstName.getText().toString();
-			String lastName = activity_signup_profile_lastName.getText().toString();
-			String fullName = firstName + lastName;
-//			if (isValid(firstName, lastName)) {
-//				presenter
-//						.signUp(email, passwd, fullName)
-//						.flatMap(new Func1<User , Observable<String>>() {
-//							@Override
-//							public Observable<String> call(User userInfo) {
-//
-//								MyInfoDAO.getInstance().setMyUserInfo(userInfo);
-//								MyInfoDAO.getInstance().saveAccountInfo(email, passwd,fullName);
-//
-//								return presenter.uploadProfileImg(imgfile);
-//							}
-//						})
-//						.flatMap(new Func1<String, Observable<Void>>() {
-//							@Override
-//							public Observable<Void> call(String profileImgUrl) {
-//								return presenter.setProfileImg(profileImgUrl);
-//							}
-//						})
-//						.subscribe(new Subscriber<Void>() {
-//							@Override
-//							public void onCompleted() {
-//								hideLoadingBar();
-//
-//								SharePrefUtil.putSharedPreference("isLoggedIn", true);
-//								Intent intent = new Intent(getApplicationContext(),PlanActivity.class);
-//								startActivity(intent);
-//								finish();
-//
-//							}
-//
-//							@Override
-//							public void onError(Throwable e) {
-//
-//							}
-//
-//							@Override
-//							public void onNext(Void aVoid) {
-//
-//							}
-//						});
-//
-//			}
-
-			if (isValid(firstName, lastName)) {
-				showLoadingBar();
-				presenter
-						.signUp(email, passwd, fullName)
-						.flatMap(user -> {
-							MyInfoDAO.getInstance().setMyUserInfo(user);
-							MyInfoDAO.getInstance().saveAccountInfo(MyInfoDAO.getInstance().getUserId(), email, passwd, fullName, "NULL");
-							return null;
-						})
-						.subscribe(new Subscriber<Object>() {
-							@Override
-							public void onCompleted() {
-
-								if (imgfile != null) {
-									presenter.uploadProfileImg(imgfile)
-											.subscribe(new Subscriber<String>() {
-												@Override
-												public void onCompleted() {
-													unsubscribe();
-												}
-
-												@Override
-												public void onError(Throwable e) {
-													e.printStackTrace();
-												}
-
-												@Override
-												public void onNext(String s) {
-													onCompleted();
-												}
-											});
-								}
-
-								hideLoadingBar();
-								SharePrefUtil.putSharedPreference("isLoggedIn", true);
-								Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
-								startActivity(intent);
-								finish();
-							}
-
-							@Override
-							public void onError(Throwable e) {
-
-							}
-
-							@Override
-							public void onNext(Object o) {
-
-
-							}
-						});
-			}
-
-		});
-
+	private void goToPlanActivity() {
+		Toast.makeText(SignUpProfileActivity.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
 	}
 
 	private boolean isValid(String firstName, String lastName) {

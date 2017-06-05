@@ -14,13 +14,23 @@
     <string name="empty_schedule_content">일정에 대한 설명을 입력해 주세요.</string>
 
 
-    //signUpActivity
+    <!--signUpActivity -->
     <string name="join_empty_email">이메일을 입력해주세요.</string>
     <string name="join_too_long_email">이메일 길이를 초과하였습니다.</string>
     <string name="join_invalid_email">이메일 형식이 맞지 않습니다.</string>
     <string name="join_invalid_pwd">비밀번호 형식이 맞지 않습니다.</string>
     <string name="join_empty_pwd">비밀번호를 입력해주세요</string>
     <string name="join_too_short_pwd">비밀번호는 8자리 이상으로 해주세요.</string>
+    <string name="already_to_join_email">이미 가입된 이메일 입니다</string>
+    <string name="show_pwd">Show</string>
+    <string name="hide_pwd">Hide</string>
+    <string name="notice_service_0">By tapping to NEXT , you are indication that</string>
+    <string name="notice_service_1"><b>Privacy Policy</b></string>
+    <string name="notice_service_2">and agree to the</string>
+    <string name="notice_service_3"><b>Terms of Service</b></string>
+
+
+
     <string name="banner_ad_unit_id">ca-app-pub-6734975683573162/7719479339</string>
 
     //myinfokey
@@ -47,7 +57,9 @@
     <string name="find_pwd_phone">다음 버전에서 지원할 계획입니다.\n 이메일로 받기를 이용해 주세요.</string>
 
     <!-- toolbar title collection -->
-    <string name="activity_base_toolbar_title">일정 관리</string>
+    <string name="activity_base_toolbar_title">일정관리</string>
+    <string name="activity_sign_up_toolbar_title">가입하기</string>
+
 
     <!-- time dialog custom -->
     <string name="select_time_table">\u0020\u0020CLICK\u0020\u0020</string>
@@ -86,5 +98,15 @@
     <string name="vocketlist_contents">나만의 봉사 큐레이터 봉봉봉 (클릭시 이동합니다.)</string>
     <string name="vocketlist_url">https://play.google.com/apps/testing/com.vocketlist.android</string>
     <string name="hs_blog_url">http://nanamare.tistory.com/</string>
+
+
+    <!-- network service -->
+    <string name="not_working_server">서버에 문제가 있습니다.</string>
+    <string name="check_user_info">이메일 또는 비밀번호를 확인해주세요</string>
+    <string name="login_success">로그인 완료</string>
+    <string name="impossible_sign_up">가입 불가</string>
+
+    <!-- preference -->
+    <string name="IS_LOGIN_KEY">isLoggedIn</string>
 
 </resources>

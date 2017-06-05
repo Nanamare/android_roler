@@ -23,8 +23,10 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 
+	public static final String putExtraEmail = "ROLER_USER_EMAIL";
+	public static final String putExtraPwd = "ROLER_USER_PWD";
+
 	private Activity activity;
-	private Subscription subscription;
 	private boolean isId;
 	private boolean isPwd;
 	private boolean isShow=true;
@@ -48,10 +50,9 @@ public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 	public void registerUser(String email, String pwd) {
 
 		Intent intent = new Intent(activity,SignUpProfileActivity.class);
-		intent.putExtra("email",email);
-		intent.putExtra("pwd",pwd);
+		intent.putExtra(putExtraEmail,email);
+		intent.putExtra(putExtraPwd,pwd);
 		activity.startActivity(intent);
-		activity.finish();
 
 	}
 
@@ -118,7 +119,7 @@ public class SignUpPresenter  extends BasePresenter implements ISignUpPresenter{
 	}
 
 	@Override
-	public Observable<String> checkDuplicateEmail(String email) {
+	public Observable<Void> checkDuplicateEmail(String email) {
 
 
 		return userService
