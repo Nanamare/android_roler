@@ -49,8 +49,6 @@ public class TodoService extends BaseService {
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-							subscriber.onCompleted();
-							subscriber.unsubscribe();
 						}
 
 						@Override

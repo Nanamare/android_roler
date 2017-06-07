@@ -50,7 +50,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<List<Todo>>() {
 					@Override
 					public void onCompleted() {
-
 					}
 
 					@Override
@@ -104,8 +103,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-//						view.setCurrentPosition();
-
 					}
 
 					@Override
@@ -116,8 +113,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 					@Override
 					public void onNext(List<Role> role) {
-						view.moveRoleContent(role,movePosition);
-
+						view.moveRoleContent(role, movePosition);
 					}
 				}));
 
@@ -126,26 +122,23 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 	@Override
 	public void updateProgress(int role_id) {
 		addSubscription(roleService
-		.updateProgress(role_id)
-		.observeOn(AndroidSchedulers.mainThread())
-		.subscribe(new Subscriber<Void>() {
-			@Override
-			public void onCompleted() {
-				view.refreshProgressLast();
-			}
+				.updateProgress(role_id)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+					}
 
-			@Override
-			public void onError(Throwable e) {
-				e.printStackTrace();
-			}
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
 
-			@Override
-			public void onNext(Void aVoid) {
-//				view.getTodoList();
-				onCompleted();
-
-			}
-		}));
+					@Override
+					public void onNext(Void aVoid) {
+						view.refreshProgressLast();
+					}
+				}));
 
 	}
 
@@ -207,8 +200,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<Void>() {
 					@Override
 					public void onCompleted() {
-						view.refreshProgress();
-						unsubscribe();
 					}
 
 					@Override
@@ -218,7 +209,7 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 
 					@Override
 					public void onNext(Void aVoid) {
-						onCompleted();
+						view.refreshProgress();
 					}
 				}));
 	}

@@ -33,6 +33,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
+import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.signup.ISignUpProfilePresenter;
 import com.buttering.roler.signup.SignUpProfilePresenter;
 import com.google.android.gms.ads.AdRequest;
@@ -60,7 +61,7 @@ import rx.Subscriber;
 /**
  * Created by nanamare on 16. 7. 30..
  */
-public class RoleActivity extends AppCompatActivity implements IRoleView {
+public class RoleActivity extends DepthBaseActivity implements IRoleView {
 
 	private static final int REQUEST_WRITE_STORAGE = 112;
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -273,7 +274,7 @@ public class RoleActivity extends AppCompatActivity implements IRoleView {
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		presenter.getRoleContent();
 

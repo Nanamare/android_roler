@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 
 import com.buttering.roler.R;
+import com.buttering.roler.depth.DepthBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends DepthBaseActivity {
 
 	@BindView(R.id.activity_profile_bong_tv) AppCompatTextView bongTv;
 	@BindView(R.id.activity_profile_hs_blog_tv) AppCompatTextView hsBlogTv;

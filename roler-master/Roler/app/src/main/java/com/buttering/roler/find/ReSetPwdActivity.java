@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buttering.roler.R;
+import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.login.LogInActivity;
 
 import java.util.regex.Matcher;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReSetPwdActivity extends AppCompatActivity implements IReSetUpPwdView {
+public class ReSetPwdActivity extends DepthBaseActivity implements IReSetUpPwdView {
 
 	@BindView(R.id.activity_find_pwd_input_edt)
 	EditText input_edt;

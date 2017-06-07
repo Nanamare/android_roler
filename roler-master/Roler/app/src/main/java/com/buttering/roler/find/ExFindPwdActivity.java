@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buttering.roler.R;
+import com.buttering.roler.depth.DepthBaseActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ExFindPwdActivity extends AppCompatActivity implements IExFindPwdView {
+public class ExFindPwdActivity extends DepthBaseActivity implements IExFindPwdView {
 
 	@BindView(R.id.activity_ex_find_pwd_email_btn) Button email_btn;
 	@BindView(R.id.activity_ex_find_pwd_name_edt) TextView name_edt;

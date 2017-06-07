@@ -23,6 +23,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -278,33 +279,31 @@ public class UserService extends BaseService {
 	}
 
 	public Observable<Void> changePwd(String pwd, String email) {
-		return Observable.create(subscriber -> {
-			getAPI().changePwd(pwd, email)
-					.subscribeOn(Schedulers.io())
-					.subscribe(new Subscriber<ResponseBody>() {
-						@Override
-						public void onCompleted() {
+		return Observable.create(subscriber -> getAPI().changePwd(pwd, email)
+				.subscribeOn(Schedulers.io())
+				.subscribe(new Subscriber<ResponseBody>() {
+					@Override
+					public void onCompleted() {
 
-						}
+					}
 
-						@Override
-						public void onError(Throwable e) {
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onNext(ResponseBody responseBody) {
+						try {
+							String result = responseBody.string();
+							if (getStatusResult(result) == "true") {
+								subscriber.onNext(null);
+							}
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
-
-						@Override
-						public void onNext(ResponseBody responseBody) {
-							try {
-								String result = responseBody.string();
-								if (getStatusResult(result) == "true") {
-									subscriber.onNext(null);
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					});
-		});
+					}
+				}));
 	}
 
 	public Observable<Void> refreshToken(String id, String email) {
@@ -341,6 +340,45 @@ public class UserService extends BaseService {
 		});
 	}
 
+	public Observable<String> checkUserToken(){
+
+		return Observable.create(new Observable.OnSubscribe<String>() {
+			@Override
+			public void call(Subscriber<? super String> subscriber) {
+
+				getAPI()
+						.checkUserToken()
+						.subscribeOn(Schedulers.io())
+						.subscribe(new Subscriber<Response<ResponseBody>>() {
+							@Override
+							public void onCompleted() {
+
+							}
+
+							@Override
+							public void onError(Throwable e) {
+								e.printStackTrace();
+							}
+
+							@Override
+							public void onNext(Response<ResponseBody> responseBodyResponse) {
+								try {
+									String json = responseBodyResponse.body().string();
+									JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+									String result = ja.get("result").getAsString();
+									subscriber.onNext(result);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+
+							}
+						});
+
+			}
+		});
+
+	}
+
 	public interface UserAPI {
 
 		@FormUrlEncoded
@@ -371,6 +409,9 @@ public class UserService extends BaseService {
 		@FormUrlEncoded
 		@PUT("/fcm/register")
 		Observable<ResponseBody> registerToken(@Field("token") String token, @Field("email") String email);
+
+		@GET("/users/token_check")
+		Observable<Response<ResponseBody>> checkUserToken();
 
 	}
 }

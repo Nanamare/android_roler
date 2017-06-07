@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.buttering.roler.BuildConfig;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
+import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.find.ExFindPwdActivity;
 import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.util.SharePrefUtil;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends DepthBaseActivity {
 
 	@BindView(R.id.activity_setting_version_ll) LinearLayout ll_version;
 	@BindView(R.id.activity_setting_tutorial_ll) LinearLayout ll_tutorial;

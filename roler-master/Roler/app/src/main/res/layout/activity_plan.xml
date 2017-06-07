@@ -150,9 +150,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         coverflow:coverHeight="250dp"
-                        coverflow:coverWidth="280dp"
+                        coverflow:coverWidth="235dp"
                         coverflow:maxScaleFactor="1.0"
-                        coverflow:reflectionGap="2dp"
+                        coverflow:reflectionGap="1dp"
                         coverflow:rotationThreshold="1.0"
                         coverflow:scalingThreshold="1.0">
                     </it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow>
