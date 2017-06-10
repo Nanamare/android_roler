@@ -152,4 +152,7 @@ dependencies {
 
     // GestureViews : https://github.com/alexvasilkov/GestureViews
     compile 'com.alexvasilkov:gesture-views:2.3.0'
+
+    //smoothCheckBox
+    compile 'com.github.keygenqt:SmoothCheckBox:1.0.0'
 }

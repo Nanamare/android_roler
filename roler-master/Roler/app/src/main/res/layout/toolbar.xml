@@ -4,7 +4,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#d1e5f9"
+    android:background="#deefff"
     android:focusableInTouchMode="true"
     android:minHeight="?attr/actionBarSize"
     app:contentInsetEnd="16dp"
@@ -57,7 +57,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:background="@drawable/img_logo_3"
                 android:layout_width="110dp"
-                android:layout_height="25dp"/>
+                android:layout_height="28dp"/>
 
         </LinearLayout>
 

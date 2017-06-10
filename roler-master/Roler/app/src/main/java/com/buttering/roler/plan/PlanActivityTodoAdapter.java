@@ -20,6 +20,8 @@ import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
 
+import cn.refactor.library.SmoothCheckBox;
+
 /**
  * Created by nanamare on 16. 7. 31..
  */
@@ -30,6 +32,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 	private int itemLayout;
 	private IPlanPresenter presenter;
 	private IPlanView view;
+	private boolean isDialogMode;
 
 
 	public PlanActivityTodoAdapter(PlanActivity context, List<Todo> todos, int itemLayout) {
@@ -67,45 +70,53 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 		}
 
 
-		holder.cb_todo.setOnClickListener(v -> {
-			if (holder.cb_todo.isChecked()) {
+		holder.cb_todo.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
 
-				if ((holder.tv_list.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
-					holder.tv_list.setPaintFlags(holder.tv_list.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
-				if ((holder.tv_no.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
-					holder.tv_no.setPaintFlags(holder.tv_no.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+				if (holder.cb_todo.isChecked()) {
 
-				todos.get(position).setDone(true);
-				presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
-			} else {
-				AlertDialog.Builder alert = new AlertDialog.Builder(context);
-				alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
-						.setPositiveButton("확인", (dialog, which) -> {
-							holder.tv_list.setTextColor(Color.DKGRAY);
-							holder.tv_no.setTextColor(Color.DKGRAY);
-							todos.get(position).setDone(false);
-							presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
+					if ((holder.tv_list.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
+						holder.tv_list.setPaintFlags(holder.tv_list.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+					if ((holder.tv_no.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG)
+						holder.tv_no.setPaintFlags(holder.tv_no.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
 
-						})
-						.setNegativeButton("취소", (dialog, which) -> {
-							holder.cb_todo.setChecked(true);
-							holder.tv_list.setTextColor(Color.LTGRAY);
-							holder.tv_no.setTextColor(Color.LTGRAY);
-						});
+					todos.get(position).setDone(true);
+					presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
+				} else {
 
-				AlertDialog alertDialog = alert.create();
-				alertDialog.show();
+					if(!isDialogMode){
 
+						AlertDialog.Builder alert = new AlertDialog.Builder(context);
+						alert.setMessage("Todo list를 취소 하시겠습니까?").setCancelable(false)
+								.setPositiveButton("확인", (dialog, which) -> {
+									holder.tv_list.setTextColor(Color.DKGRAY);
+									holder.tv_no.setTextColor(Color.DKGRAY);
+									todos.get(position).setDone(false);
+									presenter.setDone(todos.get(position).getId(), todos.get(position).getDone());
+
+								})
+								.setNegativeButton("취소", (dialog, which) -> {
+									holder.cb_todo.setChecked(true);
+									holder.tv_list.setTextColor(Color.LTGRAY);
+									holder.tv_no.setTextColor(Color.LTGRAY);
+								});
+
+						AlertDialog alertDialog = alert.create();
+						alertDialog.show();
+
+						isDialogMode = false;
+
+					}
+
+				}
 			}
-
-
 		});
 
 		holder.swipe_layout.setShowMode(SwipeLayout.ShowMode.LayDown);
 		holder.swipe_layout.addDrag(SwipeLayout.DragEdge.Left, holder.ll_swipe_left);
 		holder.swipe_layout.setRightSwipeEnabled(false);
 		holder.swipe_layout.addSwipeListener(new SwipeLayout.SwipeListener() {
-
 
 			@Override
 			public void onStartOpen(SwipeLayout layout) {
@@ -114,9 +125,10 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 			@Override
 			public void onOpen(SwipeLayout layout) {
-				YoYo.with(Techniques.Tada)
-						.duration(700)
-						.playOn(layout.findViewById(R.id.ll_swipe_left));
+				//animation
+//				YoYo.with(Techniques.Tada)
+//						.duration(700)
+//						.playOn(layout.findViewById(R.id.ll_swipe_left));
 			}
 
 			@Override
@@ -145,6 +157,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			public void onClick(View v) {
 				presenter.deleteTodo(todos.get(position).getId());
 				todos.remove(position);
+				isDialogMode = true;
 				notifyDataSetChanged();
 			}
 		});
@@ -172,7 +185,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 
 		public TextView tv_no;
 		public TextView tv_list;
-		public CheckBox cb_todo;
+		public SmoothCheckBox cb_todo;
 		public SwipeLayout swipe_layout;
 		public LinearLayout ll_swipe_left;
 
@@ -182,7 +195,7 @@ public class PlanActivityTodoAdapter extends RecyclerView.Adapter<PlanActivityTo
 			swipe_layout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
 			tv_no = (TextView) itemView.findViewById(R.id.tv_no);
 			tv_list = (TextView) itemView.findViewById(R.id.tv_list);
-			cb_todo = (CheckBox) itemView.findViewById(R.id.cb_todo);
+			cb_todo = (SmoothCheckBox) itemView.findViewById(R.id.cb_todo);
 
 		}
 	}

@@ -31,6 +31,7 @@ import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
 import com.buttering.roler.login.ILoginPresenter;
 import com.buttering.roler.login.LoginPresenter;
+import com.buttering.roler.role.EditRoleActivity;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
@@ -50,6 +51,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import me.leolin.shortcutbadger.ShortcutBadger;
@@ -62,6 +64,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+	@BindView(R.id.activity_plan_add_role_iv) AppCompatImageView addRoleIv;
 	@BindView(R.id.role_empty_ll) LinearLayout role_empty_ll;
 	@BindView(R.id.activity_plan_name_tv) AppCompatTextView name;
 	@BindView(R.id.vp_rolePlanPage) FeatureCoverFlow vp_rolePlanPage;
@@ -138,7 +141,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 
 
-//		FCM
+		//FCM
 		SharePrefUtil.putSharedPreference("isFcmToken", false);
 		if (checkPlayServices()) {
 			if (!SharePrefUtil.getBooleanSharedPreference("isFcmToken")) {
@@ -365,6 +368,12 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 			startActivity(new Intent(PlanActivity.this, BaseActivity.class));
 		});
 
+	}
+
+	@OnClick(R.id.activity_plan_add_role_iv)
+	public void addRoleOnClick(){
+		Intent intent = new Intent(this, EditRoleActivity.class);
+		startActivity(intent);
 	}
 
 	@Override

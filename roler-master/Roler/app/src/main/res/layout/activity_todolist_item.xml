@@ -1,5 +1,6 @@
 <com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,43 +37,43 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:padding="5dp"
         android:weightSum="10">
 
         <TextView
             android:id="@+id/tv_no"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:text="01"
             android:textSize="15sp"/>
 
         <TextView
+            android:maxLines="1"
             android:id="@+id/tv_list"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_weight="9"
-            android:text="교양과제 제출하기"
-            android:textSize="15sp"/>
+            android:layout_weight="8"
+            android:textSize="15sp"
+            tools:text="교양과제 제출하기"/>
 
-        <CheckBox
-            android:id="@+id/cb_todo"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:layout_weight="0"
-            android:background="@color/hard_grey"
-            android:button="@drawable/checkboxxml"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <cn.refactor.library.SmoothCheckBox
+                android:id="@+id/cb_todo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </com.daimajia.swipe.SwipeLayout>

@@ -14,7 +14,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**

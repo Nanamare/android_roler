@@ -1,6 +1,7 @@
 package com.buttering.roler.timetable;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.depth.DepthBaseActivity;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -307,8 +309,30 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 
 	@Override
 	public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-		Toast.makeText(this, "Delete : " + event.getName(), Toast.LENGTH_SHORT).show();
-		presenter.deleteSchdule((int) event.getId());
+		createScheduleDeleteDialog(event);
+
+	}
+
+	private void createScheduleDeleteDialog(WeekViewEvent event) {
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setMessage("일정을 삭제 하시겠습니까?").setCancelable(false)
+				.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						presenter.deleteSchdule((int) event.getId());
+					}
+				})
+				.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						return;
+					}
+				});
+
+		AlertDialog alertDialog = alert.create();
+		alertDialog.show();
+
 	}
 
 	@Override

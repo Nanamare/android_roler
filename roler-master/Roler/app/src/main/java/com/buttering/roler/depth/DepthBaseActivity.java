@@ -3,7 +3,6 @@ package com.buttering.roler.depth;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.buttering.roler.login.LogInActivity;
 
