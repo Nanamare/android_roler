@@ -1,4 +1,4 @@
-package com.buttering.roler.signup;
+package com.buttering.roler.dialog;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

@@ -1,4 +1,4 @@
-package com.buttering.roler.util;
+package com.buttering.roler.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -116,4 +116,8 @@
     <string name="menu_refresh">새로고침</string>
     <string name="menu_options">설정</string>
 
+    <!-- todo dialog -->
+    <string name="dialog_todo_title">TODO-LIST 추가하기</string>
+    <string name="dialog_todo_content">내용을 입력해주세요</string>
+
 </resources>

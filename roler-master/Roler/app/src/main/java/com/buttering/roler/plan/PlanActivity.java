@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
@@ -16,9 +17,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +32,8 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
+import com.buttering.roler.dialog.TodoDialog;
+import com.buttering.roler.helper.KeyboardHelper;
 import com.buttering.roler.login.ILoginPresenter;
 import com.buttering.roler.login.LoginPresenter;
 import com.buttering.roler.role.EditRoleActivity;
@@ -134,8 +139,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		allTodoList = receiveTodoItems();
 		planPresenter.getRoleContent();
 
-		addTodoList();
-
 		swipeRole();
 		scrollPostion();
 
@@ -234,50 +237,43 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 			});
 	}
 
-	private void addTodoList() {
+	@OnClick(R.id.activity_plan_bottom_ll)
+	public void planBottomLayoutOnClick(){
+		if (allRoleList.size() != 0) {
 
-		plan_bottom_ll.setOnClickListener(v -> {
-			if (allRoleList.size() != 0) {
-				AlertDialog.Builder alert = new AlertDialog.Builder(PlanActivity.this);
+			TodoDialog dialog = new TodoDialog(PlanActivity.this);
+			KeyboardHelper.show(dialog);
+			dialog.show();
 
-				alert.setTitle("To Do List 추가하기");
-				alert.setMessage("내용을 입력해주세요");
+			dialog.setTodoListener(new TodoDialog.TodoListener() {
+				@Override
+				public void addTodoList(String contents) {
 
-				// Set an EditText view to get user input
-				final EditText input = new EditText(PlanActivity.this);
-				alert.setView(input);
+					Todo todo = new Todo();
+					todo.setContent(contents);
+					allTodoList.get(currentPosition).add(todo);
+					todoAdapter = new PlanActivityTodoAdapter(PlanActivity.this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
+					rv_todolist.setAdapter(todoAdapter);
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Calendar calendar = Calendar.getInstance();
+					String date = sdf.format(calendar.getTime());
+					int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
+					planPresenter.addTodo(contents
+							, 1, date, role_id, false);
 
-				alert.setPositiveButton("확인", (dialog, whichButton) -> {
-					String value = input.getText().toString();
-					if (!value.isEmpty()) {
-						Todo todo = new Todo();
-						todo.setContent(value);
-						allTodoList.get(currentPosition).add(todo);
-						todoAdapter = new PlanActivityTodoAdapter(this, allTodoList.get(currentPosition), R.layout.activity_todolist_item);
-						rv_todolist.setAdapter(todoAdapter);
-						DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						Calendar calendar = Calendar.getInstance();
-						String date = sdf.format(calendar.getTime());
-						int role_id = ((Role) adapter.getItem(vp_rolePlanPage.getScrollPosition())).getRole_id();
-						planPresenter.addTodo(value
-								, 1, date, role_id, false);
-					} else {
-						Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
-					}
-				});
-				alert.setNegativeButton("취소",
-						(dialog, whichButton) -> {
-							// Canceled.
-						});
+				}
 
-				alert.show();
-			}  else {
-				Toast.makeText(this, getString(R.string.empty_role), Toast.LENGTH_SHORT).show();
-			}
-		});
+				@Override
+				public void onCancel() {
+
+				}
+			});
+
+		} else {
+			Toast.makeText(this, getString(R.string.empty_role), Toast.LENGTH_SHORT).show();
+		}
 
 	}
-
 
 	private void setDate() {
 		Calendar calendar = Calendar.getInstance();
@@ -306,7 +302,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		allTodoList.add(todolist);
 
 		//꼭 고쳐야하는 코드
-		for (int loop = 0; loop < 999; loop++) {
+		for (int loop = 0; loop < 9999; loop++) {
 			allTodoList.add(todolist);
 		}
 
@@ -517,6 +513,34 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 	public void hideLoadingBar() {
 		if (materialDialog != null)
 			materialDialog.dismiss();
+	}
+
+	public void showKeyBoard(View view){
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+
+				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+			}
+		},100);
+
+
+	}
+
+	public void hideKeyBord(View view){
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+
+				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);
+
+			}
+		},100);
+
 	}
 
 

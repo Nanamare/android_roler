@@ -1,4 +1,4 @@
-package com.buttering.roler.timetable;
+package com.buttering.roler.dialog;
 
 import android.app.TimePickerDialog;
 import android.content.Context;

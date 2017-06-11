@@ -28,11 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buttering.roler.*;
-import com.buttering.roler.VO.MyInfoDAO;
-import com.buttering.roler.VO.Schedule;
+import com.buttering.roler.dialog.SignUpProfileTimeDialog;
 import com.buttering.roler.login.ILoginPresenter;
 import com.buttering.roler.login.ILoginView;
-import com.buttering.roler.login.LogInActivity;
 import com.buttering.roler.login.LoginPresenter;
 import com.buttering.roler.plan.PlanActivity;
 import com.buttering.roler.util.SharePrefUtil;
@@ -47,12 +45,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressConstant;
-import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class SignUpProfileActivity extends AppCompatActivity implements ISignUpProfileView, ILoginView {
 
@@ -222,7 +217,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Sign Up Profile");
+		textView.setText(getString(R.string.activity_sign_up_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {

@@ -7,7 +7,6 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +26,8 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.depth.DepthBaseActivity;
+import com.buttering.roler.dialog.ScheduleDialog;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

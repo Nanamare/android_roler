@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="300dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingBottom="25dp"
+              android:paddingEnd="20dp"
+              android:paddingStart="20dp"
+              android:paddingTop="25dp">
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatTextView
+                android:textSize="@dimen/font_50"
+                android:text="@string/dialog_todo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatTextView
+            android:textSize="@dimen/font_40"
+            android:text="@string/dialog_todo_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/dialog_todo_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- 버튼 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/dialog_todo_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="6dp"
+            android:text="취소"
+            android:textColor="#808080"
+            android:textSize="@dimen/font_42" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/dialog_todo_done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="44dp"
+            android:padding="6dp"
+            android:text="신청"
+            android:textColor="@color/point_5FA9D0"
+            android:textSize="@dimen/font_42" />
+
+    </LinearLayout>
+
+</LinearLayout>

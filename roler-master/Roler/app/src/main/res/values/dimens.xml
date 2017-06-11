@@ -4,4 +4,25 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="notice_service_size">13sp</dimen>
+
+    <!-- 폰트 크기 -->
+    <dimen name="font_25">8.3sp</dimen>
+    <dimen name="font_27">9sp</dimen>
+    <dimen name="font_30">10sp</dimen>
+    <dimen name="font_33">11sp</dimen>
+    <dimen name="font_36">12sp</dimen>
+    <dimen name="font_39">13sp</dimen>
+    <dimen name="font_40">13.3sp</dimen>
+    <dimen name="font_42">14sp</dimen>
+    <dimen name="font_45">15sp</dimen>
+    <dimen name="font_48">16sp</dimen>
+    <dimen name="font_50">16.6sp</dimen>
+    <dimen name="font_51">17sp</dimen>
+    <dimen name="font_54">18sp</dimen>
+    <dimen name="font_60">20sp</dimen>
+    <dimen name="font_81">27sp</dimen>
+    <dimen name="font_120">40sp</dimen>
+    <dimen name="font_150">50sp</dimen>
+    <dimen name="font_180">60sp</dimen>
+
 </resources>
