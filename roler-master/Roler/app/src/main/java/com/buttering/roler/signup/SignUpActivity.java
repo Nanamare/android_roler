@@ -114,20 +114,20 @@ public class SignUpActivity extends AppCompatActivity {
 
 		policyTv[0] = new TextView(this);
 		policyTv[0].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		policyTv[0].setTextSize(10);
 		policyTv[0].setText(getString(R.string.notice_service_0));
-		policyTv[0].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
 		policyTv[1] = new TextView(this);
 		policyTv[1].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		policyTv[1].setText(getString(R.string.notice_service_1));
-		policyTv[1].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
+		policyTv[1].setTextSize(10);
 		policyTv[2] = new TextView(this);
 		policyTv[2].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		policyTv[2].setText(getString(R.string.notice_service_2));
-		policyTv[2].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
+		policyTv[2].setTextSize(10);
 		policyTv[3] = new TextView(this);
 		policyTv[3].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		policyTv[3].setText(getString(R.string.notice_service_3));
-		policyTv[3].setTextSize(getResources().getDimension(R.dimen.notice_service_size));
+		policyTv[3].setTextSize(10);
 
 		dynamicView(activity_signup_ll_policy, policyTv, this);
 

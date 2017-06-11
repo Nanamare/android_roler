@@ -123,7 +123,7 @@ public class ExFindPwdActivity extends DepthBaseActivity implements IExFindPwdVi
 			finish();
 		});
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Find Password");
+		textView.setText("비밀번호 찾기");
 		setSupportActionBar(toolbar);
 
 	}

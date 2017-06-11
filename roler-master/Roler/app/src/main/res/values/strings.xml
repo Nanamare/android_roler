@@ -25,9 +25,9 @@
     <string name="show_pwd">Show</string>
     <string name="hide_pwd">Hide</string>
     <string name="notice_service_0">By tapping to NEXT , you are indication that</string>
-    <string name="notice_service_1"><b>Privacy Policy</b></string>
-    <string name="notice_service_2">and agree to the</string>
-    <string name="notice_service_3"><b>Terms of Service</b></string>
+    <string name="notice_service_1"> <b>Privacy Policy</b></string>
+    <string name="notice_service_2"> and agree to the</string>
+    <string name="notice_service_3"> <b>Terms of Service</b></string>
 
 
 

@@ -19,7 +19,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.001"
         multiDexEnabled true;
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -29,7 +29,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false //debuggin 허용 금지
+            zipAlignEnabled true // apk 최적화
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             applicationVariants.all { variant ->
@@ -94,25 +96,46 @@ dependencies {
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    compile 'com.commit451:PhotoView:1.2.4'
     compile files('libs/3rdparty_login_library_android_4.1.4.jar')
+
+    //버터 나이프
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.jakewharton:butterknife:8.4.0'
+
+    //안드로이드 서포트 라이브러리
     compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.github.alamkanak:android-week-view:1.2.6'
-    compile 'com.wdullaer:materialdatetimepicker:1.3.0'
     compile 'com.android.support:design:23.0.0'
+
+
+    //스케쥴 관리 뷰
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
+
+    //우선순위 뷰
+    compile 'com.wdullaer:materialdatetimepicker:1.3.0'
+
+
+    //써클 뷰
     compile 'de.hdodenhof:circleimageview:2.0.0'
+
     compile 'cc.cloudist.acplibrary:library:1.2.1'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.google.android.gms:play-services:10.2.4'
+
+    //http 라이브러리
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.google.android.gms:play-services:10.2.4'
+
+    //multi dex
     compile 'com.android.support:multidex:1.0.1'
+
+    //rxandroid, rxjava, rx binding
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.7'
+
+
     // Firebase (https://firebase.google.com/)
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     // Firebase message
@@ -126,16 +149,19 @@ dependencies {
     compile 'com.daimajia.androidanimations:library:1.1.3@aar'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+
     //PICKERUI
     compile 'com.github.davidpizarro:pickerui:1.0.1'
+
     //leack trace memory
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    //eventBus
-    compile 'com.squareup:otto:1.3.7'
-    //badge
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //badge 노티 뱃지
     compile 'me.leolin:ShortcutBadger:1.1.13@aar'
+
+
     // Required for local unit tests (JUnit 4 framework)
     testCompile 'junit:junit:4.12'
     // Required for instrumented tests
@@ -155,4 +181,6 @@ dependencies {
 
     //smoothCheckBox
     compile 'com.github.keygenqt:SmoothCheckBox:1.0.0'
+
+//    compile 'com.commit451:PhotoView:1.2.4'
 }
