@@ -35,12 +35,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.AppCompatEditText
+            android:textSize="@dimen/font_50"
+            tools:text="@string/dialog_todo_edit_contents"
             android:id="@+id/dialog_todo_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <!-- 버튼 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

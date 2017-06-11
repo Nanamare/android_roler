@@ -41,14 +41,6 @@ public class TodoDialog extends Dialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 
-	public TodoDialog(@NonNull Context context, @StyleRes int themeResId) {
-		super(context, themeResId);
-	}
-
-	protected TodoDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-		super(context, cancelable, cancelListener);
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
