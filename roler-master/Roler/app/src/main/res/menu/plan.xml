@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="300"
-        android:title="Refresh"
+        android:title="@string/menu_refresh"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_setting"
         android:orderInCategory="300"
-        android:title="Settings"
+        android:title="@string/menu_options"
         app:showAsAction="never"/>
 
 

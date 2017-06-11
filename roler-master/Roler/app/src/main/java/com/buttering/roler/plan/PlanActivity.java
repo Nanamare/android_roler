@@ -357,7 +357,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		imageView2.setImageResource(R.drawable.icon_timeline);
 		imageView.setImageResource(R.drawable.icon_profile);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Plan");
+		textView.setText(getString(R.string.activity_plan_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(v -> {

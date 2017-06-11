@@ -161,7 +161,7 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("My Page");
+		textView.setText(getString(R.string.activity_role_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(v -> {
@@ -268,7 +268,6 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 				Intent intentSubActivity = new Intent(RoleActivity.this, EditRoleActivity.class);
 				intentSubActivity.putExtra("Role", (Role) adapter.getItem(vp_roleDetail.getScrollPosition()));
 				startActivity(intentSubActivity);
-				finish();
 			}
 		});
 	}
@@ -284,7 +283,6 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 	public void editOnnClick() {
 		Intent intent = new Intent(RoleActivity.this, EditRoleActivity.class);
 		startActivity(intent);
-		finish();
 	}
 
 	@OnClick(R.id.activity_role_deleteTv)

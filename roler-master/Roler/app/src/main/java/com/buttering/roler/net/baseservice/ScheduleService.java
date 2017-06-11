@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -172,7 +173,6 @@ public class ScheduleService extends BaseService {
 
 		@GET("/schedule/read")
 		Observable<ResponseBody> getScheduleList(@Query("date") String date);
-
 
 		@FormUrlEncoded
 		@POST("/schedule/create")

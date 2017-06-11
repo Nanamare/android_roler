@@ -9,7 +9,7 @@
     <string name="add_schedule_title">일정 추가 하기</string>
     <string name="add_start_time_title">시작 시간을 선택해주세요</string>
     <string name="add_end_time_title">종료 시간을 선택해주세요</string>
-    <string name="set_time_title" formatted="false">%2d시 %2d분</string>
+    <string name="set_time_title" formatted="false">\u0020%2d시 %2d분</string>
     <string name="schedule_contents" formatted="false">%1s ~ %2s\n%3s</string>
     <string name="empty_schedule_content">일정에 대한 설명을 입력해 주세요.</string>
 
@@ -24,10 +24,10 @@
     <string name="already_to_join_email">이미 가입된 이메일 입니다</string>
     <string name="show_pwd">Show</string>
     <string name="hide_pwd">Hide</string>
-    <string name="notice_service_0">By tapping to NEXT , you are indication that</string>
-    <string name="notice_service_1"> <b>Privacy Policy</b></string>
-    <string name="notice_service_2"> and agree to the</string>
-    <string name="notice_service_3"> <b>Terms of Service</b></string>
+    <string name="notice_service_0">By tapping to NEXT , you are indication that\u0020</string>
+    <string name="notice_service_1"><b>Privacy Policy</b></string>
+    <string name="notice_service_2">\u0020and agree to the\u0020</string>
+    <string name="notice_service_3"><b>Terms of Service</b></string>
 
 
 
@@ -59,10 +59,13 @@
     <!-- toolbar title collection -->
     <string name="activity_base_toolbar_title">일정관리</string>
     <string name="activity_sign_up_toolbar_title">가입하기</string>
+    <string name="activity_plan_toolbar_title">역할보기</string>
+    <string name="activity_role_toolbar_title">마이페이지</string>
+    <string name="activity_setting_toolbar_title">설정</string>
 
 
     <!-- time dialog custom -->
-    <string name="select_time_table">\u0020\u0020CLICK\u0020\u0020</string>
+    <string name="select_time_table">\u0020\u0020Click\u0020\u0020</string>
     <string name="start_time_title">시작 시간\u0020\u0020:</string>
     <string name="end_time_title">종료 시간\u0020\u0020:</string>
     <string name="schedule_contents_title">일정에 대한 설명을 입력해 주세요.</string>
@@ -108,5 +111,9 @@
 
     <!-- preference -->
     <string name="IS_LOGIN_KEY">isLoggedIn</string>
+
+    <!-- hamberger menu -->
+    <string name="menu_refresh">새로고침</string>
+    <string name="menu_options">설정</string>
 
 </resources>

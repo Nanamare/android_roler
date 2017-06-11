@@ -92,8 +92,6 @@ public class BaseService<T> {
 			.addNetworkInterceptor(new LoggingInterceptor(MyApplication.getInstance().getContext()));
 
 
-
-
 	public T getAPI() {
 		return service;
 	}

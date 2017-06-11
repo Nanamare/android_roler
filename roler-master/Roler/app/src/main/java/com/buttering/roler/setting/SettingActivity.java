@@ -148,7 +148,7 @@ public class SettingActivity extends DepthBaseActivity {
 			finish();
 		});
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Options");
+		textView.setText(getString(R.string.activity_setting_toolbar_title));
 		setSupportActionBar(toolbar);
 
 	}

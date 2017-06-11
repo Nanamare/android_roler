@@ -11,6 +11,7 @@ import com.buttering.roler.R;
 import com.buttering.roler.util.MyApplication;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
