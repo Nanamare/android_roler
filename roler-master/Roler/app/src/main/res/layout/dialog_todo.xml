@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             android:padding="6dp"
             android:text="취소"
-            android:textColor="#808080"
+            android:textColor="@color/dialog_todo_font_color"
             android:textSize="@dimen/font_42" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -63,8 +63,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="44dp"
             android:padding="6dp"
-            android:text="신청"
-            android:textColor="@color/point_5FA9D0"
+            android:text="추가"
+            android:textColor="@color/dialog_todo_font_color"
             android:textSize="@dimen/font_42" />
 
     </LinearLayout>

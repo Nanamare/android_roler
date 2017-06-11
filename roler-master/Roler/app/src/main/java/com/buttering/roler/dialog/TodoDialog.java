@@ -13,10 +13,13 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.buttering.roler.R;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by kinamare on 2017-06-12.
@@ -54,13 +57,41 @@ public class TodoDialog extends Dialog {
 
 		ButterKnife.bind(this);
 
+		checkBlanck();
+
+	}
+
+	private void checkBlanck() {
+
+		Observable<CharSequence> observable1 = RxTextView.textChanges(todoEditText);
+		observable1.map(charSequence -> charSequence.length() > 0).subscribe(new Subscriber<Boolean>() {
+			@Override
+			public void onCompleted() {
+
+			}
+
+			@Override
+			public void onError(Throwable e) {
+
+			}
+
+			@Override
+			public void onNext(Boolean aBoolean) {
+				if(aBoolean){
+					doneBtn.setTextColor(context.getResources().getColor(R.color.point_5FA9D0));
+				} else {
+					doneBtn.setTextColor(context.getResources().getColor(R.color.dialog_todo_font_color));
+				}
+
+			}
+		});
 	}
 
 	@OnClick(R.id.dialog_todo_done_btn)
 	public void doneOnClick() {
 		String contents = todoEditText.getText().toString();
 		if (TextUtils.isEmpty(contents)) {
-			Toast.makeText(context, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, context.getString(R.string.dialog_todo_content), Toast.LENGTH_SHORT).show();
 			return;
 		} else {
 			todoListener.addTodoList(contents);

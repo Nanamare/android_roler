@@ -115,5 +115,7 @@
     <color name="point_5FA9D0">#FF5FA9D0</color>
     <color name="point_E47B75">#FFE47B75</color>
 
+    <color name="dialog_todo_font_color">#808080</color>
+
 
 </resources>
