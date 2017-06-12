@@ -121,6 +121,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 								, et_roleContent.getText().toString(), role_id);
 					}
 					intent.putExtra("Role", role);
+					intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
 					finish();
 				}

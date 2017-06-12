@@ -74,7 +74,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 				.subscribe(new Subscriber<List<Role>>() {
 					@Override
 					public void onCompleted() {
-
 					}
 
 					@Override
@@ -87,7 +86,6 @@ public class PlanPresenter extends BasePresenter implements IPlanPresenter {
 					public void onNext(List<Role> role) {
 						view.setRoleContent(role);
 						view.setCurrentPosition();
-						onCompleted();
 
 					}
 				}));

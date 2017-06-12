@@ -59,6 +59,7 @@
                 android:value="com.buttering.roler.role.RoleActivity"/>
         </activity>
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".login.LogInActivity"
             android:theme="@style/NoAppBarTheme">
         </activity>

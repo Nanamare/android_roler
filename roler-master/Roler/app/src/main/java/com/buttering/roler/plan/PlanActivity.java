@@ -17,12 +17,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +30,7 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.MyInfoDAO;
 import com.buttering.roler.VO.Role;
 import com.buttering.roler.VO.Todo;
+import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.dialog.TodoDialog;
 import com.buttering.roler.helper.KeyboardHelper;
 import com.buttering.roler.login.ILoginPresenter;
@@ -40,7 +39,6 @@ import com.buttering.roler.role.EditRoleActivity;
 import com.buttering.roler.role.RoleActivity;
 import com.buttering.roler.setting.SettingActivity;
 import com.buttering.roler.timetable.BaseActivity;
-import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.util.MyApplication;
 import com.buttering.roler.util.SharePrefUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -141,8 +139,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 		swipeRole();
 		scrollPostion();
-
-
 
 		//FCM
 		SharePrefUtil.putSharedPreference("isFcmToken", false);
@@ -294,10 +290,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 	private List<List<Todo>> receiveTodoItems() {
 		todo = new Todo();
-		todo.setRole_id(0);
-		todo.setId(0);
-		todo.setContent("역할별로 할일을 적어 보세요!");
-		todo.setDone(false);
 		todolist.add(todo);
 		allTodoList.add(todolist);
 
@@ -352,8 +344,8 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		ImageView imageView2 = (ImageView) findViewById(R.id.custom_toolbar_right_iv);
 		imageView2.setImageResource(R.drawable.icon_timeline);
 		imageView.setImageResource(R.drawable.icon_profile);
-		textView.setTextColor(Color.BLACK);
-		textView.setText(getString(R.string.activity_plan_toolbar_title));
+//		textView.setTextColor(Color.BLACK);
+//		textView.setText(getString(R.string.activity_plan_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(v -> {
@@ -515,33 +507,6 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 			materialDialog.dismiss();
 	}
 
-	public void showKeyBoard(View view){
-
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-
-				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
-			}
-		},100);
-
-
-	}
-
-	public void hideKeyBord(View view){
-
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-
-				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);
-
-			}
-		},100);
-
-	}
 
 
 }

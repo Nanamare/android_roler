@@ -6,20 +6,20 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/action_today"
-              android:title="Go to today"
+              android:title="오늘로 이동하기"
               android:orderInCategory="100"
               app:showAsAction="never"
               android:checked="true"/>
         <item android:id="@+id/action_day_view"
-              android:title="Day view"
+              android:title="1일 단위"
               android:orderInCategory="100"
               app:showAsAction="never"/>
         <item android:id="@+id/action_three_day_view"
-              android:title="3 day view"
+              android:title="3일 단위"
               android:orderInCategory="100"
               app:showAsAction="never"/>
         <item android:id="@+id/action_week_view"
-              android:title="Week view"
+              android:title="일주일 단위"
               android:orderInCategory="100"
               app:showAsAction="never"/>
     </group>
