@@ -1,6 +1,9 @@
 package com.buttering.roler.plan;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +71,6 @@ public class PlanActivityAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		viewHolder.rl_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 		viewHolder.tv_rolePrimaryPlan.setText(String.valueOf(roles.get(position).getRolePrimary()));
 		viewHolder.tv_roleContentPlan.setText(roles.get(position).getRoleContent());
 		viewHolder.tv_roleNamePlan.setText(roles.get(position).getRoleName());
@@ -77,6 +79,10 @@ public class PlanActivityAdapter extends BaseAdapter {
 		viewHolder.waveLoadingView.setBorderColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
 		viewHolder.waveLoadingView.setCenterTitleColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
 		viewHolder.waveLoadingView.setWaveColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+		viewHolder.top_ll.setBackground(ContextCompat.getDrawable(context, R.drawable.plan_item_shape_round));
+		viewHolder.rl_roleItemTop.setBackground(ContextCompat.getDrawable(context, R.drawable.plan_item_top_round));
+		((GradientDrawable) viewHolder.rl_roleItemTop.getBackground()).setColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+
 		return convertView;
 	}
 
@@ -101,6 +107,8 @@ public class PlanActivityAdapter extends BaseAdapter {
 		TextView tv_roleContentPlan;
 		@BindView(R.id.waveLoadingView)
 		WaveLoadingView waveLoadingView;
+		@BindView(R.id.activity_plan_item_top_ll)
+		LinearLayout top_ll;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

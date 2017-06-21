@@ -34,6 +34,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
@@ -50,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -58,7 +60,7 @@ import rx.Subscriber;
 public class LogInActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ILoginView {
 
 	private static final String EXTRA_MESSAGE = "com.buttering.roler";
-	private static final String TAG = "Login_Activity";
+	private static final String TAG = "LogInActivity";
 	private static final String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
 	private static final String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
 	private static final String OAUTH_CLIENT_NAME = "Roler";
@@ -74,6 +76,9 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private SweetAlertDialog materialDialog;
 
 	public ISignUpProfilePresenter presenter;
+
+	private boolean isEmptyEmail;
+	private boolean isEmptyPwd;
 
 	@BindView(R.id.activity_login_google_btn) ImageButton login_google_btn;
 	@BindView(R.id.activity_login_signIn_btn) Button login_signIn_btn;
@@ -136,12 +141,67 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 		checkPlayServices();
 
+		checkTheRegularExpression();
+
 		loginPresenter = new LoginPresenter(this, this);
 		signUpPresenter = new SignUpPresenter();
 
 		initLoginSetting();
 
 		presenter = new SignUpProfilePresenter();
+
+
+	}
+
+	private void checkTheRegularExpression() {
+
+		Observable<CharSequence> emailObservable = RxTextView.textChanges(email_et);
+		emailObservable.map(charSequence -> charSequence.length() > 0).subscribe(new Subscriber<Boolean>() {
+			@Override
+			public void onCompleted() {
+
+			}
+
+			@Override
+			public void onError(Throwable e) {
+
+			}
+
+			@Override
+			public void onNext(Boolean aBoolean) {
+				isEmptyEmail = aBoolean;
+				if(aBoolean && isEmptyPwd){
+					login_signIn_btn.setBackground(ContextCompat.getDrawable(LogInActivity.this, R.drawable.sign_in_on_round_btn));
+				} else {
+					login_signIn_btn.setBackground(ContextCompat.getDrawable(LogInActivity.this, R.drawable.sign_in_off_round_btn));
+				}
+
+			}
+		});
+
+		Observable<CharSequence> pwdObservable = RxTextView.textChanges(pw_et);
+		pwdObservable.map(charSequence -> charSequence.length() > 0).subscribe(new Subscriber<Boolean>() {
+			@Override
+			public void onCompleted() {
+
+			}
+
+			@Override
+			public void onError(Throwable e) {
+
+			}
+
+			@Override
+			public void onNext(Boolean aBoolean) {
+				isEmptyPwd = aBoolean;
+				if(aBoolean && isEmptyEmail){
+					login_signIn_btn.setBackground(ContextCompat.getDrawable(LogInActivity.this, R.drawable.sign_in_on_round_btn));
+				} else {
+					login_signIn_btn.setBackground(ContextCompat.getDrawable(LogInActivity.this, R.drawable.sign_in_off_round_btn));
+				}
+
+			}
+		});
 
 
 	}
@@ -429,6 +489,14 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	public void loginGoogleOnClick() {
 
 		checkThePemission();
+
+//    regacy
+//		mGoogleApiClient = new GoogleApiClient.Builder(this)
+//				.addConnectionCallbacks(this)
+//				.addOnConnectionFailedListener(this)
+//				.addApi(Plus.API,  Plus.PlusOptions.builder().build())
+//				.addScope(new Scope(Scopes.PROFILE))
+//				.build();
 
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)

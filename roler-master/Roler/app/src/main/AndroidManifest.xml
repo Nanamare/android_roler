@@ -34,9 +34,6 @@
         android:supportsRtl="true"
         android:theme="@style/NoAppBarTheme"
         tools:node="replace">
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name=".splash.SplashActivity"
@@ -62,6 +59,7 @@
             android:windowSoftInputMode="adjustResize"
             android:name=".login.LogInActivity"
             android:theme="@style/NoAppBarTheme">
+
         </activity>
         <activity
             android:name=".signup.SignUpProfileActivity"
@@ -135,6 +133,11 @@
         <service
             android:name=".util.TokenRefreshService"
             android:enabled="true"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
     </application>
 
 </manifest>

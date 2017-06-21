@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -124,6 +125,10 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		planPresenter = new PlanPresenter(this, this);
 		tokenPresenter = new LoginPresenter(this);
 
+		//smooth scrolling
+		rv_todolist.setNestedScrollingEnabled(false);
+		ViewCompat.setNestedScrollingEnabled(vp_rolePlanPage, false);
+
 		roleSize = allRoleList.size();
 		if (roleSize == 0) {
 			role_empty_ll.setVisibility(View.VISIBLE);
@@ -171,6 +176,7 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 		}
 
 		ShortcutBadger.removeCount(MyApplication.getInstance().getContext()); //for 1.1.4+
+
 
 	}
 

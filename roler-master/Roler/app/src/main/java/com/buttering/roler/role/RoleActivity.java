@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -142,6 +143,9 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 
 		//load RoleContent
 		presenter.getRoleContent();
+
+		//smooth scrolling
+		ViewCompat.setNestedScrollingEnabled(vp_roleDetail, false);
 
 		editRole();
 

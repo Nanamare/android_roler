@@ -28,7 +28,7 @@
         <item name="android:textColorPrimary">@color/mdtp_transparent_black</item>
         <item name="actionMenuTextColor">@color/mdtp_transparent_black</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="colorControlActivated">@color/mdtp_button_color</item>
+        <item name="colorControlActivated">@color/point_5FA9D0</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

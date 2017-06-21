@@ -1,6 +1,8 @@
 package com.buttering.roler.role;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +69,7 @@ public class RoleActivityAdapter extends BaseAdapter {
 
 
 		viewHolder.role_title.setText("우선순위 " + String.valueOf(roles.get(position).getRolePrimary()));
-		viewHolder.ll_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
+//		viewHolder.ll_roleItemTop.setBackgroundResource(bgColor[roles.get(position).getRolePrimary()]);
 		viewHolder.role_subTitle.setText("역할을 실천해 나가세요!");
 		viewHolder.rolePrimary.setText(String.valueOf(roles.get(position).getRole_id()));
 		viewHolder.roleContent.setText(roles.get(position).getRoleContent());
@@ -77,6 +79,10 @@ public class RoleActivityAdapter extends BaseAdapter {
 		viewHolder.waveLoadingView.setBorderColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
 		viewHolder.waveLoadingView.setCenterTitleColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
 		viewHolder.waveLoadingView.setWaveColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
+
+		viewHolder.top_ll.setBackground(ContextCompat.getDrawable(context, R.drawable.plan_item_shape_round));
+		viewHolder.ll_roleItemTop.setBackground(ContextCompat.getDrawable(context, R.drawable.plan_item_top_round));
+		((GradientDrawable) viewHolder.ll_roleItemTop.getBackground()).setColor(context.getResources().getColor(bgColor[roles.get(position).getRolePrimary()]));
 
 
 		return convertView;
@@ -105,6 +111,8 @@ public class RoleActivityAdapter extends BaseAdapter {
 		TextView role_title;
 		@BindView(R.id.activity_role_subTitle)
 		TextView role_subTitle;
+		@BindView(R.id.activity_role_item_top_ll)
+		LinearLayout top_ll;
 
 		public ViewHolder(View view) {
 			ButterKnife.bind(this, view);

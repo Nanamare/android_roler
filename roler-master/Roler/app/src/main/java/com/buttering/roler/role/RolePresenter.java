@@ -67,7 +67,6 @@ public class RolePresenter extends BasePresenter implements IRolePresenter {
 					@Override
 					public void onNext(List<Role> role) {
 						view.setRoleContent(role);
-						onCompleted();
 
 					}
 				}));

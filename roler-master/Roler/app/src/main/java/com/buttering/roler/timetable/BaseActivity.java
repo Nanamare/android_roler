@@ -91,6 +91,8 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 		//load Schedule
 		presenter.getSchduleList(nowDate);
 
+		mWeekView.setOverlappingEventGap(5);
+
 
 	}
 

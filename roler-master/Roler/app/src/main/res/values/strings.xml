@@ -65,8 +65,9 @@
 
 
     <!-- time dialog custom -->
-    <string name="select_time_table">\u0020\u0020Click\u0020\u0020</string>
+    <!--<string name="select_time_table">\u0020\u0020Click\u0020\u0020</string>-->
     <string name="start_time_title">시작 시간\u0020\u0020:</string>
+    <string name="select_time_table">\u0020\u0020선택해보세요\u0020\u0020</string>
     <string name="end_time_title">종료 시간\u0020\u0020:</string>
     <string name="schedule_contents_title">일정에 대한 설명을 입력해 주세요.</string>
 
@@ -120,5 +121,9 @@
     <string name="dialog_todo_title">TODO-LIST 추가하기</string>
     <string name="dialog_todo_content">내용을 입력해주세요</string>
     <string name="dialog_todo_edit_contents">역할을 써주세요</string>
+
+    <!-- login activity-->
+    <string name="sign_in_btn">로그인</string>
+    <string name="sign_up_btn">가입하기</string>
 
 </resources>
