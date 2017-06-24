@@ -95,7 +95,7 @@
                             android:id="@+id/activity_plan_arrow_left_iv"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:background="@drawable/icon_arrow_left"/>
+                            android:background="@drawable/ic_keyboard_arrow_left_black_24dp_2"/>
                     </LinearLayout>
 
 
@@ -120,7 +120,7 @@
                             android:id="@+id/activity_plan_arrow_right_iv"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:background="@drawable/icon_arrow_right"/>
+                            android:background="@drawable/ic_keyboard_arrow_right_black_24dp_2"/>
 
                     </LinearLayout>
 

@@ -24,6 +24,7 @@ import com.buttering.roler.web.LicenseActivity;
 import com.buttering.roler.web.TermServiceActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.nhn.android.naverlogin.OAuthLogin;
 
 import butterknife.BindView;
@@ -46,6 +47,8 @@ public class SettingActivity extends DepthBaseActivity {
 	private static final int single_top_activity = 999;
 
 	private OAuthLogin mOAuthLoginModule;
+	private GoogleApiClient mGoogleApiClient;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class SettingActivity extends DepthBaseActivity {
 			SharePrefUtil.delSharePreference("accessToken");
 			mOAuthLoginModule = OAuthLogin.getInstance();
 			mOAuthLoginModule.logout(this);
+
 			Intent loginIntent = new Intent(this, LogInActivity.class);
 			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
 				loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

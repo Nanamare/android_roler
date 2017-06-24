@@ -2,6 +2,7 @@ package com.buttering.roler.login;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -27,6 +28,8 @@ import com.buttering.roler.signup.SignUpActivity;
 import com.buttering.roler.signup.SignUpPresenter;
 import com.buttering.roler.signup.SignUpProfilePresenter;
 import com.buttering.roler.util.SharePrefUtil;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -149,6 +152,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		initLoginSetting();
 
 		presenter = new SignUpProfilePresenter();
+
 
 
 	}
@@ -552,7 +556,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				checkGoogleUserDuplication(email, name, pwd);
 
 
-
 			}
 		}
 	}
@@ -671,15 +674,20 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		;
+
 		switch (requestCode) {
-			case single_top_activity: {
-				break;
+
+			case PLAY_SERVICES_RESOLUTION_REQUEST: {
+//				GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//
+//				if(result.isSuccess()){
+//					Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
+//				} else {
+//					Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show();
+//				}
+
 			}
-//			case PLAY_SERVICES_RESOLUTION_REQUEST : {
-//				mGoogleApiClient.connect();
-//				break;
-//			}
+
 
 		}
 

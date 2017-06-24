@@ -43,8 +43,10 @@
 
     <string name="find_pwd">비밀번호 찾기</string>
 
+    <!-- role activity -->
     <string name="add_role_information">역할 추가하기</string>
     <string name="delete_role_information">역할 삭제하기</string>
+    <string name="warning_empty_role">역할이 하나도 없습니다</string>
 
     <!--plan activity-->
     <string name="load_role">로딩 중입니다</string>
@@ -125,5 +127,14 @@
     <!-- login activity-->
     <string name="sign_in_btn">로그인</string>
     <string name="sign_up_btn">가입하기</string>
+
+    <!-- edit role -->
+    <string name="priority_title">우선 순위 설정</string>
+    <string name="priority_title_btn">우선순위를 설정해주세요!</string>
+    <string name="role_title">역할 제목 설정</string>
+    <string name="role_title_hint">역할을 설정해보세요!</string>
+    <string name="goal_title">단기 목표 설명</string>
+    <string name="goal_title_hint">역할에 대한 설명을 적어 보세요!</string>
+    <string name="done_title">추가하기</string>
 
 </resources>

@@ -300,6 +300,7 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 					} else {
 						vp_roleDetail.setVisibility(View.GONE);
 						empty_role_ll.setVisibility(View.VISIBLE);
+						Toast.makeText(this, getString(R.string.warning_empty_role), Toast.LENGTH_SHORT).show();
 					}
 				})
 				.setNegativeButton("취소", (dialog, which) -> {
