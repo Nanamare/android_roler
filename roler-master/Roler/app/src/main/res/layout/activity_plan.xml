@@ -127,6 +127,7 @@
                 </LinearLayout>
 
                 <FrameLayout
+                    android:background="@color/hard_grey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -150,7 +151,7 @@
                         android:id="@+id/vp_rolePlanPage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        coverflow:coverHeight="250dp"
+                        coverflow:coverHeight="235dp"
                         coverflow:coverWidth="235dp"
                         coverflow:maxScaleFactor="1.0"
                         coverflow:reflectionGap="1dp"
@@ -163,6 +164,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:background="@color/hard_grey"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="-50dp"

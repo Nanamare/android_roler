@@ -340,14 +340,14 @@ public class UserService extends BaseService {
 		});
 	}
 
-	public Observable<String> checkUserToken(){
+	public Observable<String> checkUserToken(String token){
 
 		return Observable.create(new Observable.OnSubscribe<String>() {
 			@Override
 			public void call(Subscriber<? super String> subscriber) {
 
 				getAPI()
-						.checkUserToken()
+						.checkUserToken(token)
 						.subscribeOn(Schedulers.io())
 						.subscribe(new Subscriber<Response<ResponseBody>>() {
 							@Override
@@ -410,8 +410,9 @@ public class UserService extends BaseService {
 		@PUT("/fcm/register")
 		Observable<ResponseBody> registerToken(@Field("token") String token, @Field("email") String email);
 
-		@GET("/users/token_check")
-		Observable<Response<ResponseBody>> checkUserToken();
+		@FormUrlEncoded
+		@POST("/users/token_check")
+		Observable<Response<ResponseBody>> checkUserToken(@Field("token") String token);
 
 	}
 }

@@ -345,13 +345,10 @@ public class PlanActivity extends DepthBaseActivity implements IPlanView {
 
 	private void setToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
-		TextView textView = (TextView) findViewById(R.id.toolbar_title);
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		ImageView imageView2 = (ImageView) findViewById(R.id.custom_toolbar_right_iv);
 		imageView2.setImageResource(R.drawable.icon_timeline);
 		imageView.setImageResource(R.drawable.icon_profile);
-//		textView.setTextColor(Color.BLACK);
-//		textView.setText(getString(R.string.activity_plan_toolbar_title));
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(v -> {

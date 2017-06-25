@@ -21,9 +21,9 @@ public class DepthPresenter extends BasePresenter implements IDepthPresenter {
 	}
 
 	@Override
-	public void isCheckTokenExpired() {
+	public void isCheckTokenExpired(String token) {
 
-		userService.checkUserToken()
+		userService.checkUserToken(token)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<String>() {
 					@Override

@@ -258,9 +258,11 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 
 		Glide.with(this)
 				.load(MyInfoDAO.getInstance().getPicUrl())
+				.dontAnimate()
 				.diskCacheStrategy(DiskCacheStrategy.NONE)
 				.skipMemoryCache(true)
 				.override(300, 300)
+				.placeholder(R.drawable.ic_face_white_48dp)
 				.into(iv_picture);
 	}
 
@@ -314,12 +316,14 @@ public class RoleActivity extends DepthBaseActivity implements IRoleView {
 
 	@Override
 	public void setRoleContent(List<Role> roleList) {
+
+		allRoleList = roleList;
+
 		if (roleList.size() == 0) {
 			empty_role_ll.setVisibility(View.VISIBLE);
 			vp_roleDetail.setVisibility(View.GONE);
 		} else {
 			empty_role_ll.setVisibility(View.GONE);
-			allRoleList = roleList;
 			adapter = new RoleActivityAdapter(this, allRoleList);
 			vp_roleDetail.setAdapter(adapter);
 			vp_roleDetail.setVisibility(View.VISIBLE);

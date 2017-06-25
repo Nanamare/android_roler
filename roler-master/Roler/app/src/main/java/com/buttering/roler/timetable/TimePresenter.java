@@ -35,20 +35,19 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 					@Override
 					public void onCompleted() {
 						view.hideLoadingBar();
-
 					}
 
 					@Override
 					public void onError(Throwable e) {
-						e.printStackTrace();
 						view.hideLoadingBar();
-
+						e.printStackTrace();
 					}
 
 					@Override
 					public void onNext(List<Schedule> schedules) {
 						view.setScheduleList(schedules);
-						onCompleted();
+						view.hideLoadingBar();
+
 					}
 				}));
 	}

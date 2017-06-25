@@ -27,13 +27,18 @@ import com.buttering.roler.R;
 import com.buttering.roler.VO.Schedule;
 import com.buttering.roler.depth.DepthBaseActivity;
 import com.buttering.roler.dialog.ScheduleDialog;
+import com.buttering.roler.net.basepresenter.BasePresenter;
+import com.buttering.roler.util.MyApplication;
+import com.vocketlist.android.roboguice.log.Ln;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +60,7 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 	private ITimePresenter presenter;
 	private WeekView mWeekView;
 	private String nowDate;
+	private String addNowDate;
 	private int startTimeOfDay;
 	private int startMinOfDay;
 	private int endTimeOfDay;
@@ -92,6 +98,18 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 		presenter.getSchduleList(nowDate);
 
 		mWeekView.setOverlappingEventGap(5);
+
+		// 사용자가 원하는 날짜에 일정을 추가할수 있도록 한다
+		mWeekView.setScrollListener(new WeekView.ScrollListener() {
+			@Override
+			public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay) {
+
+				DateFormat dateType = new SimpleDateFormat(BaseActivity.this.getString(R.string.today_data_format));
+				dateType.setTimeZone(TimeZone.getDefault());
+				Ln.v(TimeZone.getDefault());
+				addNowDate = dateType.format(newFirstVisibleDay.getTime());
+			}
+		});
 
 
 	}
@@ -175,7 +193,7 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 
 
 				presenter.addSchdule(getString(R.string.schedule_contents,startDate ,endDate ,contents)
-						, startDate, endDate, nowDate);
+						, startDate, endDate, addNowDate);
 
 			} else {
 				Toast.makeText(this, getString(R.string.empty_schedule_content), Toast.LENGTH_SHORT).show();
@@ -198,6 +216,7 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 		Calendar cal = Calendar.getInstance();
 		DateFormat dateType = new SimpleDateFormat(getString(R.string.today_data_format));
 		nowDate = dateType.format(cal.getTime());
+		addNowDate = dateType.format(cal.getTime());
 	}
 
 
@@ -371,8 +390,13 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 	@Override
 	public void setScheduleList(List<Schedule> schedules) {
 		this.events.clear();
-		for (Schedule event : schedules) {
-			this.events.add(event.toWeekViewEvent(event, nowDate));
+//		for (Schedule event : schedules) {
+//			this.events.add(event.toWeekViewEvent(event, nowDate));
+//		}
+
+		for(int i = 0; i<schedules.size(); i++) {
+			Schedule event = new Schedule();
+			this.events.add(event.toWeekViewEvent(schedules.get(i), schedules.get(i).getDate()));
 		}
 
 		getWeekView().notifyDatasetChanged();
@@ -396,6 +420,12 @@ public class BaseActivity extends DepthBaseActivity implements WeekView.EventCli
 	@Override
 	public void updateWeekView() {
 		mWeekView.notifyDatasetChanged();
+	}
+
+	public static Calendar toCalendar(Date date){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
 	}
 
 }

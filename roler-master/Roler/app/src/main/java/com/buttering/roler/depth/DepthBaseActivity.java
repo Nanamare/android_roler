@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 
 import com.buttering.roler.login.LogInActivity;
+import com.buttering.roler.util.SharePrefUtil;
 
 /**
  * Created by kinamare on 2017-05-29.
@@ -18,8 +19,11 @@ public class DepthBaseActivity extends AppCompatActivity implements IDepthView{
 	protected void onRestart(){
 		super.onRestart();
 
+
+		//get jwt token
+		String token = SharePrefUtil.getSharedPreference("accessToken");
 		presenter = new DepthPresenter(this);
-		presenter.isCheckTokenExpired();
+		presenter.isCheckTokenExpired(token);
 	}
 
 	@Override

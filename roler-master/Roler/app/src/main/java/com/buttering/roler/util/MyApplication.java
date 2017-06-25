@@ -2,12 +2,8 @@ package com.buttering.roler.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.MainThread;
 import android.support.multidex.MultiDex;
-import android.widget.Toast;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 
 /**
@@ -43,6 +39,7 @@ public class MyApplication extends Application {
 		super.onCreate();
 		sInstance = this;
 		FirebaseApp.initializeApp(this);
+
 	}
 
 

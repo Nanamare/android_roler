@@ -5,5 +5,5 @@ package com.buttering.roler.depth;
  */
 
 public interface IDepthPresenter {
-	void isCheckTokenExpired();
+	void isCheckTokenExpired(String token);
 }

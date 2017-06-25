@@ -10,15 +10,18 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.buttering.roler.R;
 import com.buttering.roler.util.MyApplication;
 import com.google.gson.reflect.TypeToken;
+import com.vocketlist.android.roboguice.log.Ln;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  * Created by ichaeeun on 2016. 7. 30..
@@ -31,6 +34,12 @@ public class Schedule {
 	private String endTime;
 	private int role_id;
 	private int user_id;
+
+	public Date getDate() {
+		return date;
+	}
+
+	private Date date;
 
 	public String getContent() {
 		return content;
@@ -87,9 +96,17 @@ public class Schedule {
 	}
 
 	@SuppressLint("SimpleDateFormat")
-	public WeekViewEvent toWeekViewEvent(Schedule schedule, String nowDate) {
+	public WeekViewEvent toWeekViewEvent(Schedule schedule, Date date) {
 
 		Random random = new Random();
+
+		Calendar tempDate = toCalendar(date);
+
+		DateFormat dateType = new SimpleDateFormat(MyApplication.getInstance().getString(R.string.today_data_format));
+		dateType.setTimeZone(TimeZone.getDefault());
+		Ln.v(TimeZone.getDefault());
+		String nowDate = dateType.format(tempDate.getTime());
+
 
 		Calendar getStartTime = Calendar.getInstance();
 		SimpleDateFormat startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -109,13 +126,20 @@ public class Schedule {
 
 		// Create an week view event.
 		WeekViewEvent weekViewEvent = new WeekViewEvent();
-		weekViewEvent.setId(getId());
-		weekViewEvent.setName(getContent());
+		weekViewEvent.setId(schedule.getId());
+		weekViewEvent.setName(schedule.getContent());
 		weekViewEvent.setStartTime(getStartTime);
 		weekViewEvent.setEndTime(getEndTime);
 		weekViewEvent.setColor((MyApplication.getInstance().getResources().getColor(bgColor[random.nextInt(6)])));
 		return weekViewEvent;
 	}
+
+	public static Calendar toCalendar(Date date){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
+
 
 
 	final int[] bgColor = {R.color.role_color_0, R.color.role_color_1, R.color.role_color_2, R.color.role_color_3,
