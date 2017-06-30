@@ -242,6 +242,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 						@Override
 						public void onError(Throwable e) {
 							hideLoadingBar();
+							Toast.makeText(LogInActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
 							e.printStackTrace();
 						}
 

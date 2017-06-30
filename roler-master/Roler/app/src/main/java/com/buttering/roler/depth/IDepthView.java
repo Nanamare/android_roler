@@ -5,5 +5,6 @@ package com.buttering.roler.depth;
  */
 
 public interface IDepthView {
+	void logOut();
 	void goToLoginActivity();
 }

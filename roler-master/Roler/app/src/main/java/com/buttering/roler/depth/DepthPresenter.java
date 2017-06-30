@@ -41,6 +41,7 @@ public class DepthPresenter extends BasePresenter implements IDepthPresenter {
 
 						if(string.equals("false")){
 							//expired Todo goToLoginActivity
+							view.logOut();
 							view.goToLoginActivity();
 						} else {
 							//valid Todo nothing

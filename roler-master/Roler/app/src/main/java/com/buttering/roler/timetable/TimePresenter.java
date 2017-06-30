@@ -39,7 +39,6 @@ public class TimePresenter extends BasePresenter implements ITimePresenter {
 
 					@Override
 					public void onError(Throwable e) {
-						view.hideLoadingBar();
 						e.printStackTrace();
 					}
 

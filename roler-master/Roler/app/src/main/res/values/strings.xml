@@ -127,6 +127,7 @@
     <!-- login activity-->
     <string name="sign_in_btn">로그인</string>
     <string name="sign_up_btn">가입하기</string>
+    <string name="dialog_log_out_token">토큰 만료\n다시 로그인 해주세요.</string>
 
     <!-- edit role -->
     <string name="priority_title">우선 순위 설정</string>
