@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical">
 
 
 
@@ -27,14 +28,14 @@
                 android:id="@+id/tv_priority"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.7"
                 android:text="@string/priority_title"/>
 
             <Button
                 android:id="@+id/et_priority"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="7.3"
                 android:background="@color/white"
                 android:hint="@string/priority_title_btn"
                 android:textColor="@color/actionbar"
@@ -54,15 +55,20 @@
                 android:id="@+id/tv_roleNameText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.7"
                 android:text="@string/role_title"/>
 
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_marginTop="3dp"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/role_title_hint"
+                app:met_hideUnderline="true"
+                app:met_primaryColor="@color/point_E47B75"
                 android:id="@+id/et_roleName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="7.3"
                 android:hint="@string/role_title_hint"
                 android:textColorHint="@color/hard_grey"/>
 
@@ -79,14 +85,19 @@
                 android:id="@+id/tv_roleContentText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.7"
                 android:text="@string/goal_title"/>
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_marginTop="3dp"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/goal_title_hint"
+                app:met_hideUnderline="true"
+                app:met_primaryColor="@color/point_E47B75"
                 android:id="@+id/et_roleContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="7.3"
                 android:hint="@string/goal_title_hint"
                 android:textColorHint="@color/hard_grey"/>
 

@@ -2,6 +2,7 @@ package com.buttering.roler.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.buttering.roler.R;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +29,7 @@ import rx.Subscriber;
 
 public class TodoDialog extends Dialog {
 
-	@BindView(R.id.dialog_todo_edit) AppCompatEditText todoEditText;
+	@BindView(R.id.dialog_todo_edit) MaterialEditText todoEditText;
 	@BindView(R.id.dialog_todo_cancel_btn) AppCompatTextView cancleBtn;
 	@BindView(R.id.dialog_todo_done_btn) AppCompatTextView doneBtn;
 

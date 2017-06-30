@@ -32,16 +32,11 @@ import butterknife.ButterKnife;
  */
 public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 
-	@BindView(R.id.activity_edit_role_btn)
-	Button done_role_btn;
-	@BindView(R.id.et_roleName)
-	EditText et_roleName;
-	@BindView(R.id.et_roleContent)
-	EditText et_roleContent;
-	@BindView(R.id.picker_ui_view)
-	PickerUI picker_ui_view;
-	@BindView(R.id.et_priority)
-	Button et_priority;
+	@BindView(R.id.activity_edit_role_btn) Button done_role_btn;
+	@BindView(R.id.et_roleName) EditText et_roleName;
+	@BindView(R.id.et_roleContent) EditText et_roleContent;
+	@BindView(R.id.picker_ui_view) PickerUI picker_ui_view;
+	@BindView(R.id.et_priority) Button et_priority;
 
 	private List<String> score;
 	private int currentPosition = -1;
@@ -204,7 +199,7 @@ public class EditRoleActivity extends AppCompatActivity implements IRoleView {
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("역할 수정");
+		textView.setText("목표 설정");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {

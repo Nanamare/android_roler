@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="300dp"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_gravity="center_horizontal"
               android:orientation="vertical"
               android:paddingBottom="25dp"
@@ -34,12 +35,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.AppCompatEditText
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:textSize="@dimen/font_50"
-            tools:text="@string/dialog_todo_edit_contents"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="@string/dialog_todo_edit_contents"
+            app:met_floatingLabelTextColor="@color/point_E47B75"
             android:id="@+id/dialog_todo_edit"
             android:layout_width="match_parent"
+            app:met_hideUnderline="true"
+            app:met_primaryColor="@color/point_E47B75"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            android:textColor="#808080"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -67,6 +77,7 @@
             android:text="추가"
             android:textColor="@color/dialog_todo_font_color"
             android:textSize="@dimen/font_42" />
+
 
     </LinearLayout>
 

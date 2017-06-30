@@ -122,7 +122,7 @@
     <!-- todo dialog -->
     <string name="dialog_todo_title">TODO-LIST 추가하기</string>
     <string name="dialog_todo_content">내용을 입력해주세요</string>
-    <string name="dialog_todo_edit_contents">역할을 써주세요</string>
+    <string name="dialog_todo_edit_contents">목표를 달성하는 당신, 화이팅!</string>
 
     <!-- login activity-->
     <string name="sign_in_btn">로그인</string>
@@ -132,10 +132,10 @@
     <!-- edit role -->
     <string name="priority_title">우선 순위 설정</string>
     <string name="priority_title_btn">우선순위를 설정해주세요!</string>
-    <string name="role_title">역할 제목 설정</string>
-    <string name="role_title_hint">역할을 설정해보세요!</string>
+    <string name="role_title">목표 제목 설정</string>
+    <string name="role_title_hint">목표를 설정해보세요!</string>
     <string name="goal_title">단기 목표 설명</string>
-    <string name="goal_title_hint">역할에 대한 설명을 적어 보세요!</string>
+    <string name="goal_title_hint">목표에 대한 설명을 적어 보세요!</string>
     <string name="done_title">추가하기</string>
 
 </resources>
