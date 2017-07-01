@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,6 +43,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.vocketlist.android.roboguice.log.Ln;
 
 import java.io.BufferedReader;
@@ -86,8 +89,8 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	@BindView(R.id.activity_login_google_btn) ImageButton login_google_btn;
 	@BindView(R.id.activity_login_signIn_btn) Button login_signIn_btn;
 	@BindView(R.id.activity_login_signUp_btn) Button login_signUp_btn;
-	@BindView(R.id.email_et) TextView email_et;
-	@BindView(R.id.pw_et) TextView pw_et;
+	@BindView(R.id.email_et) MaterialEditText email_et;
+	@BindView(R.id.pw_et) MaterialEditText pw_et;
 	@BindView(R.id.activity_login_find_pwd_tv) TextView find_pwd_tv;
 
 
@@ -146,6 +149,8 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 		checkTheRegularExpression();
 
+		checkTheHilightEditText();
+
 		loginPresenter = new LoginPresenter(this, this);
 		signUpPresenter = new SignUpPresenter();
 
@@ -154,6 +159,38 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		presenter = new SignUpProfilePresenter();
 
 
+
+	}
+
+	private void checkTheHilightEditText() {
+
+		email_et.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(1000);
+							email_et.setFloatingLabelText(isHignlightValid(s.toString()));
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 
 	}
 
@@ -316,6 +353,22 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 
 		return true;
+	}
+
+	private String isHignlightValid(String email) {
+
+		if (email == null || email.isEmpty()) {
+			return getString(R.string.join_empty_email);
+		}
+		if (email.length() > 60) {
+			return getString(R.string.join_too_long_email);
+		}
+
+		if (!isEmailValid(email)) {
+			return getString(R.string.join_invalid_email);
+		}
+
+		return getString(R.string.welcome_roler_title);
 	}
 
 
